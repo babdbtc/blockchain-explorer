@@ -130,7 +130,40 @@ export function ThreeScene() {
         "Be the counter-economy",
         "Regulate THIS!",
         "Don't impose democracy on me!",
-        "Use blind signatures!"
+        "Use blind signatures!",
+        // Cypherpunk quotes with authors
+        "A specter is haunting the modern world,\nthe specter of crypto anarchy.\n— Tim May",
+        "Strong cryptography can resist an unlimited\namount of violence. No amount of coercive force\nwill ever solve a math problem.\n— Tim May",
+        "Privacy is necessary for an open\nsociety in the electronic age.\n— Eric Hughes",
+        "Cypherpunks write code.\n— Eric Hughes",
+        "Privacy is not secrecy. Privacy is the power\nto selectively reveal oneself to the world.\n— Eric Hughes",
+        "We cannot expect governments, corporations,\nor other large, faceless organizations to grant\nus privacy out of their beneficence.\n— Eric Hughes",
+        "If privacy is outlawed,\nonly outlaws will have privacy.\n— Philip Zimmermann",
+        "Trusted third parties are security holes.\n— Nick Szabo",
+        "The Net interprets censorship\nas damage and routes around it.\n— John Gilmore",
+        "Arguing that you don't care about privacy\nbecause you have nothing to hide is no different\nthan saying you don't care about free speech\nbecause you have nothing to say.\n— Edward Snowden",
+        "Encryption works. Properly implemented\nstrong crypto systems are one of the few\nthings that you can rely on.\n— Edward Snowden",
+        "Security is a process, not a product.\n— Bruce Schneier",
+        "Cryptography is the last defense of liberty\nin a world of total surveillance.\n— Bruce Schneier",
+        "I'd like to think that decades from now,\npeople will look back and see this time as\nthe dawning of a new era of individual\nempowerment and freedom.\n— Hal Finney",
+        "Bitcoin seems to be a very promising idea.\n— Hal Finney",
+        "Talk is cheap. Show me the code.\n— Linus Torvalds",
+        "Information is power. But like all power,\nthere are those who want to keep\nit for themselves.\n— Aaron Swartz",
+        "Cryptography is the ultimate form\nof non-violent direct action.\n— Julian Assange",
+        "Every time we witness an injustice\nand do not act, we train our character\nto be passive in its presence.\n— Julian Assange",
+        "I am fascinated by Tim May's crypto-anarchy.\nIn a crypto-anarchy the government is\npermanently forbidden and permanently unnecessary.\n— Wei Dai",
+        "Public key cryptography is a revolution\nthat puts control of privacy into\nthe hands of the individual.\n— Whitfield Diffie",
+        "WE STAND TODAY on the brink\nof a revolution in cryptography.\n— Diffie & Hellman",
+        "A cashless economy is\na surveillance economy.\n— Jerry Brito",
+        "Cash is an escape valve in our increasingly\nintermediated and surveilled world.\n— Jerry Brito",
+        "The keyboard is the great equalizer.\n— St. Jude",
+        "Cryptography rearranges power: it configures\nwho can do what, from what. This makes\ncryptography an inherently political tool.\n— Phillip Rogaway",
+        "Bitcoin is a tool of resistance\ngifted to us by Satoshi.\n— Amir Taaki",
+        "Fundamentally, I believe we will have the kind\nof society that most people want. If we want\nfreedom and privacy, we must persuade others\nthat these are worth having.\n— Hal Finney",
+        "Cryptography can make possible a world in\nwhich people have control over information\nabout themselves, not because government has\ngranted them that control, but because only\nthey possess the cryptographic keys.\n— Hal Finney",
+        "I wanted to empower people to make\ntheir own choices, to pursue\ntheir own happiness.\n— Ross Ulbricht",
+        "Free software is a matter of liberty,\nnot price. Think of 'free' as in\n'free speech,' not as in 'free beer.'\n— Richard Stallman",
+        "Bitcoin isn't just money for the internet.\nIt's a new form of money that is\nnative to the internet.\n— Andreas Antonopoulos"
       ]
 
       const textSprites: any[] = []
@@ -138,25 +171,35 @@ export function ThreeScene() {
       const createTextSprite = (text: string) => {
         const fontface = "Arial"
         const fontsize = 24
-        const borderThickness = 0
+        const lineHeight = fontsize * 1.3
         const canvas = document.createElement("canvas")
         const context = canvas.getContext("2d")!
 
-        // Measure text size
+        // Split text into lines
+        const lines = text.split("\n")
+
+        // Measure max line width
         context.font = "Bold " + fontsize + "px " + fontface
-        const metrics = context.measureText(text)
-        const textWidth = metrics.width
+        let maxWidth = 0
+        for (const line of lines) {
+          const metrics = context.measureText(line)
+          maxWidth = Math.max(maxWidth, metrics.width)
+        }
 
-        // Resize canvas to fit text
-        canvas.width = textWidth + 20
-        canvas.height = fontsize + 20
+        // Resize canvas to fit all lines
+        canvas.width = maxWidth + 40
+        canvas.height = lines.length * lineHeight + 20
 
-        // Draw text
+        // Draw each line
         context.font = "Bold " + fontsize + "px " + fontface
         context.fillStyle = "rgba(255, 255, 255, 0.4)" // Subtle white
         context.textAlign = "center"
         context.textBaseline = "middle"
-        context.fillText(text, canvas.width / 2, canvas.height / 2)
+
+        const startY = (canvas.height - (lines.length - 1) * lineHeight) / 2
+        lines.forEach((line, i) => {
+          context.fillText(line, canvas.width / 2, startY + i * lineHeight)
+        })
 
         const texture = new THREE.CanvasTexture(canvas)
         texture.minFilter = THREE.LinearFilter
@@ -173,7 +216,19 @@ export function ThreeScene() {
         const sprite = new THREE.Sprite(spriteMaterial)
         // Scale sprite to maintain aspect ratio but keep it relatively small
         const scale = 10
-        sprite.scale.set(scale * (canvas.width / canvas.height), scale, 1)
+        const baseScaleX = scale * (canvas.width / canvas.height)
+        const baseScaleY = scale
+        sprite.scale.set(baseScaleX, baseScaleY, 1)
+
+        // Store base scale and current scale factor for hover animation
+        sprite.userData = {
+          baseScaleX,
+          baseScaleY,
+          currentScale: 1,
+          targetScale: 1,
+          isMultiLine: lines.length > 1,
+          text: text
+        }
 
         return sprite
       }
@@ -192,6 +247,98 @@ export function ThreeScene() {
         scene.add(sprite)
         textSprites.push(sprite)
       })
+
+      // Raycaster for text sprite hover detection
+      const textRaycaster = new THREE.Raycaster()
+      // Increase the raycaster threshold for sprites
+      textRaycaster.params.Sprite = { threshold: 10 }
+      let hoveredSprite: any = null
+
+      // Quote modal overlay
+      const quoteModal = document.createElement("div")
+      quoteModal.style.cssText = `
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.85);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        z-index: 1000;
+        cursor: pointer;
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      `
+      const quoteContent = document.createElement("div")
+      quoteContent.style.cssText = `
+        color: rgba(255, 255, 255, 0.9);
+        font-family: Arial, sans-serif;
+        font-size: clamp(18px, 4vw, 32px);
+        text-align: center;
+        padding: 40px;
+        max-width: 800px;
+        line-height: 1.6;
+        white-space: pre-line;
+      `
+      const closeHint = document.createElement("div")
+      closeHint.style.cssText = `
+        color: rgba(255, 255, 255, 0.3);
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        margin-top: 40px;
+      `
+      closeHint.textContent = "click anywhere to close"
+      quoteModal.appendChild(quoteContent)
+      quoteModal.appendChild(closeHint)
+      document.body.appendChild(quoteModal)
+
+      // Modal show/hide helpers
+      let modalVisible = false
+      const showModal = (text: string) => {
+        quoteContent.textContent = text
+        quoteModal.style.display = "flex"
+        requestAnimationFrame(() => {
+          quoteModal.style.opacity = "1"
+        })
+        modalVisible = true
+      }
+      const hideModal = () => {
+        quoteModal.style.opacity = "0"
+        modalVisible = false
+        setTimeout(() => {
+          if (!modalVisible) quoteModal.style.display = "none"
+        }, 200)
+      }
+
+      // Close modal on click
+      quoteModal.addEventListener("click", hideModal)
+
+      // Close modal on escape key
+      const onKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") hideModal()
+      }
+      window.addEventListener("keydown", onKeyDown)
+
+      // Click handler for quote sprites
+      const onQuoteClick = (e: MouseEvent) => {
+        if (modalVisible) return
+
+        const rect = renderer.domElement.getBoundingClientRect()
+        const clickNdc = new THREE.Vector2(
+          ((e.clientX - rect.left) / rect.width) * 2 - 1,
+          -((e.clientY - rect.top) / rect.height) * 2 + 1
+        )
+
+        textRaycaster.setFromCamera(clickNdc, camera)
+        const intersects = textRaycaster.intersectObjects(textSprites)
+
+        if (intersects.length > 0) {
+          const clickedSprite = intersects[0].object as any
+          showModal(clickedSprite.userData.text)
+        }
+      }
+      renderer.domElement.addEventListener("click", onQuoteClick)
 
       // --- Planet (point cloud) ---
       const numParticles = 5000
@@ -516,9 +663,9 @@ export function ThreeScene() {
 
       // Tunables
       const influenceRadius = 4.0
-      const strength = 0.5
+      const strength = 0.32
       const hoverReach = 40.0       // how far outside still influences (world)
-      const maxOutward = 3.8        // max outward offset (world)
+      const maxOutward = 2.2        // max outward offset (world)
       const tentSharpness = 1.0     // triangular peak sharpness
 
       // Press-to-compress tunables
@@ -650,7 +797,7 @@ export function ThreeScene() {
       }
 
       function updateMagnetFromRay() {
-        const isAfk = (performance.now() - lastMouseMoveTime) > 1000
+        const isAfk = (performance.now() - lastMouseMoveTime) > 3000
 
         if (!pointerActive || isAfk) {
           magnetActive = false
@@ -1024,7 +1171,32 @@ export function ThreeScene() {
         }
         starPositions.needsUpdate = true
 
-        // Animate easter egg texts (drift with stars)
+        // Detect hovered text sprite
+        if (pointerActive && !isDraggingPlanet) {
+          textRaycaster.setFromCamera(ndc, camera)
+          const intersects = textRaycaster.intersectObjects(textSprites)
+
+          // Reset previous hover
+          if (hoveredSprite && (!intersects.length || intersects[0].object !== hoveredSprite)) {
+            hoveredSprite.userData.targetScale = 1
+            hoveredSprite = null
+          }
+
+          // Set new hover
+          if (intersects.length > 0) {
+            const hit = intersects[0].object as any
+            if (hit !== hoveredSprite) {
+              hoveredSprite = hit
+              // Larger scale for multi-line quotes to make them readable
+              hoveredSprite.userData.targetScale = hoveredSprite.userData.isMultiLine ? 3 : 2
+            }
+          }
+        } else if (hoveredSprite) {
+          hoveredSprite.userData.targetScale = 1
+          hoveredSprite = null
+        }
+
+        // Animate easter egg texts (drift with stars + hover scale)
         textSprites.forEach(sprite => {
           sprite.position.z += starSpeed
           if (sprite.position.z > 2000) {
@@ -1033,7 +1205,25 @@ export function ThreeScene() {
             sprite.position.x = THREE.MathUtils.randFloatSpread(1500)
             sprite.position.y = THREE.MathUtils.randFloatSpread(1500)
           }
+
+          // Smooth scale animation for hover effect
+          const ud = sprite.userData
+          const scaleLerp = 0.1
+          ud.currentScale += (ud.targetScale - ud.currentScale) * scaleLerp
+          sprite.scale.set(
+            ud.baseScaleX * ud.currentScale,
+            ud.baseScaleY * ud.currentScale,
+            1
+          )
+
+          // Also increase opacity when hovered
+          const targetOpacity = ud.currentScale > 1.1 ? 0.9 : 0.6
+          const mat = sprite.material as THREE.SpriteMaterial
+          mat.opacity += (targetOpacity - mat.opacity) * scaleLerp
         })
+
+        // Change cursor when hovering a quote
+        renderer.domElement.style.cursor = hoveredSprite ? "pointer" : "default"
 
         renderer.render(scene, camera)
 
@@ -1071,7 +1261,12 @@ export function ThreeScene() {
         document.removeEventListener("mouseout", onMouseOut)
         renderer.domElement.removeEventListener("pointerdown", onPointerDown)
         window.removeEventListener("pointerup", onPointerUp)
+        window.removeEventListener("keydown", onKeyDown)
+        renderer.domElement.removeEventListener("click", onQuoteClick)
         renderer.domElement.removeEventListener("wheel", onWheel)
+        if (quoteModal.parentElement) {
+          quoteModal.parentElement.removeChild(quoteModal)
+        }
         if (frameId) cancelAnimationFrame(frameId)
         if (renderer.domElement && renderer.domElement.parentElement) {
           renderer.domElement.parentElement.removeChild(renderer.domElement)
