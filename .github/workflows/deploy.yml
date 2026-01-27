@@ -1,0 +1,38 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install SSH dependencies
+        run: sudo apt-get update && sudo apt-get install -y openssh-client
+
+      - name: Setup SSH Agent
+        run: |
+          eval $(ssh-agent -s)
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 --decode > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-add ~/.ssh/id_rsa
+
+      - name: Debug SSH Key (Temporary - Remove After Success)
+        run: |
+          ssh-keygen -l -f ~/.ssh/id_rsa || echo "Key verification failed - check format"
+
+      - name: Deploy to VPS
+        run: |
+          ssh -o StrictHostKeyChecking=no -v ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "
+            cd ~/babd
+            git pull origin main
+            npm install
+            npm run build
+            pm2 restart babd-app
+          "
