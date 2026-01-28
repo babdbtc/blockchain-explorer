@@ -175,6 +175,12 @@
   border-color: hsl(var(--accent) / 0.5);
 }
 
+.premium-button-accent-active {
+  background: hsl(var(--accent) / 0.25);
+  border: 1px solid hsl(var(--accent) / 0.6);
+  color: hsl(var(--accent));
+}
+
 /* Text utilities with accent color */
 .text-accent {
   color: hsl(var(--accent));

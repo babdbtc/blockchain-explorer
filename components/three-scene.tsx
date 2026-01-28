@@ -1127,7 +1127,8 @@ export function ThreeScene() {
             const dist2 = dx * dx + dy * dy + dz * dz
 
             const w = Math.exp(-dist2 / twoSigma2)
-            const k = strength * w * deformAlpha
+            // Reduce magnetic strength when compressed to avoid over-pulling
+            const k = strength * w * deformAlpha * compressionFactor
 
             // Combine all effects
             arr[ix] = bx + dx * k + scatterX + wobbleX + normX * rippleOffset

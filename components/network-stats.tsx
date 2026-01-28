@@ -51,8 +51,6 @@ export function NetworkStats() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3 }}
           onClick={() => setIsModalOpen(true)}
-          whileHover={{ scale: 1.02, y: -2 }}
-          whileTap={{ scale: 0.98 }}
         >
           <Card className="premium-card p-4">
             <StatsContent

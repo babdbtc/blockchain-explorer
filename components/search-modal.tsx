@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Loader2, ExternalLink, Copy, Check, ArrowRight, ArrowLeft, Wallet, Coins, HardDrive, Activity } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useSearchHistory, type SearchType } from "@/hooks/use-search-history"
 
 interface SearchModalProps {
   isOpen: boolean
@@ -15,6 +16,7 @@ interface SearchModalProps {
 }
 
 export function SearchModal({ isOpen, onClose, query }: SearchModalProps) {
+  const { addToHistory } = useSearchHistory()
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<any>(null)
   const [error, setError] = useState<string | null>(null)
@@ -52,12 +54,14 @@ export function SearchModal({ isOpen, onClose, query }: SearchModalProps) {
       if (isTxId) {
         const txData = await (await fetch(`https://mempool.space/api/tx/${searchQuery}`)).json()
         setResult({ type: "transaction", data: txData })
+        addToHistory(searchQuery, "transaction")
       } else if (isAddress) {
         const [addrData, utxoData] = await Promise.all([
           fetch(`https://mempool.space/api/address/${searchQuery}`).then((r) => r.json()),
           fetch(`https://mempool.space/api/address/${searchQuery}/utxo`).then((r) => r.json()),
         ])
         setResult({ type: "address", data: addrData, utxos: utxoData })
+        addToHistory(searchQuery, "address")
       }
     } catch (err) {
       setError("Error fetching data. Please try again.")

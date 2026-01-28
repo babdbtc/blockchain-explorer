@@ -350,7 +350,7 @@ export function CashuDonation() {
               onClick={() => { setPaymentMethod("onchain"); resetCashu(); }}
               size="sm"
               variant="ghost"
-              className={`premium-button-accent px-2 py-0.5 h-7 text-xs flex-1 ${paymentMethod === "onchain" ? "bg-[hsl(var(--accent)/0.25)]" : ""}`}
+              className={`px-2 py-0.5 h-7 text-xs flex-1 ${paymentMethod === "onchain" ? "premium-button-accent-active" : "premium-button-accent"}`}
             >
               <Bitcoin className="w-3 h-3 mr-1" />
               On-Chain
@@ -359,7 +359,7 @@ export function CashuDonation() {
               onClick={() => { setPaymentMethod("lightning"); resetCashu(); }}
               size="sm"
               variant="ghost"
-              className={`premium-button-accent px-2 py-0.5 h-7 text-xs flex-1 ${paymentMethod === "lightning" ? "bg-[hsl(var(--accent)/0.25)]" : ""}`}
+              className={`px-2 py-0.5 h-7 text-xs flex-1 ${paymentMethod === "lightning" ? "premium-button-accent-active" : "premium-button-accent"}`}
             >
               <Zap className="w-3 h-3 mr-1" />
               Lightning
@@ -369,7 +369,7 @@ export function CashuDonation() {
             onClick={() => { setPaymentMethod("cashu"); resetCashu(); }}
             size="sm"
             variant="ghost"
-            className={`premium-button-accent px-2 py-0.5 h-7 text-xs w-full ${paymentMethod === "cashu" ? "bg-[hsl(var(--accent)/0.25)]" : ""}`}
+            className={`px-2 py-0.5 h-7 text-xs w-full ${paymentMethod === "cashu" ? "premium-button-accent-active" : "premium-button-accent"}`}
           >
             <span className="mr-1">🥜</span>
             Cashu
