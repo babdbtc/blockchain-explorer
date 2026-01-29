@@ -361,7 +361,11 @@ export function ThreeScene() {
         // JStark
         "Live free or fucking die.\n— JStark",
         "I am extremely peaceful.\n— JStark",
-        "Come and take it"
+        "Come and take it",
+        "Pinochet's Helicopter Tours.\nTake the plunge!",
+        "\"Diversification\" is a fancy way\nto say \"less bitcoin\".",
+        "Lost it all in a boat accident...",
+        "Bitcoin is everything people don't\nknow about computers, combined with\neverything they don't understand\nabout money.\n— John Oliver"
       ]
 
       const textSprites: any[] = []
