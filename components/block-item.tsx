@@ -122,7 +122,7 @@ export const BlockItem = React.memo(
           title={`Click to view details for block ${blockData.height}`}
           style={{
             zIndex: zIndex,
-            borderColor: isCurrentBlock ? "hsl(217 91% 60%)" : "hsl(217 91% 60% / 0.3)",
+            borderColor: isCurrentBlock ? "hsl(217 91% 60% / 0.5)" : "hsl(217 91% 60% / 0.3)",
           }}
           animate={{ scale: scale }}
           whileHover={{
@@ -134,6 +134,13 @@ export const BlockItem = React.memo(
           whileTap={{ scale: scale * 0.98 }}
           transition={{ duration: 0.15 }}
         >
+          {/* Animated border glow orbs for current block */}
+          {isCurrentBlock && (
+            <div className="current-block-glow-container">
+              <div className="glow-orb" />
+              <div className="glow-orb glow-orb-2" />
+            </div>
+          )}
           {/* Blue fill layer */}
           <motion.div
             className="absolute bottom-0 left-0 w-full bg-blue-500/40 rounded-b-xl"

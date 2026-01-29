@@ -337,10 +337,91 @@
   transform: translateY(-2px) scale(1.02);
 }
 
-/* Current block indicator - simplified */
+/* Current block indicator - base styles */
 .current-block {
-  border-color: hsl(217 91% 60%);
+  border-color: hsl(217 91% 60% / 0.5);
   box-shadow: 0 0 20px hsl(217 91% 60% / 0.3);
+  position: relative;
+}
+
+/* Animated glow orbs traveling around the border */
+.current-block-glow-container {
+  position: absolute;
+  inset: -6px;
+  pointer-events: none;
+  z-index: 10;
+  overflow: visible;
+}
+
+/* Keyframes for traveling around rectangle border */
+/* Uses percentages based on perimeter: top(~15%), right(~35%), bottom(~15%), left(~35%) */
+@keyframes travelClockwise {
+  /* Start at top-left, move along top edge */
+  0% {
+    left: 0%;
+    top: 0;
+    transform: translate(0, -50%);
+  }
+  /* Top-right corner */
+  15% {
+    left: 100%;
+    top: 0;
+    transform: translate(-100%, -50%);
+  }
+  /* Move down right edge */
+  15.01% {
+    left: 100%;
+    top: 0%;
+    transform: translate(-50%, 0);
+  }
+  50% {
+    left: 100%;
+    top: 100%;
+    transform: translate(-50%, -100%);
+  }
+  /* Move along bottom edge (right to left) */
+  50.01% {
+    left: 100%;
+    top: 100%;
+    transform: translate(-100%, -50%);
+  }
+  65% {
+    left: 0%;
+    top: 100%;
+    transform: translate(0, -50%);
+  }
+  /* Move up left edge */
+  65.01% {
+    left: 0;
+    top: 100%;
+    transform: translate(-50%, -100%);
+  }
+  99.99% {
+    left: 0;
+    top: 0%;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    left: 0%;
+    top: 0;
+    transform: translate(0, -50%);
+  }
+}
+
+.glow-orb {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, hsl(217 100% 92%) 0%, hsl(217 91% 72%) 35%, hsl(217 91% 60% / 0.4) 60%, transparent 75%);
+  box-shadow:
+    0 0 6px 2px hsl(217 100% 78%),
+    0 0 14px 3px hsl(217 91% 60% / 0.6);
+  animation: travelClockwise 5s linear infinite;
+}
+
+.glow-orb-2 {
+  animation-delay: -2.5s; /* 50% offset = opposite position */
 }
 
 /* Block fill layer animation */
