@@ -798,4 +798,3 @@ export function CashuDonation() {
     </div>
   )
 }
-
