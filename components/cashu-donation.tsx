@@ -21,6 +21,19 @@ const RATE_LIMIT_STORAGE_KEY = "cashu_invoice_timestamps"
 // Static payment info
 const LNURL = "LNURL1DP68GURN8GHJ7AMPD3KX2AR0VEEKZAR0WD5XJTNRDAKJ7TNHV4KXCTTTDEHHWM30D3H82UNVWQHKYCTZVSCX0SZD"
 const ONCHAIN_ADDRESS = "bc1p3yaknvcfxkqp5mvp2kxk24qlr6zzfh537zwuf7s2fggyty7hcclqd2dz65"
+const PGP_PUBLIC_KEY = `-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+xjMEaXqHlhYJKwYBBAHaRw8BAQdA65nlb8qrFPqXplUnEAeSx8QjI3xx3pwStFMQ
+4HCXq8nNHUJhYmQgPGJhYmRidGNAcHJvdG9ubWFpbC5jb20+wpkEExYKAEEWIQTD
+I2XAe2tgxuFO3GZtWTGmEIngtQUCaXqHlgIbAwUJA8JnAAULCQgHAgIiAgYVCgkI
+CwIEFgIDAQIeBwIXgAAKCRBtWTGmEIngtSTGAP4w+PpvpqOwrDYQOp2j0FL+Leui
+NmMNTt4T0QcmNovdBgD9Eu2ngdOwim/dXFQdi/L+bbkoetb3j2+awOMaigxWNwrO
+OARpeoeWEgorBgEEAZdVAQUBAQdAOE9HHD6pJiACX6PDAAFfmuvu+V3w/ZtfWRBR
+5eVOl2UDAQgHwn4EGBYKACYWIQTDI2XAe2tgxuFO3GZtWTGmEIngtQUCaXqHlgIb
+DAUJA8JnAAAKCRBtWTGmEIngteI3AQCRLbFrM75j4YeOF+fAJtcmM4fZ+8RZ6nQB
+pPlR6TNL8gD/fLQjHoIMHrGMhnpXpXqoIH6T0p7ucUk7DLD29wp4SQw=
+=nw4U
+-----END PGP PUBLIC KEY BLOCK-----`
 
 type PaymentMethod = "onchain" | "lightning" | "cashu"
 type CashuMode = "select" | "invoice" | "paste"
@@ -51,6 +64,7 @@ export function CashuDonation() {
 
   // General state
   const [copied, setCopied] = useState(false)
+  const [pgpCopied, setPgpCopied] = useState(false)
   const [error, setError] = useState("")
   const [rateLimitedUntil, setRateLimitedUntil] = useState<number | null>(null)
 
@@ -317,6 +331,17 @@ export function CashuDonation() {
     }
   }
 
+  // Copy PGP key to clipboard
+  const handleCopyPgp = async () => {
+    try {
+      await navigator.clipboard.writeText(PGP_PUBLIC_KEY)
+      setPgpCopied(true)
+      setTimeout(() => setPgpCopied(false), 2000)
+    } catch (err) {
+      console.error("Failed to copy PGP key:", err)
+    }
+  }
+
   // Reset Cashu state
   const resetCashu = () => {
     if (pollIntervalRef.current) {
@@ -339,7 +364,7 @@ export function CashuDonation() {
 
   return (
     <div className="absolute right-4 bottom-[18rem] md:bottom-[18rem] @[@media(min-height:1000px)]:top-1/2 @[@media(min-height:1000px)]:-translate-y-1/2 @[@media(min-height:1000px)]:bottom-auto min-[2000px]:top-1/2 min-[2000px]:-translate-y-1/2 min-[2000px]:bottom-auto z-5 hidden md:block">
-      <Card className="premium-card p-3 text-center w-[232px] h-[430px] flex flex-col">
+      <Card className="premium-card p-3 text-center w-[232px] min-h-[430px] flex flex-col">
         {/* Title */}
         <div className="text-[hsl(var(--accent))] text-sm font-medium mb-2">Donations</div>
 
@@ -753,6 +778,20 @@ export function CashuDonation() {
                 </svg>
               </a>
             </div>
+
+            {/* PGP Key Section */}
+            <Separator className="my-3 bg-[hsl(var(--border-subtle))]" />
+            <div
+              className="text-[9px] text-[hsl(var(--text-muted))] font-mono bg-[hsl(var(--surface-2))] rounded-md p-2 text-left leading-relaxed overflow-y-auto overflow-x-hidden cursor-text break-all"
+              style={{ maxHeight: '3.9em' }}
+              onClick={(e) => {
+                const selection = window.getSelection()
+                const range = document.createRange()
+                range.selectNodeContents(e.currentTarget)
+                selection?.removeAllRanges()
+                selection?.addRange(range)
+              }}
+            >{PGP_PUBLIC_KEY}</div>
           </div>
         )}
       </Card>
