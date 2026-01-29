@@ -30,7 +30,7 @@ export function NetworkStats() {
 
   if (loading || !difficultyData || !halvingData) {
     return (
-      <div className="absolute left-4 top-64 md:top-80 z-10 max-w-xs">
+      <div className="absolute left-1/2 -translate-x-1/2 md:left-4 md:translate-x-0 top-32 md:top-80 z-10 w-[85vw] md:max-w-xs">
         <Card className="premium-card p-4">
           <div className="text-gray-400 text-xs">Loading...</div>
         </Card>
@@ -44,9 +44,9 @@ export function NetworkStats() {
 
   return (
     <>
-      <div className={`absolute left-4 ${isDesktop ? "bottom-[18rem]" : "bottom-[22rem]"} @[@media(min-height:1000px)]:top-1/2 @[@media(min-height:1000px)]:-translate-y-1/2 @[@media(min-height:1000px)]:bottom-auto min-[2000px]:top-1/2 min-[2000px]:-translate-y-1/2 min-[2000px]:bottom-auto z-5`}>
+      <div className={`absolute left-1/2 -translate-x-1/2 md:left-4 md:translate-x-0 ${isDesktop ? "bottom-[18rem]" : "top-32"} @[@media(min-height:1000px)]:top-1/2 @[@media(min-height:1000px)]:-translate-y-1/2 @[@media(min-height:1000px)]:bottom-auto min-[2000px]:top-1/2 min-[2000px]:-translate-y-1/2 min-[2000px]:bottom-auto z-5`}>
         <motion.div
-          className="max-w-xs height-responsive-scale cursor-pointer"
+          className="w-[85vw] md:max-w-xs md:height-responsive-scale cursor-pointer"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3 }}

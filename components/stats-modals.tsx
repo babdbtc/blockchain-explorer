@@ -16,7 +16,7 @@ export function FeesModal({ isOpen, onClose, fees }: FeesModalProps) {
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="premium-modal text-white max-w-sm">
+            <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-sm">
                 <DialogHeader>
                     <DialogTitle className="text-[hsl(var(--accent))]">Recommended Fees</DialogTitle>
                     <DialogDescription className="text-[hsl(var(--text-muted))]">
@@ -72,7 +72,7 @@ export function MempoolModal({ isOpen, onClose, mempool }: MempoolModalProps) {
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="premium-modal text-white max-w-sm">
+            <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-sm">
                 <DialogHeader>
                     <DialogTitle className="text-[hsl(var(--accent))]">Mempool Status</DialogTitle>
                     <DialogDescription className="text-[hsl(var(--text-muted))]">

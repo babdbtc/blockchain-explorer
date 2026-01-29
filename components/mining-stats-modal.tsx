@@ -82,7 +82,7 @@ export function MiningStatsModal({ isOpen, onClose }: MiningStatsModalProps) {
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="premium-modal text-white max-w-5xl max-h-[90vh] overflow-y-auto p-0 gap-0">
+            <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-5xl max-h-[90vh] overflow-y-auto p-0 gap-0">
                 <DialogHeader className="p-6 pb-2 border-b border-[hsl(var(--border-subtle))] bg-[hsl(var(--accent)/0.05)]">
                     <DialogTitle className="text-[hsl(var(--accent))] flex items-center gap-2 text-xl">
                         <BarChart3 className="w-6 h-6" />

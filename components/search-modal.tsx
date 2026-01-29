@@ -269,7 +269,7 @@ export function SearchModal({ isOpen, onClose, query }: SearchModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="premium-modal text-white max-w-4xl max-h-[85vh] overflow-y-auto">
+      <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-4xl max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-[hsl(var(--accent))]">
             Search Results

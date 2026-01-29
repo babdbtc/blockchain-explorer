@@ -154,18 +154,19 @@ export function BlockExplorer({ currentHeight }: BlockExplorerProps) {
 
   // Center the view on the current block
   useEffect(() => {
-    if (scrollRef.current && !isInitialCenteringDone.current) {
-      const currentBlockElement = scrollRef.current.querySelector(".current-block")
-      if (currentBlockElement) {
-        const containerWidth = scrollRef.current.clientWidth
-        const elementLeft = (currentBlockElement as HTMLElement).offsetLeft
-        const elementWidth = (currentBlockElement as HTMLElement).offsetWidth
-        scrollRef.current.scrollLeft =
-          elementLeft - containerWidth / 2 + elementWidth / 2
-        isInitialCenteringDone.current = true
-      }
+    if (scrollRef.current && !isInitialCenteringDone.current && blocks.length > 0 && currentHeight > 0) {
+      // Use setTimeout to ensure DOM is fully laid out after render
+      const timeoutId = setTimeout(() => {
+        const currentBlockElement = scrollRef.current?.querySelector(".current-block")
+        if (currentBlockElement && scrollRef.current) {
+          // Use scrollIntoView for more reliable centering
+          currentBlockElement.scrollIntoView({ behavior: "instant", inline: "center", block: "nearest" })
+          isInitialCenteringDone.current = true
+        }
+      }, 300)
+      return () => clearTimeout(timeoutId)
     }
-  }, [blocks, projectedBlocks, leftPadPx]) // Added leftPadPx dependency
+  }, [blocks, projectedBlocks, leftPadPx, currentHeight])
 
   const formatTimeAgo = (timestamp: number) => {
     const now = Date.now()
@@ -281,7 +282,7 @@ export function BlockExplorer({ currentHeight }: BlockExplorerProps) {
 
   return (
     <>
-      <div className="absolute bottom-32 md:bottom-24 left-1/2 -translate-x-1/2 w-[120vw] z-10 pointer-events-none">
+      <div className="absolute bottom-36 md:bottom-24 left-1/2 -translate-x-1/2 w-screen md:w-[120vw] z-10 pointer-events-none">
         <div>
           <Card className="bg-transparent border-transparent shadow-none relative pointer-events-auto">
             <div
