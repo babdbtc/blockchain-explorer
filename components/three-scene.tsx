@@ -357,7 +357,11 @@ export function ThreeScene() {
         "They're abridging the freedom and privacy of\nall citizens — to defend us against\na bogeyman.\n— John Gilmore",
         // Zooko Wilcox
         "User-controlled privacy is not a niche;\nit's a fundamental building block\nof healthy society.\n— Zooko Wilcox",
-        "Privacy is the foundation that allows freedom\nof speech, thought, and association to thrive.\n— Zooko Wilcox"
+        "Privacy is the foundation that allows freedom\nof speech, thought, and association to thrive.\n— Zooko Wilcox",
+        // JStark
+        "Live free or fucking die.\n— JStark",
+        "I am extremely peaceful.\n— JStark",
+        "Come and take it"
       ]
 
       const textSprites: any[] = []
