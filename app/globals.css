@@ -339,89 +339,61 @@
 
 /* Current block indicator - base styles */
 .current-block {
-  border-color: hsl(217 91% 60% / 0.5);
+  border-color: hsl(217 91% 60% / 0.4);
   box-shadow: 0 0 20px hsl(217 91% 60% / 0.3);
   position: relative;
 }
 
-/* Animated glow orbs traveling around the border */
+/* SVG glow container */
 .current-block-glow-container {
   position: absolute;
-  inset: -6px;
+  inset: -3px;
   pointer-events: none;
   z-index: 10;
   overflow: visible;
 }
 
-/* Keyframes for traveling around rectangle border */
-/* Uses percentages based on perimeter: top(~15%), right(~35%), bottom(~15%), left(~35%) */
-@keyframes travelClockwise {
-  /* Start at top-left, move along top edge */
-  0% {
-    left: 0%;
-    top: 0;
-    transform: translate(0, -50%);
-  }
-  /* Top-right corner */
-  15% {
-    left: 100%;
-    top: 0;
-    transform: translate(-100%, -50%);
-  }
-  /* Move down right edge */
-  15.01% {
-    left: 100%;
-    top: 0%;
-    transform: translate(-50%, 0);
-  }
-  50% {
-    left: 100%;
-    top: 100%;
-    transform: translate(-50%, -100%);
-  }
-  /* Move along bottom edge (right to left) */
-  50.01% {
-    left: 100%;
-    top: 100%;
-    transform: translate(-100%, -50%);
-  }
-  65% {
-    left: 0%;
-    top: 100%;
-    transform: translate(0, -50%);
-  }
-  /* Move up left edge */
-  65.01% {
-    left: 0;
-    top: 100%;
-    transform: translate(-50%, -100%);
-  }
-  99.99% {
-    left: 0;
-    top: 0%;
-    transform: translate(-50%, 0);
-  }
-  100% {
-    left: 0%;
-    top: 0;
-    transform: translate(0, -50%);
-  }
+.current-block-glow-container svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
 
-.glow-orb {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: radial-gradient(circle, hsl(217 100% 92%) 0%, hsl(217 91% 72%) 35%, hsl(217 91% 60% / 0.4) 60%, transparent 75%);
-  box-shadow:
-    0 0 6px 2px hsl(217 100% 78%),
-    0 0 14px 3px hsl(217 91% 60% / 0.6);
-  animation: travelClockwise 5s linear infinite;
+/* SVG border glow animation */
+@keyframes strokeMove {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -200; }
 }
 
-.glow-orb-2 {
-  animation-delay: -2.5s; /* 50% offset = opposite position */
+.glow-rect {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  /* Two glowing segments, opposite each other: 20 visible, 80 gap (x2 = 200 total for pathLength) */
+  stroke-dasharray: 20 80 20 80;
+  animation: strokeMove 5s linear infinite;
+}
+
+/* Main bright stroke */
+.glow-rect-main {
+  stroke: hsl(217 100% 85%);
+  filter: blur(1px);
+}
+
+/* Outer glow layer */
+.glow-rect-outer {
+  stroke: hsl(217 91% 60%);
+  stroke-width: 6;
+  filter: blur(6px);
+  opacity: 0.7;
+}
+
+/* Extra soft glow */
+.glow-rect-soft {
+  stroke: hsl(217 91% 60%);
+  stroke-width: 12;
+  filter: blur(12px);
+  opacity: 0.4;
 }
 
 /* Block fill layer animation */

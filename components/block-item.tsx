@@ -134,11 +134,32 @@ export const BlockItem = React.memo(
           whileTap={{ scale: scale * 0.98 }}
           transition={{ duration: 0.15 }}
         >
-          {/* Animated border glow orbs for current block */}
+          {/* Animated border glow for current block */}
           {isCurrentBlock && (
             <div className="current-block-glow-container">
-              <div className="glow-orb" />
-              <div className="glow-orb glow-orb-2" />
+              <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                {/* Soft outer glow */}
+                <rect
+                  className="glow-rect glow-rect-soft"
+                  x="0" y="0" width="100" height="100"
+                  rx="12" ry="12"
+                  pathLength={200}
+                />
+                {/* Medium glow */}
+                <rect
+                  className="glow-rect glow-rect-outer"
+                  x="0" y="0" width="100" height="100"
+                  rx="12" ry="12"
+                  pathLength={200}
+                />
+                {/* Bright core */}
+                <rect
+                  className="glow-rect glow-rect-main"
+                  x="0" y="0" width="100" height="100"
+                  rx="12" ry="12"
+                  pathLength={200}
+                />
+              </svg>
             </div>
           )}
           {/* Blue fill layer */}
