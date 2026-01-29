@@ -402,7 +402,7 @@ export function BlockExplorer({ currentHeight }: BlockExplorerProps) {
                   </AnimatePresence>
                 </motion.div>
                 {/* Past blocks group */}
-                <motion.div ref={blocksGroupRef} className="flex space-x-4" layout>
+                <motion.div ref={blocksGroupRef} className="flex items-center" layout>
                   <AnimatePresence mode="popLayout" initial={false}>
                     {/* Past blocks - newest to oldest (right to left) */}
                     {blocks.map((block, index) => {
@@ -418,6 +418,7 @@ export function BlockExplorer({ currentHeight }: BlockExplorerProps) {
                           animate={{ opacity: 1, scale: 1, x: 0 }}
                           exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.15 } }}
                           transition={{ duration: 0.2 }}
+                          className="flex items-center"
                         >
                           <BlockItem
                             block={block}
@@ -434,6 +435,10 @@ export function BlockExplorer({ currentHeight }: BlockExplorerProps) {
                             blockCenterX={blockCenterX}
                             viewportCenterX={viewportCenterX}
                           />
+                          {/* Chain connector line between blue blocks */}
+                          {index < blocks.length - 1 && (
+                            <div className="w-4 h-0.5 bg-blue-500/60 flex-shrink-0" />
+                          )}
                         </motion.div>
                       )
                     })}
