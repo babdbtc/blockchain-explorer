@@ -2,61 +2,32 @@
 
 **<https://babd.space>**
 
-A Bitcoin blockchain explorer with a 3D space theme. Shows live network stats, block details, and lets you search transactions and addresses.
-
-## What it does
-
-The site pulls real-time data from the Mempool.space API and displays it with a scrollable block timeline. Click any block to see its transactions, fees, and other details. There's also a search bar for looking up specific TxIDs or addresses.
-
-The background has a Three.js scene with a rotating planet and some visual effects. You can drag to rotate the camera.
-
-## Tech stack
-
-- Next.js with the App Router
-- React and Three.js for the 3D stuff
-- Tailwind CSS for styling
-- shadcn/ui components
-- Mempool.space API for Bitcoin data
-
-## Setup
-
-To run this project locally, follow these steps:
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/babdbtc/babd.git
-   cd babd
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Build the project**
-   ```bash
-   npm run build
-   ```
-
-4. **Start the development server**
-   ```bash
-   npm run dev
-   ```
-
-5. **Open your browser**
-   Navigate to `http://localhost:3000` to view the site.
-
-### Available Scripts
-
-- `npm run dev` - Starts the development server
-- `npm run build` - Creates an optimized production build
-- `npm start` - Runs the production server
-- `npm run lint` - Runs ESLint to check code quality
+A Bitcoin block explorer with a 3D space theme.
 
 ## Features
 
-- Live Bitcoin price, mempool size, fee rates, and block height
-- Block explorer showing recent and projected future blocks
-- Block weight visualization (the blue/green fill shows MWU relative to max)
-- Search for transactions and addresses
-- Lightning Network donation QR code
+- Real-time Bitcoin stats via WebSocket (price, fees, mempool, block height)
+- Block timeline with weight visualization
+- Transaction and address search
+- Cashu ecash donations
+- Lightning Address (`babd@babd.space`)
+- NIP-05 Nostr verification
+
+## Tech
+
+- Next.js 15 (App Router), React 19
+- Three.js for the 3D scene
+- Tailwind CSS, shadcn/ui, Framer Motion
+- TanStack Query + Mempool.space WebSocket API
+- `@cashu/cashu-ts` for ecash
+
+## Run locally
+
+```bash
+git clone https://github.com/babdbtc/babd.git
+cd babd
+npm install
+npm run dev
+```
+
+Open `http://localhost:3000`
