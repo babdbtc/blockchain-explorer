@@ -1,6 +1,6 @@
 "use client"
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, type OriginRect } from "@/components/ui/dialog"
 import { Card } from "@/components/ui/card"
 import { Clock, Hash, Zap, Database, AlertCircle } from "lucide-react"
 import { motion } from "framer-motion"
@@ -19,9 +19,10 @@ interface ProjectedBlockDetailsModalProps {
   isOpen: boolean
   onClose: () => void
   projectedBlock: ProjectedBlock | null
+  originRect?: OriginRect | null
 }
 
-export function ProjectedBlockDetailsModal({ isOpen, onClose, projectedBlock }: ProjectedBlockDetailsModalProps) {
+export function ProjectedBlockDetailsModal({ isOpen, onClose, projectedBlock, originRect }: ProjectedBlockDetailsModalProps) {
   if (!isOpen || !projectedBlock) return null
 
   const getAverageFeeRate = (feeRange: number[]) => {
@@ -43,7 +44,7 @@ export function ProjectedBlockDetailsModal({ isOpen, onClose, projectedBlock }: 
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-4xl max-h-[90vh] overflow-y-auto p-0 gap-0">
+      <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-4xl max-h-[90vh] overflow-y-auto p-0 gap-0" originRect={originRect}>
         <DialogHeader className="p-6 pb-2 border-b border-green-500/10 bg-green-500/5">
           <DialogTitle className="text-green-400 flex items-center gap-2 text-xl">
             <Hash className="w-6 h-6" />

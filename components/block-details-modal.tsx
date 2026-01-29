@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, type OriginRect } from "@/components/ui/dialog"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Loader2, ExternalLink, Copy, Check, Clock, Hash, Zap, Users } from "lucide-react"
@@ -11,6 +11,7 @@ interface BlockDetailsModalProps {
   isOpen: boolean
   onClose: () => void
   blockHash: string | null
+  originRect?: OriginRect | null
 }
 
 interface BlockDetails {
@@ -48,7 +49,7 @@ interface BlockDetails {
   }
 }
 
-export function BlockDetailsModal({ isOpen, onClose, blockHash }: BlockDetailsModalProps) {
+export function BlockDetailsModal({ isOpen, onClose, blockHash, originRect }: BlockDetailsModalProps) {
   const [loading, setLoading] = useState(false)
   const [blockDetails, setBlockDetails] = useState<BlockDetails | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -110,7 +111,7 @@ export function BlockDetailsModal({ isOpen, onClose, blockHash }: BlockDetailsMo
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-5xl max-h-[90vh] overflow-y-auto p-0 gap-0">
+      <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-5xl max-h-[90vh] overflow-y-auto p-0 gap-0" originRect={originRect}>
         <DialogHeader className="p-6 pb-2 border-b border-[hsl(var(--border-subtle))] bg-[hsl(var(--accent)/0.05)]">
           <DialogTitle className="text-[hsl(var(--accent))] flex items-center gap-2 text-xl">
             <Hash className="w-6 h-6" />

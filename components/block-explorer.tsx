@@ -8,6 +8,7 @@ import { BlockItem } from "@/components/block-item"
 import { useRecentBlocks, useProjectedBlocks } from "@/hooks/use-bitcoin-data"
 import { MempoolAPI } from "@/lib/mempool-api"
 import type { Block, ProjectedBlock } from "@/lib/types"
+import type { OriginRect } from "@/components/ui/dialog"
 import { AnimatePresence, motion } from "framer-motion"
 
 export type { Block, ProjectedBlock }
@@ -32,6 +33,7 @@ export function BlockExplorer({ currentHeight }: BlockExplorerProps) {
   >(null)
   const [isBlockDetailsModalOpen, setIsBlockDetailsModalOpen] = useState(false)
   const [isProjectedBlockDetailsModalOpen, setIsProjectedBlockDetailsModalOpen] = useState(false)
+  const [modalOriginRect, setModalOriginRect] = useState<OriginRect | null>(null)
 
   const scrollRef = useRef<HTMLDivElement>(null)
   const olderSentinelRef = useRef<HTMLDivElement>(null)
@@ -220,14 +222,24 @@ export function BlockExplorer({ currentHeight }: BlockExplorerProps) {
     return `hsla(${Math.round(hue)}, ${saturation}%, ${lightness}%, ${alpha})`
   }
 
-  const handleProjectedBlockClick = (proj: ProjectedBlock, index: number) => {
+  const handleProjectedBlockClick = (proj: ProjectedBlock, index: number, event?: React.MouseEvent) => {
+    if (event) {
+      const target = event.currentTarget as HTMLElement
+      const rect = target.getBoundingClientRect()
+      setModalOriginRect({ x: rect.left, y: rect.top, width: rect.width, height: rect.height })
+    }
     const futureHeight = currentHeight + (projectedBlocks.length - index)
     setSelectedProjectedBlock({ ...proj, height: futureHeight, estimatedTime: getEstimatedTime(index) })
     setIsProjectedBlockDetailsModalOpen(true)
   }
 
-  const handleBlockClick = (block: Block | ProjectedBlock) => {
+  const handleBlockClick = (block: Block | ProjectedBlock, event?: React.MouseEvent) => {
     if (isDragging || hasDragged.current) return
+    if (event) {
+      const target = event.currentTarget as HTMLElement
+      const rect = target.getBoundingClientRect()
+      setModalOriginRect({ x: rect.left, y: rect.top, width: rect.width, height: rect.height })
+    }
     const pastBlock = block as Block
     setSelectedBlockHash(pastBlock.id)
     setIsBlockDetailsModalOpen(true)
@@ -236,11 +248,13 @@ export function BlockExplorer({ currentHeight }: BlockExplorerProps) {
   const handleCloseBlockDetailsModal = () => {
     setIsBlockDetailsModalOpen(false)
     setSelectedBlockHash(null)
+    setTimeout(() => setModalOriginRect(null), 300)
   }
 
   const handleCloseProjectedBlockDetailsModal = () => {
     setIsProjectedBlockDetailsModalOpen(false)
     setSelectedProjectedBlock(null)
+    setTimeout(() => setModalOriginRect(null), 300)
   }
 
   const getBlockScaleAndZIndex = useCallback((itemId: string) => {
@@ -386,7 +400,7 @@ export function BlockExplorer({ currentHeight }: BlockExplorerProps) {
                               isProjected={true}
                               scale={scale}
                               zIndex={zIndex}
-                              onClick={(projBlock) => handleProjectedBlockClick(projBlock as ProjectedBlock, index)}
+                              onClick={(projBlock, event) => handleProjectedBlockClick(projBlock as ProjectedBlock, index, event)}
                               formatTimeAgo={formatTimeAgo}
                               getEstimatedTime={getEstimatedTime}
                               getAverageFeeRate={getAverageFeeRate}
@@ -426,7 +440,7 @@ export function BlockExplorer({ currentHeight }: BlockExplorerProps) {
                             isProjected={false}
                             scale={scale}
                             zIndex={zIndex}
-                            onClick={handleBlockClick}
+                            onClick={(b, event) => handleBlockClick(b, event)}
                             formatTimeAgo={formatTimeAgo}
                             getEstimatedTime={getEstimatedTime}
                             getAverageFeeRate={getAverageFeeRate}
@@ -458,6 +472,7 @@ export function BlockExplorer({ currentHeight }: BlockExplorerProps) {
         isOpen={isBlockDetailsModalOpen}
         onClose={handleCloseBlockDetailsModal}
         blockHash={selectedBlockHash}
+        originRect={modalOriginRect}
       />
 
       {/* Projected Block Details Modal for future blocks */}
@@ -465,6 +480,7 @@ export function BlockExplorer({ currentHeight }: BlockExplorerProps) {
         isOpen={isProjectedBlockDetailsModalOpen}
         onClose={handleCloseProjectedBlockDetailsModal}
         projectedBlock={selectedProjectedBlock}
+        originRect={modalOriginRect}
       />
     </>
   )

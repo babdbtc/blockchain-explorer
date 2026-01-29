@@ -9,7 +9,7 @@ interface BlockItemProps {
   isProjected: boolean;
   scale: number;
   zIndex: number;
-  onClick: (block: Block | ProjectedBlock) => void;
+  onClick: (block: Block | ProjectedBlock, event?: React.MouseEvent) => void;
   formatTimeAgo?: (timestamp: number) => string;
   getEstimatedTime?: (indexInReversedArray: number) => string;
   getAverageFeeRate?: (feeRange: number[]) => string;
@@ -60,7 +60,7 @@ export const BlockItem = React.memo(
       return (
         <motion.div
           layoutId={`block-${displayHeight}`}
-          onClick={() => onClick(proj)}
+          onClick={(e) => onClick(proj, e)}
           className="relative flex-shrink-0 p-3 rounded-xl border text-center min-w-[100px] cursor-pointer overflow-hidden bg-[hsl(var(--surface-1))]"
           title={`Click to view estimated details for future block ${displayHeight}`}
           style={{
@@ -117,7 +117,7 @@ export const BlockItem = React.memo(
       return (
         <motion.div
           layoutId={`block-${blockData.height}`}
-          onClick={() => onClick(blockData)}
+          onClick={(e) => onClick(blockData, e)}
           className={`relative flex-shrink-0 p-3 rounded-xl border text-center min-w-[100px] cursor-pointer overflow-hidden bg-[hsl(var(--surface-1))] ${isCurrentBlock ? "current-block" : ""}`}
           title={`Click to view details for block ${blockData.height}`}
           style={{

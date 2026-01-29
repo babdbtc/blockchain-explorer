@@ -1,20 +1,21 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, type OriginRect } from "@/components/ui/dialog"
 import TradingViewWidget from "@/components/tradingview-widget"
 
 interface ChartModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
+  originRect?: OriginRect | null
 }
 
-export function ChartModal({ open, onOpenChange }: ChartModalProps) {
+export function ChartModal({ open, onOpenChange, originRect }: ChartModalProps) {
   const [symbol, setSymbol] = useState<"BTCUSD" | "BTCEUR">("BTCUSD")
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] w-[95vw] h-[80vh] p-0 premium-modal text-white">
+      <DialogContent className="max-w-[95vw] w-[95vw] h-[80vh] p-0 premium-modal text-white" originRect={originRect}>
         <DialogHeader className="pt-2 pb-0 px-2">
           <DialogTitle className="pt-0 pb-0">
             {/* Symbol toggle */}

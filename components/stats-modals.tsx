@@ -1,6 +1,6 @@
 "use client"
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, type OriginRect } from "@/components/ui/dialog"
 import { Card } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import type { MempoolInfoResponse, RecommendedFeesResponse } from "@/lib/types"
@@ -9,14 +9,15 @@ interface FeesModalProps {
     isOpen: boolean
     onClose: () => void
     fees?: RecommendedFeesResponse
+    originRect?: OriginRect | null
 }
 
-export function FeesModal({ isOpen, onClose, fees }: FeesModalProps) {
+export function FeesModal({ isOpen, onClose, fees, originRect }: FeesModalProps) {
     if (!fees) return null
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-sm">
+            <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-sm" originRect={originRect}>
                 <DialogHeader>
                     <DialogTitle className="text-[hsl(var(--accent))]">Recommended Fees</DialogTitle>
                     <DialogDescription className="text-[hsl(var(--text-muted))]">
@@ -65,14 +66,15 @@ interface MempoolModalProps {
     isOpen: boolean
     onClose: () => void
     mempool?: MempoolInfoResponse
+    originRect?: OriginRect | null
 }
 
-export function MempoolModal({ isOpen, onClose, mempool }: MempoolModalProps) {
+export function MempoolModal({ isOpen, onClose, mempool, originRect }: MempoolModalProps) {
     if (!mempool) return null
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-sm">
+            <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-sm" originRect={originRect}>
                 <DialogHeader>
                     <DialogTitle className="text-[hsl(var(--accent))]">Mempool Status</DialogTitle>
                     <DialogDescription className="text-[hsl(var(--text-muted))]">

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { Card } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { AnimatedNumber } from "@/components/ui/animated-number"
@@ -8,6 +8,7 @@ import { ChartModal } from "@/components/chart-modal"
 import { FeesModal, MempoolModal } from "@/components/stats-modals"
 import { BlockDetailsModal } from "@/components/block-details-modal"
 import { useBitcoinStats, useRecentBlocks } from "@/hooks/use-bitcoin-data"
+import type { OriginRect } from "@/components/ui/dialog"
 
 interface StatsPanelProps {
   blockHeight: number
@@ -17,6 +18,7 @@ type ModalType = 'chart' | 'fees' | 'mempool' | 'unconfirmed' | 'block-height' |
 
 export function StatsPanel({ blockHeight }: StatsPanelProps) {
   const [activeModal, setActiveModal] = useState<ModalType>(null)
+  const [originRect, setOriginRect] = useState<OriginRect | null>(null)
   const [isNewBlock, setIsNewBlock] = useState(false)
   const prevBlockHeightRef = useRef(blockHeight)
   const { data: stats, isLoading, error } = useBitcoinStats()
@@ -24,6 +26,26 @@ export function StatsPanel({ blockHeight }: StatsPanelProps) {
 
   // Get the current block hash from recent blocks (first block is the current one)
   const currentBlockHash = recentBlocks?.[0]?.id ?? null
+
+  // Helper to open modal with origin animation
+  const openModal = useCallback((modal: ModalType, event: React.MouseEvent) => {
+    const target = event.currentTarget as HTMLElement
+    const rect = target.getBoundingClientRect()
+    setOriginRect({
+      x: rect.left,
+      y: rect.top,
+      width: rect.width,
+      height: rect.height,
+    })
+    setActiveModal(modal)
+  }, [])
+
+  // Clear origin when modal closes
+  const closeModal = useCallback(() => {
+    setActiveModal(null)
+    // Delay clearing origin to allow close animation
+    setTimeout(() => setOriginRect(null), 300)
+  }, [])
 
   // Detect new block and trigger celebration animation
   useEffect(() => {
@@ -47,9 +69,9 @@ export function StatsPanel({ blockHeight }: StatsPanelProps) {
     console.error("Error fetching stats:", error)
   }
 
-  const handleBlockHeightClick = () => {
+  const handleBlockHeightClick = (event: React.MouseEvent) => {
     if (currentBlockHash) {
-      setActiveModal('block-height')
+      openModal('block-height', event)
     }
   }
 
@@ -77,7 +99,7 @@ export function StatsPanel({ blockHeight }: StatsPanelProps) {
       </div>
 
       {/* Price - Top Left */}
-      <div className="absolute top-4 left-4 z-10 cursor-pointer" onClick={() => setActiveModal('chart')}>
+      <div className="absolute top-4 left-4 z-10 cursor-pointer" onClick={(e) => openModal('chart', e)}>
         <Card className="premium-card">
           <div className="p-3">
             {isLoading ? (
@@ -102,7 +124,7 @@ export function StatsPanel({ blockHeight }: StatsPanelProps) {
       </div>
 
       {/* High Priority - Top Right */}
-      <div className="absolute top-4 right-4 z-10 cursor-pointer" onClick={() => setActiveModal('fees')}>
+      <div className="absolute top-4 right-4 z-10 cursor-pointer" onClick={(e) => openModal('fees', e)}>
         <Card className="premium-card">
           <div className="p-3 text-right">
             {isLoading ? (
@@ -127,7 +149,7 @@ export function StatsPanel({ blockHeight }: StatsPanelProps) {
       </div>
 
       {/* Mempool Size - Bottom Left */}
-      <div className="absolute bottom-20 md:bottom-4 left-4 z-10 cursor-pointer" onClick={() => setActiveModal('mempool')}>
+      <div className="absolute bottom-20 md:bottom-4 left-4 z-10 cursor-pointer" onClick={(e) => openModal('mempool', e)}>
         <Card className="premium-card">
           <div className="p-3">
             {isLoading ? (
@@ -152,7 +174,7 @@ export function StatsPanel({ blockHeight }: StatsPanelProps) {
       </div>
 
       {/* Unconfirmed - Bottom Right */}
-      <div className="absolute bottom-20 md:bottom-4 right-4 z-10 cursor-pointer" onClick={() => setActiveModal('unconfirmed')}>
+      <div className="absolute bottom-20 md:bottom-4 right-4 z-10 cursor-pointer" onClick={(e) => openModal('unconfirmed', e)}>
         <Card className="premium-card">
           <div className="p-3 text-right">
             {isLoading ? (
@@ -179,25 +201,29 @@ export function StatsPanel({ blockHeight }: StatsPanelProps) {
       {/* Modals */}
       <ChartModal
         open={activeModal === 'chart'}
-        onOpenChange={(open) => !open && setActiveModal(null)}
+        onOpenChange={(open) => !open && closeModal()}
+        originRect={originRect}
       />
 
       <FeesModal
         isOpen={activeModal === 'fees'}
-        onClose={() => setActiveModal(null)}
+        onClose={closeModal}
         fees={stats?.fees}
+        originRect={originRect}
       />
 
       <MempoolModal
         isOpen={activeModal === 'mempool' || activeModal === 'unconfirmed'}
-        onClose={() => setActiveModal(null)}
+        onClose={closeModal}
         mempool={stats?.mempool}
+        originRect={originRect}
       />
 
       <BlockDetailsModal
         isOpen={activeModal === 'block-height'}
-        onClose={() => setActiveModal(null)}
+        onClose={closeModal}
         blockHash={currentBlockHash}
+        originRect={originRect}
       />
     </>
   )
