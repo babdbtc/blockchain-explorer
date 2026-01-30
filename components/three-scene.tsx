@@ -133,6 +133,7 @@ export function ThreeScene() {
         "Use blind signatures!",
         "1984 is now",
         "Austrian economics",
+        "John McAfee didn't kill himself",
         // Cypherpunk quotes with authors (from github.com/swedishfrenchpress/cypherpunk-quotes-bot)
         // Tim May
         "A specter is haunting the modern world,\nthe specter of crypto anarchy.\n— Tim May",
