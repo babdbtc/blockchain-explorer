@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter, JetBrains_Mono } from "next/font/google"
+import { Inter } from "next/font/google"
+import localFont from "next/font/local"
 import { Providers } from "@/components/providers"
 import { ErrorBoundary } from "@/components/error-boundary"
 import "./globals.css"
@@ -11,8 +12,19 @@ const inter = Inter({
   display: "swap",
 })
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
+const cascadiaCode = localFont({
+  src: [
+    {
+      path: "../public/fonts/CascadiaCode.woff2",
+      weight: "100 900",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/CascadiaCodeItalic.woff2",
+      weight: "100 900",
+      style: "italic",
+    },
+  ],
   variable: "--font-mono",
   display: "swap",
 })
@@ -58,7 +70,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#000000" />
         <link rel="icon" href="/images/logo2.png" type="image/png" />
       </head>
-      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans bg-black`}>
+      <body className={`${inter.variable} ${cascadiaCode.variable} font-sans bg-black`}>
         <ErrorBoundary>
           <Providers>{children}</Providers>
         </ErrorBoundary>

@@ -478,7 +478,7 @@ export function ThreeScene() {
       const quoteContent = document.createElement("div")
       quoteContent.style.cssText = `
         color: rgba(255, 255, 255, 0.9);
-        font-family: Arial, sans-serif;
+        font-family: var(--font-mono), monospace;
         font-size: clamp(18px, 4vw, 32px);
         text-align: center;
         padding: 40px;
@@ -489,7 +489,7 @@ export function ThreeScene() {
       const closeHint = document.createElement("div")
       closeHint.style.cssText = `
         color: rgba(255, 255, 255, 0.3);
-        font-family: Arial, sans-serif;
+        font-family: var(--font-mono), monospace;
         font-size: 14px;
         margin-top: 40px;
       `
