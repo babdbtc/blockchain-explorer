@@ -42,7 +42,7 @@ export default function Home({ initialQuery }: { initialQuery?: string }) {
   }, [wsStatus.isConnected])
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black">
+    <div className="relative w-full h-screen overflow-hidden bg-[#0d0d0f]">
       {/* 3D Background */}
       <ThreeScene />
 

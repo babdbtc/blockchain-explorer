@@ -20,7 +20,7 @@ export function ThreeScene() {
       renderer = new THREE.WebGLRenderer({ antialias: true })
       renderer.setSize(window.innerWidth, window.innerHeight)
       renderer.setPixelRatio(Math.min(window.devicePixelRatio ?? 1, 2))
-      renderer.setClearColor(0x000000)
+      renderer.setClearColor(0x0d0d0f)
 
       if (containerRef.current) {
         containerRef.current.appendChild(renderer.domElement)
@@ -84,10 +84,9 @@ export function ThreeScene() {
       const starMaterial = new THREE.PointsMaterial({
         color: 0xffffff,
         size: 0.7,
-        map: circleTexture,
+        sizeAttenuation: true,
         transparent: true,
-        blending: THREE.NormalBlending,
-        alphaTest: 0.5,
+        blending: THREE.AdditiveBlending,
         depthWrite: false,
       })
       const stars = new THREE.Points(starGeometry, starMaterial)
@@ -1366,9 +1365,9 @@ export function ThreeScene() {
           colorAttr.needsUpdate = true
         }
 
-        // Starfield drift - synced with planet rotation speed
+        // Starfield drift
         const starPositions = starGeometry.attributes.position as THREE.BufferAttribute
-        const starSpeed = 0.5 * spinSpeedFactor // Stars move faster when planet spins faster
+        const starSpeed = 0.15 * spinSpeedFactor
         for (let i = 0; i < starPositions.count; i++) {
           let z = starPositions.getZ(i)
           z += starSpeed
@@ -1403,8 +1402,9 @@ export function ThreeScene() {
         }
 
         // Animate easter egg texts (drift with stars + hover scale)
+        const quoteSpeed = 0.5 * spinSpeedFactor
         textSprites.forEach(sprite => {
-          sprite.position.z += starSpeed
+          sprite.position.z += quoteSpeed
           if (sprite.position.z > 2000) {
             sprite.position.z -= 4000
             // Randomize X/Y again when wrapping for variety

@@ -14,7 +14,8 @@
       "Bash(find:*)",
       "WebFetch(domain:www.erik.day)",
       "WebFetch(domain:www.hoseki.app)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(npx next build:*)"
     ],
     "deny": [],
     "ask": []
