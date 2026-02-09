@@ -1365,16 +1365,15 @@ export function ThreeScene() {
           colorAttr.needsUpdate = true
         }
 
-        // Starfield drift
-        const starPositions = starGeometry.attributes.position as THREE.BufferAttribute
+        // Starfield drift (direct array access instead of getZ/setZ)
+        const starPosAttr = starGeometry.attributes.position as THREE.BufferAttribute
+        const starArr = starPosAttr.array as Float32Array
         const starSpeed = 0.15 * spinSpeedFactor
-        for (let i = 0; i < starPositions.count; i++) {
-          let z = starPositions.getZ(i)
-          z += starSpeed
-          if (z > 2000) z -= 4000
-          starPositions.setZ(i, z)
+        for (let i = 2; i < starArr.length; i += 3) {
+          starArr[i] += starSpeed
+          if (starArr[i] > 2000) starArr[i] -= 4000
         }
-        starPositions.needsUpdate = true
+        starPosAttr.needsUpdate = true
 
         // Detect hovered text sprite
         if (pointerActive && !isDraggingPlanet) {
