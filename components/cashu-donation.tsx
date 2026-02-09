@@ -401,8 +401,28 @@ export function CashuDonation() {
           </Button>
         </div>
 
-        {/* Content Area - Fixed Height */}
-        <div className="flex-1 flex flex-col justify-center">
+        {/* Content Area - grid overlay keeps height stable */}
+        <div className="flex-1 grid [&>*]:col-start-1 [&>*]:row-start-1">
+
+        {/* Hidden height setter - always renders Cashu select layout to hold the height */}
+        <div className="invisible flex flex-col justify-center" aria-hidden="true">
+          <div className="text-[10px] mb-2">Choose option</div>
+          <div className="flex flex-col gap-2">
+            <div className="px-2 py-5 h-auto text-[11px] flex flex-col items-center justify-center gap-1">
+              <div className="w-5 h-5" />
+              <span>Generate</span>
+              <span>Lightning Invoice</span>
+            </div>
+            <div className="px-2 py-5 h-auto text-[11px] flex flex-col items-center justify-center gap-1">
+              <div className="w-5 h-5" />
+              <span>Paste</span>
+              <span>Cashu Token</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Visible content */}
+        <div className="flex flex-col justify-center">
 
         {/* On-Chain Content */}
         {paymentMethod === "onchain" && (
@@ -488,7 +508,7 @@ export function CashuDonation() {
 
             {/* Cashu Invoice - Amount Selection */}
             {cashuMode === "invoice" && cashuState === "idle" && (
-              <>
+              <div className="flex flex-col h-full">
                 <Button
                   onClick={() => setCashuMode("select")}
                   size="sm"
@@ -498,66 +518,64 @@ export function CashuDonation() {
                   <ArrowLeft className="w-3 h-3 mr-1" />
                   Back
                 </Button>
-                <div className="text-[10px] text-[hsl(var(--text-muted))] mb-2">Select amount (sats)</div>
-                <div className="grid grid-cols-3 gap-1.5 mb-2">
+                <div className="text-[10px] text-[hsl(var(--text-muted))] mb-1.5">Select amount (sats)</div>
+                <div className="flex flex-col gap-1.5 flex-1">
                   {PRESET_AMOUNTS.map((amount) => (
                     <Button
                       key={amount}
                       onClick={() => handleAmountSelect(amount)}
                       size="sm"
                       variant="ghost"
-                      className="premium-button-accent px-1.5 py-0.5 h-7 text-[11px]"
+                      className="w-full premium-button-accent px-1.5 flex-1 text-[12px]"
                     >
                       {amount}
                     </Button>
                   ))}
-                </div>
-
-                {!showCustomInput ? (
-                  <Button
-                    onClick={() => setShowCustomInput(true)}
-                    size="sm"
-                    variant="ghost"
-                    className="w-full premium-button-accent px-1.5 py-0.5 h-7 text-[11px] mb-2"
-                  >
-                    Custom
-                  </Button>
-                ) : (
-                  <div className="flex gap-1.5 mb-2">
-                    <Input
-                      type="number"
-                      value={customAmount}
-                      onChange={(e) => setCustomAmount(e.target.value)}
-                      placeholder="sats"
-                      className="h-7 text-[11px] bg-[hsl(var(--surface-2))] border-[hsl(var(--border-subtle))] text-white placeholder:text-[hsl(var(--text-muted))]"
-                      min={1}
-                      max={1000000}
-                      onKeyDown={(e) => e.key === "Enter" && handleCustomSubmit()}
-                    />
+                  {!showCustomInput ? (
                     <Button
-                      onClick={handleCustomSubmit}
+                      onClick={() => setShowCustomInput(true)}
                       size="sm"
                       variant="ghost"
-                      className="premium-button-accent px-1.5 h-7 text-[11px]"
+                      className="w-full premium-button-accent px-1.5 flex-1 text-[12px]"
                     >
-                      <Check className="w-3 h-3" />
+                      Custom
                     </Button>
-                  </div>
-                )}
+                  ) : (
+                    <div className="flex gap-1.5 flex-1 max-h-8">
+                      <Input
+                        type="number"
+                        value={customAmount}
+                        onChange={(e) => setCustomAmount(e.target.value)}
+                        placeholder="sats"
+                        className="h-full text-[11px] bg-[hsl(var(--surface-2))] border-[hsl(var(--border-subtle))] text-white placeholder:text-[hsl(var(--text-muted))]"
+                        min={1}
+                        max={1000000}
+                        onKeyDown={(e) => e.key === "Enter" && handleCustomSubmit()}
+                      />
+                      <Button
+                        onClick={handleCustomSubmit}
+                        size="sm"
+                        variant="ghost"
+                        className="premium-button-accent px-1.5 h-full text-[11px]"
+                      >
+                        <Check className="w-3 h-3" />
+                      </Button>
+                    </div>
+                  )}
+                </div>
 
-                <Input
-                  type="text"
+                <textarea
                   value={donationNote}
                   onChange={(e) => setDonationNote(e.target.value)}
                   placeholder="Add a note (optional)"
-                  className="h-7 text-[10px] bg-[hsl(var(--surface-2))] border-[hsl(var(--border-subtle))] text-white placeholder:text-[hsl(var(--text-muted))]"
+                  className="w-full h-7 mt-1.5 text-[11px] bg-[hsl(var(--surface-2))] border border-[hsl(var(--border-subtle))] text-white placeholder:text-[hsl(var(--text-muted))] rounded-md px-2 py-1 resize-none shrink-0"
                   maxLength={100}
                 />
 
                 {error && (
                   <div className="text-red-400 text-[10px] mt-1.5">{error}</div>
                 )}
-              </>
+              </div>
             )}
 
             {/* Cashu Invoice - Pending Payment */}
@@ -662,7 +680,7 @@ export function CashuDonation() {
 
             {/* Cashu Paste Token */}
             {cashuMode === "paste" && !pasteSuccess && !pasteLoading && (
-              <>
+              <div className="flex flex-col h-full">
                 <Button
                   onClick={() => setCashuMode("select")}
                   size="sm"
@@ -678,19 +696,18 @@ export function CashuDonation() {
                   value={pasteToken}
                   onChange={(e) => setPasteToken(e.target.value)}
                   placeholder="cashuA..."
-                  className="w-full h-16 text-[10px] bg-[hsl(var(--surface-2))] border border-[hsl(var(--border-subtle))] text-white placeholder:text-[hsl(var(--text-muted))] rounded-md p-2 resize-none mb-2"
+                  className="w-full flex-1 text-[11px] bg-[hsl(var(--surface-2))] border border-[hsl(var(--border-subtle))] text-white placeholder:text-[hsl(var(--text-muted))] rounded-md p-2 resize-none mb-2"
                 />
 
-                <Input
-                  type="text"
+                <textarea
                   value={donationNote}
                   onChange={(e) => setDonationNote(e.target.value)}
                   placeholder="Add a note (optional)"
-                  className="h-7 text-[10px] bg-[hsl(var(--surface-2))] border-[hsl(var(--border-subtle))] text-white placeholder:text-[hsl(var(--text-muted))] mb-2"
+                  className="w-full h-7 text-[11px] bg-[hsl(var(--surface-2))] border border-[hsl(var(--border-subtle))] text-white placeholder:text-[hsl(var(--text-muted))] rounded-md px-2 py-1 resize-none mb-2"
                   maxLength={100}
                 />
 
-                <div className="flex gap-1.5 mb-2">
+                <div className="flex gap-1.5">
                   <Button
                     onClick={handlePasteFromClipboard}
                     size="sm"
@@ -712,9 +729,9 @@ export function CashuDonation() {
                 </div>
 
                 {pasteError && (
-                  <div className="text-red-400 text-[10px]">{pasteError}</div>
+                  <div className="text-red-400 text-[10px] mt-1.5">{pasteError}</div>
                 )}
-              </>
+              </div>
             )}
 
             {/* Cashu Paste Loading */}
@@ -743,9 +760,9 @@ export function CashuDonation() {
           </>
         )}
         </div>
+        </div>
 
-        {/* Footer - Fixed at bottom, hidden during Cashu pending payment */}
-        {!(paymentMethod === "cashu" && cashuState === "pending") && (
+        {/* Footer */}
           <div className="mt-auto">
             <Separator className="my-3 bg-[hsl(var(--border-subtle))]" />
 
@@ -793,7 +810,6 @@ export function CashuDonation() {
               }}
             >{PGP_PUBLIC_KEY}</div>
           </div>
-        )}
       </Card>
     </div>
   )
