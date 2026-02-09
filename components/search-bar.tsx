@@ -9,6 +9,7 @@ import { useSearchHistory } from "@/hooks/use-search-history"
 
 export function SearchBar() {
   const [query, setQuery] = useState("")
+  const [isFocused, setIsFocused] = useState(false)
   const [historyOpen, setHistoryOpen] = useState(false)
   const router = useRouter()
   const { history, clearHistory } = useSearchHistory()
@@ -67,20 +68,45 @@ export function SearchBar() {
   return (
     <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10 w-full max-w-3xl px-2">
       <div className="search-bar-premium relative" ref={dropdownRef}>
-        <form onSubmit={handleSubmit} className="flex items-center p-1">
-          <div className="pl-4 pr-3">
-            <Search className="w-5 h-5 text-[hsl(var(--accent))]" />
+        <form onSubmit={handleSubmit} className="flex items-center p-1 relative z-[2]">
+          <div className="pl-4 pr-3 relative">
+            <Search
+              className={`w-5 h-5 transition-all duration-300 ${
+                isFocused
+                  ? "text-[hsl(var(--accent))]"
+                  : "text-[hsl(var(--accent)/0.5)]"
+              }`}
+            />
           </div>
+
+          {/* Query type indicator dot */}
+          {query.trim() && (
+            <div className="flex items-center pr-2">
+              <div
+                className={`w-1.5 h-1.5 rounded-full transition-colors duration-200 ${
+                  /^[0-9a-fA-F]{64}$/.test(query.trim())
+                    ? "bg-orange-400 shadow-[0_0_6px_theme(colors.orange.400/0.6)]"
+                    : /^(1|3|bc1)/.test(query.trim())
+                      ? "bg-emerald-400 shadow-[0_0_6px_theme(colors.emerald.400/0.6)]"
+                      : "bg-[hsl(var(--text-muted))]"
+                }`}
+              />
+            </div>
+          )}
+
           <Input
             type="search"
             enterKeyHint="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
             placeholder="Search TxID or Address..."
             className="flex-1 bg-transparent border-none focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 text-white placeholder-[hsl(var(--text-muted))] transition-all duration-150 text-lg font-mono px-2 py-5 caret-[hsl(var(--accent))]"
             autoComplete="off"
             data-1p-ignore
           />
+
           <button
             type="button"
             onClick={() => setHistoryOpen(!historyOpen)}

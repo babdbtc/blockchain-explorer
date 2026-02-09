@@ -498,15 +498,24 @@
 
 /* Search bar premium styling */
 .search-bar-premium {
-  background: hsl(var(--surface-1));
-  border: 1px solid hsl(var(--border-subtle));
+  position: relative;
+  background: hsl(var(--surface-2));
+  border: 1px solid hsl(var(--accent) / 0.15);
   border-radius: 12px;
-  transition: all 150ms ease;
+  transition: border-color 300ms ease, box-shadow 300ms ease, background 300ms ease;
+  box-shadow: 0 0 12px hsl(var(--accent) / 0.04);
+}
+
+.search-bar-premium:hover {
+  border-color: hsl(var(--accent) / 0.3);
+  box-shadow: 0 0 16px hsl(var(--accent) / 0.06);
 }
 
 .search-bar-premium:focus-within {
   border-color: hsl(var(--accent) / 0.5);
-  box-shadow: 0 0 0 3px hsl(var(--accent) / 0.1);
+  box-shadow:
+    0 0 0 3px hsl(var(--accent) / 0.08),
+    0 0 20px hsl(var(--accent) / 0.06);
 }
 
 /* Block height display - premium style */
