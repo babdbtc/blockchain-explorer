@@ -217,6 +217,120 @@
     0 8px 32px hsl(0 0% 0% / 0.35);
 }
 
+/* Anonymize Button — wholesome "kid-friendly" ironic wrapper, site-native dark glass */
+.anonymize-friendly {
+  position: relative;
+  background: linear-gradient(
+    165deg,
+    hsl(0 0% 18% / 0.75) 0%,
+    hsl(0 0% 14% / 0.7) 40%,
+    hsl(0 0% 10% / 0.75) 100%
+  );
+  border: 1px solid hsl(48 60% 50% / 0.35);
+  border-top-color: hsl(48 80% 65% / 0.25);
+  border-radius: 16px;
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  box-shadow:
+    inset 0 1px 1px 0 hsl(48 80% 70% / 0.08),
+    inset 0 -1px 1px 0 hsl(0 0% 0% / 0.1),
+    0 0 16px hsl(48 80% 65% / 0.08),
+    0 4px 24px hsl(0 0% 0% / 0.3);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+.anonymize-friendly:hover {
+  transform: translateY(-1px) scale(1.03);
+  border-color: hsl(48 60% 50% / 0.55);
+  border-top-color: hsl(48 80% 65% / 0.4);
+  background: linear-gradient(
+    165deg,
+    hsl(0 0% 22% / 0.8) 0%,
+    hsl(0 0% 17% / 0.75) 40%,
+    hsl(0 0% 12% / 0.8) 100%
+  );
+  box-shadow:
+    inset 0 1px 1px 0 hsl(48 80% 70% / 0.12),
+    inset 0 -1px 1px 0 hsl(0 0% 0% / 0.1),
+    0 0 24px hsl(48 80% 65% / 0.12),
+    0 8px 32px hsl(0 0% 0% / 0.35);
+}
+
+.anonymize-friendly:active {
+  transform: translateY(0px) scale(0.97);
+}
+
+/* Warm golden shimmer sweep */
+.anonymize-friendly::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 300%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    hsl(48 80% 70% / 0.12) 43%,
+    hsl(48 90% 75% / 0.18) 46%,
+    hsl(48 80% 70% / 0.12) 49%,
+    transparent 60%
+  );
+  animation: shimmer-sweep 3.5s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Tiny golden sparkle dots */
+.anonymize-friendly::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image:
+    radial-gradient(circle 1px at 12% 35%, hsl(48 90% 75% / 0.6) 0%, transparent 100%),
+    radial-gradient(circle 1px at 78% 25%, hsl(48 90% 75% / 0.5) 0%, transparent 100%),
+    radial-gradient(circle 1px at 88% 65%, hsl(48 90% 75% / 0.55) 0%, transparent 100%),
+    radial-gradient(circle 1px at 28% 75%, hsl(48 90% 75% / 0.45) 0%, transparent 100%);
+  animation: sparkle-twinkle 5s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes shimmer-sweep {
+  0% { transform: translateX(-100%); }
+  80% { transform: translateX(100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes sparkle-twinkle {
+  0% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+@keyframes gentle-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+
+.anonymize-bounce {
+  animation: gentle-bounce 3.5s ease-in-out infinite;
+}
+
+.anonymize-wiggle {
+  animation: wiggle 3s ease-in-out infinite;
+  display: inline-block;
+}
+
 /* Premium Modal styling */
 .premium-modal {
   background: linear-gradient(
@@ -579,4 +693,19 @@
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Recommended technique card — animated accent glow */
+@keyframes recommendedGlow {
+  0%, 100% {
+    box-shadow: 0 0 8px hsl(var(--accent) / 0.06);
+  }
+  50% {
+    box-shadow: 0 0 20px hsl(var(--accent) / 0.18);
+  }
+}
+
+.recommended-card {
+  background: linear-gradient(165deg, hsl(var(--accent) / 0.06) 0%, hsl(var(--surface-2)) 40%);
+  animation: recommendedGlow 3s ease-in-out infinite;
 }

@@ -7,6 +7,7 @@ import { StatsPanel } from "@/components/stats-panel"
 import { BlockExplorer } from "@/components/block-explorer"
 import { SearchModal } from "@/components/search-modal"
 import { CashuDonation } from "@/components/cashu-donation"
+import { PrivacyGuide } from "@/components/privacy-guide-modal"
 
 import { SearchBar } from "@/components/search-bar"
 import { NetworkStats } from "@/components/network-stats"
@@ -58,6 +59,9 @@ export default function Home({ initialQuery }: { initialQuery?: string }) {
 
       {/* Search Bar */}
       <SearchBar />
+
+      {/* Bitcoin Privacy Guide */}
+      <PrivacyGuide />
 
       {/* Cashu Lightning Donation */}
       <CashuDonation />
