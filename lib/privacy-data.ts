@@ -94,7 +94,7 @@ export const PRIVACY_TECHNIQUES: PrivacyTechnique[] = [
       { step: 5, title: 'Cash out', description: 'Melt your tokens back to Lightning anytime. Paste an invoice and your sats are returned.' },
     ],
     caveats: [
-      'The mint holds your bitcoin — only deposit what you\'re comfortable losing.',
+      'Custodial: The mint holds your bitcoin.',
       'No proof of solvency yet. Spread funds across multiple mints.',
       'When cashing out to Lightning, the mint sees the destination invoice. P2P token transfers remain fully private.',
     ],
