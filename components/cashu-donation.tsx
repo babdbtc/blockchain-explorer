@@ -592,8 +592,13 @@ export function CashuDonation() {
                   <QRCodeSVG
                     value={invoice}
                     size={180}
-                    level="M"
+                    level="H"
                     includeMargin={false}
+                  />
+                  <img
+                    src="/images/cashu-logo.png"
+                    alt="Cashu"
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white p-0.5"
                   />
                   {copied && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 rounded-md">
