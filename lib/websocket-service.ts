@@ -36,7 +36,7 @@ class MempoolWebSocketService {
       this.ws = new WebSocket(this.url)
 
       this.ws.onopen = () => {
-        console.log("✅ WebSocket connected to mempool.space")
+        // Connected to mempool.space
         this.reconnectAttempts = 0
 
         // Subscribe to all channels we're interested in
@@ -65,7 +65,7 @@ class MempoolWebSocketService {
       }
 
       this.ws.onclose = () => {
-        console.log("WebSocket disconnected")
+        // WebSocket disconnected
         this.ws = null
 
         if (!this.isIntentionallyClosed) {
@@ -91,7 +91,7 @@ class MempoolWebSocketService {
     const delay = this.reconnectDelay * Math.pow(1.5, this.reconnectAttempts)
     this.reconnectAttempts++
 
-    console.log(`Reconnecting WebSocket in ${delay}ms (attempt ${this.reconnectAttempts})...`)
+    // Reconnecting WebSocket
 
     this.reconnectTimeout = setTimeout(() => {
       this.connect()

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { getClientIP } from "@/lib/get-client-ip"
 import {
   verifyPassword,
   createSession,
@@ -7,19 +8,6 @@ import {
   SESSION_COOKIE_NAME,
   SESSION_DURATION,
 } from "@/lib/admin-auth"
-
-// Get client IP from request
-function getClientIP(request: NextRequest): string {
-  const forwarded = request.headers.get("x-forwarded-for")
-  if (forwarded) {
-    return forwarded.split(",")[0].trim()
-  }
-  const realIP = request.headers.get("x-real-ip")
-  if (realIP) {
-    return realIP
-  }
-  return "unknown"
-}
 
 export async function POST(request: NextRequest) {
   const ip = getClientIP(request)
@@ -49,7 +37,6 @@ export async function POST(request: NextRequest) {
 
     if (!isValid) {
       recordLoginAttempt(ip, false)
-      // Generic error message to prevent username enumeration
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })
     }
 
@@ -66,7 +53,7 @@ export async function POST(request: NextRequest) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: SESSION_DURATION / 1000, // Convert to seconds
+      maxAge: SESSION_DURATION / 1000,
       path: "/",
     })
 

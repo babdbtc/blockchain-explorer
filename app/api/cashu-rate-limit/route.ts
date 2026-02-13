@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
+import { getClientIP } from "@/lib/get-client-ip"
+import { corsOptionsResponse } from "@/lib/cors"
 
 // In-memory rate limit store (resets on server restart)
-// For production, consider using Redis or a database
 const rateLimitStore = new Map<string, number[]>()
 
 const RATE_LIMIT_WINDOW = 60000 // 1 minute
@@ -18,19 +19,6 @@ function cleanupOldEntries() {
       rateLimitStore.set(ip, validTimestamps)
     }
   }
-}
-
-// Get client IP from request
-function getClientIP(request: NextRequest): string {
-  const forwarded = request.headers.get("x-forwarded-for")
-  if (forwarded) {
-    return forwarded.split(",")[0].trim()
-  }
-  const realIP = request.headers.get("x-real-ip")
-  if (realIP) {
-    return realIP
-  }
-  return "unknown"
 }
 
 // POST - Check and record rate limit
@@ -99,12 +87,5 @@ export async function GET(request: NextRequest) {
 
 // OPTIONS - CORS preflight
 export async function OPTIONS() {
-  return new NextResponse(null, {
-    status: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
-  })
+  return corsOptionsResponse("GET, POST, OPTIONS")
 }

@@ -22,7 +22,7 @@ export function useBlocksWebSocket() {
 
     // Subscribe to new blocks
     const unsubscribe = ws.subscribe("blocks", async (block: Block) => {
-      console.log("🔔 New block received via WebSocket:", block.height)
+      // New block received via WebSocket
 
       try {
         // Fetch full block details with weight
@@ -79,7 +79,7 @@ export function useMempoolBlocksWebSocket() {
     setIsConnected(ws.isConnected())
 
     const unsubscribe = ws.subscribe("mempool-blocks", (mempoolBlocks: any[]) => {
-      console.log("🔔 Mempool blocks updated via WebSocket")
+      // Mempool blocks updated via WebSocket
 
       // Update projected blocks cache
       queryClient.setQueryData(["projectedBlocks"], mempoolBlocks)
@@ -111,7 +111,7 @@ export function useStatsWebSocket() {
     setIsConnected(ws.isConnected())
 
     const unsubscribe = ws.subscribe("stats", (stats: any) => {
-      console.log("🔔 Stats updated via WebSocket")
+      // Stats updated via WebSocket
 
       // Update price data if available
       if (stats.conversions) {

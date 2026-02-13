@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, type OriginRect } from "@/components/ui/dialog"
 import { Shield, ExternalLink, ArrowLeft, AlertTriangle, BookOpen, ChevronRight } from "lucide-react"
 import { AnimatePresence, motion } from "framer-motion"
@@ -272,8 +272,16 @@ function PrivacyTechniqueDetail({
   )
 }
 
-export function PrivacyGuide() {
+export function PrivacyGuide({ externalOpen, onExternalOpenHandled }: { externalOpen?: boolean; onExternalOpenHandled?: () => void } = {}) {
   const [isOpen, setIsOpen] = useState(false)
+
+  // Allow external trigger (mobile menu)
+  useEffect(() => {
+    if (externalOpen) {
+      setIsOpen(true)
+      onExternalOpenHandled?.()
+    }
+  }, [externalOpen, onExternalOpenHandled])
   const [originRect, setOriginRect] = useState<OriginRect | null>(null)
   const [view, setView] = useState<View>('overview')
   const [selectedTechnique, setSelectedTechnique] = useState<PrivacyTechniqueId | null>(null)

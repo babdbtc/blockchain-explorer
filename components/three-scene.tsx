@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useRef } from "react"
+import type { BufferAttribute, SpriteMaterial } from "three"
 
 export function ThreeScene() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -1124,8 +1125,8 @@ export function ThreeScene() {
         }
 
         // Text morphing and physics animation
-        const textPosAttr = textGeometry.getAttribute("position") as THREE.BufferAttribute
-        const textColorAttr = textGeometry.getAttribute("color") as THREE.BufferAttribute
+        const textPosAttr = textGeometry.getAttribute("position") as BufferAttribute
+        const textColorAttr = textGeometry.getAttribute("color") as BufferAttribute
         const textArr = textPosAttr.array as Float32Array
         const textColorArr = textColorAttr.array as Float32Array
 
@@ -1274,8 +1275,8 @@ export function ThreeScene() {
         const rippleActive = rippleProgress < 1
 
         // --- Deform + (SMOOTH) Compression + Wobble + Ripple ---
-        const posAttr = planetGeometry.getAttribute("position") as THREE.BufferAttribute
-        const colorAttr = planetGeometry.getAttribute("color") as THREE.BufferAttribute
+        const posAttr = planetGeometry.getAttribute("position") as BufferAttribute
+        const colorAttr = planetGeometry.getAttribute("color") as BufferAttribute
         const arr = posAttr.array as Float32Array
         const colorArr = colorAttr.array as Float32Array
         const sigma = influenceRadius
@@ -1366,7 +1367,7 @@ export function ThreeScene() {
         }
 
         // Starfield drift (direct array access instead of getZ/setZ)
-        const starPosAttr = starGeometry.attributes.position as THREE.BufferAttribute
+        const starPosAttr = starGeometry.attributes.position as BufferAttribute
         const starArr = starPosAttr.array as Float32Array
         const starSpeed = 0.15 * spinSpeedFactor
         for (let i = 2; i < starArr.length; i += 3) {
@@ -1423,7 +1424,7 @@ export function ThreeScene() {
 
           // Also increase opacity when hovered
           const targetOpacity = ud.currentScale > 1.1 ? 0.9 : 0.6
-          const mat = sprite.material as THREE.SpriteMaterial
+          const mat = sprite.material as SpriteMaterial
           mat.opacity += (targetOpacity - mat.opacity) * scaleLerp
         })
 

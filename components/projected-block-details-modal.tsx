@@ -45,14 +45,14 @@ export function ProjectedBlockDetailsModal({ isOpen, onClose, projectedBlock, or
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-4xl max-h-[90vh] overflow-y-auto p-0 gap-0" originRect={originRect}>
-        <DialogHeader className="p-6 pb-2 border-b border-green-500/10 bg-green-500/5">
-          <DialogTitle className="text-green-400 flex items-center gap-2 text-xl">
-            <Hash className="w-6 h-6" />
+        <DialogHeader className="p-4 sm:p-6 pb-2 border-b border-green-500/10 bg-green-500/5">
+          <DialogTitle className="text-green-400 flex items-center gap-2 text-lg sm:text-xl">
+            <Hash className="w-5 h-5 sm:w-6 sm:h-6" />
             Projected Block Details
           </DialogTitle>
         </DialogHeader>
 
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           <motion.div
             className="space-y-6"
             initial="hidden"
@@ -73,12 +73,12 @@ export function ProjectedBlockDetailsModal({ isOpen, onClose, projectedBlock, or
               className="relative"
             >
               <div className="absolute inset-0 bg-green-500/5 blur-3xl rounded-full" />
-              <div className="relative z-10 text-center mb-8">
-                <div className="text-sm text-green-400/80 uppercase tracking-widest mb-1">Projected Height</div>
-                <div className="text-6xl md:text-7xl font-mono font-bold text-white mb-2">
+              <div className="relative z-10 text-center mb-6 sm:mb-8">
+                <div className="text-xs sm:text-sm text-green-400/80 uppercase tracking-widest mb-1">Projected Height</div>
+                <div className="text-4xl sm:text-6xl md:text-7xl font-mono font-bold text-white mb-2">
                   {projectedBlock.height.toLocaleString()}
                 </div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-300 text-sm font-mono">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-300 text-xs sm:text-sm font-mono">
                   <Clock className="w-3 h-3" />
                   Expected in {projectedBlock.estimatedTime}
                 </div>
@@ -86,34 +86,34 @@ export function ProjectedBlockDetailsModal({ isOpen, onClose, projectedBlock, or
             </motion.div>
 
             {/* Main Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-2 sm:gap-4">
               <motion.div variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1 } }}>
-                <Card className="bg-[hsl(var(--surface-2))] border-green-500/20 p-4 h-full hover:bg-green-500/5 transition-colors">
-                  <div className="flex items-center gap-2 text-[hsl(var(--text-muted))] text-xs uppercase tracking-wider mb-1">
-                    <Database className="w-3 h-3" />
+                <Card className="bg-[hsl(var(--surface-2))] border-green-500/20 p-3 sm:p-4 h-full hover:bg-green-500/5 transition-colors">
+                  <div className="flex items-center gap-1 sm:gap-2 text-[hsl(var(--text-muted))] text-[10px] sm:text-xs uppercase tracking-wider mb-1">
+                    <Database className="w-3 h-3 hidden sm:block" />
                     Size
                   </div>
-                  <div className="text-white font-mono text-xl">{formatBytes(projectedBlock.blockSize)}</div>
+                  <div className="text-white font-mono text-sm sm:text-xl">{formatBytes(projectedBlock.blockSize)}</div>
                 </Card>
               </motion.div>
 
               <motion.div variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1 } }}>
-                <Card className="bg-[hsl(var(--surface-2))] border-green-500/20 p-4 h-full hover:bg-green-500/5 transition-colors">
-                  <div className="flex items-center gap-2 text-[hsl(var(--text-muted))] text-xs uppercase tracking-wider mb-1">
-                    <Hash className="w-3 h-3" />
-                    Transactions
+                <Card className="bg-[hsl(var(--surface-2))] border-green-500/20 p-3 sm:p-4 h-full hover:bg-green-500/5 transition-colors">
+                  <div className="flex items-center gap-1 sm:gap-2 text-[hsl(var(--text-muted))] text-[10px] sm:text-xs uppercase tracking-wider mb-1">
+                    <Hash className="w-3 h-3 hidden sm:block" />
+                    TXs
                   </div>
-                  <div className="text-white font-mono text-xl">{projectedBlock.nTx.toLocaleString()}</div>
+                  <div className="text-white font-mono text-sm sm:text-xl">{projectedBlock.nTx.toLocaleString()}</div>
                 </Card>
               </motion.div>
 
               <motion.div variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1 } }}>
-                <Card className="bg-[hsl(var(--surface-2))] border-green-500/20 p-4 h-full hover:bg-green-500/5 transition-colors">
-                  <div className="flex items-center gap-2 text-[hsl(var(--text-muted))] text-xs uppercase tracking-wider mb-1">
-                    <Zap className="w-3 h-3" />
-                    Median Fee
+                <Card className="bg-[hsl(var(--surface-2))] border-green-500/20 p-3 sm:p-4 h-full hover:bg-green-500/5 transition-colors">
+                  <div className="flex items-center gap-1 sm:gap-2 text-[hsl(var(--text-muted))] text-[10px] sm:text-xs uppercase tracking-wider mb-1">
+                    <Zap className="w-3 h-3 hidden sm:block" />
+                    Fee
                   </div>
-                  <div className="text-white font-mono text-xl">~{medianFee} sat/vB</div>
+                  <div className="text-white font-mono text-sm sm:text-xl">~{medianFee} <span className="text-[10px] sm:text-sm">sat/vB</span></div>
                 </Card>
               </motion.div>
             </div>
@@ -122,23 +122,23 @@ export function ProjectedBlockDetailsModal({ isOpen, onClose, projectedBlock, or
             <motion.div
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
             >
-              <Card className="bg-[hsl(var(--surface-1))] border-green-500/20 p-5">
-                <h4 className="text-green-400 font-semibold mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
+              <Card className="bg-[hsl(var(--surface-1))] border-green-500/20 p-3 sm:p-5">
+                <h4 className="text-green-400 font-semibold mb-3 sm:mb-4 flex items-center gap-2 text-xs sm:text-sm uppercase tracking-wider">
                   <Zap className="w-4 h-4" />
                   Fee Range Projection
                 </h4>
 
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   <div>
-                    <div className="flex justify-between text-xs text-[hsl(var(--text-muted))] mb-2">
+                    <div className="flex justify-between text-[10px] sm:text-xs text-[hsl(var(--text-muted))] mb-2">
                       <span>Min Fee</span>
                       <span>Max Fee</span>
                     </div>
-                    <div className="h-4 bg-[hsl(var(--surface-3))] rounded-full overflow-hidden flex relative">
+                    <div className="h-3 sm:h-4 bg-[hsl(var(--surface-3))] rounded-full overflow-hidden flex relative">
                       {/* Gradient bar representing fee range */}
                       <div className="absolute inset-0 bg-gradient-to-r from-green-900 via-green-500 to-green-300 opacity-80" />
                     </div>
-                    <div className="flex justify-between text-sm font-mono text-white mt-2">
+                    <div className="flex justify-between text-xs sm:text-sm font-mono text-white mt-2">
                       <span>{projectedBlock.feeRange[0]} sat/vB</span>
                       <span>{projectedBlock.feeRange[projectedBlock.feeRange.length - 1]} sat/vB</span>
                     </div>

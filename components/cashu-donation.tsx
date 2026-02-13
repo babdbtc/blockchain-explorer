@@ -8,6 +8,7 @@ import { Copy, Check, Zap, Loader2, RefreshCw, X, Bitcoin, Clipboard, ArrowLeft 
 import { Separator } from "@/components/ui/separator"
 import { Wallet, MintQuoteState, getEncodedTokenV4 } from "@cashu/cashu-ts"
 import { QRCodeSVG } from "qrcode.react"
+import type { Proof } from "@/lib/shared-types"
 
 const MINT_URL = "https://mint.minibits.cash/Bitcoin"
 const PRESET_AMOUNTS = [21, 420, 2100]
@@ -39,14 +40,7 @@ type PaymentMethod = "onchain" | "lightning" | "cashu"
 type CashuMode = "select" | "invoice" | "paste"
 type CashuState = "idle" | "pending" | "paid" | "error"
 
-interface Proof {
-  id: string
-  amount: number
-  secret: string
-  C: string
-}
-
-export function CashuDonation() {
+export function CashuDonation({ mobile = false }: { mobile?: boolean } = {}) {
   // Main payment method
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cashu")
 
@@ -363,8 +357,8 @@ export function CashuDonation() {
   }
 
   return (
-    <div className="absolute right-4 bottom-[18rem] md:bottom-[18rem] @[@media(min-height:1000px)]:top-1/2 @[@media(min-height:1000px)]:-translate-y-1/2 @[@media(min-height:1000px)]:bottom-auto min-[2000px]:top-1/2 min-[2000px]:-translate-y-1/2 min-[2000px]:bottom-auto z-5 hidden md:block">
-      <Card className="premium-card p-3 text-center w-[232px] min-h-[430px] flex flex-col">
+    <div className={mobile ? "" : "absolute right-4 bottom-[18rem] md:bottom-[18rem] @[@media(min-height:1000px)]:top-1/2 @[@media(min-height:1000px)]:-translate-y-1/2 @[@media(min-height:1000px)]:bottom-auto min-[2000px]:top-1/2 min-[2000px]:-translate-y-1/2 min-[2000px]:bottom-auto z-5 hidden md:block"}>
+      <Card className={mobile ? "p-3 text-center flex flex-col bg-transparent border-0 shadow-none" : "premium-card p-3 text-center w-[232px] min-h-[430px] flex flex-col"}>
         {/* Title */}
         <div className="text-[hsl(var(--accent))] text-sm font-medium mb-2">Donations</div>
 

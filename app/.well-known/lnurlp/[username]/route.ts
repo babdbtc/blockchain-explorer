@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server';
 
 export async function GET(
   request: Request,
-  { params }: { params: { username: string } }
+  { params }: { params: Promise<{ username: string }> }
 ) {
-  const username = params.username;
+  const { username } = await params;
 
   // Your Wallet of Satoshi Lightning address username
   // If your WoS address is babd@walletofsatoshi.com, then WOS_USERNAME is "babd"

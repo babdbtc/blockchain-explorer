@@ -1,26 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
-import { promises as fs } from "fs"
-import path from "path"
 import { Wallet, getDecodedToken, getEncodedTokenV4 } from "@cashu/cashu-ts"
-
-const TOKENS_FILE = path.join(process.cwd(), "cashu-tokens.json")
-const MINT_URL = "https://mint.minibits.cash/Bitcoin"
-
-interface StoredToken {
-  id?: string
-  token: string
-  amount: number
-  timestamp: number
-  redeemed: boolean
-  note?: string
-}
-
-interface Proof {
-  id: string
-  amount: number
-  secret: string
-  C: string
-}
+import { readTokens, writeTokens } from "@/lib/tokens-file"
+import { corsOptionsResponse } from "@/lib/cors"
+import type { StoredToken, Proof } from "@/lib/shared-types"
 
 // POST - Receive and immediately redeem a Cashu token
 export async function POST(request: NextRequest) {
@@ -75,16 +57,12 @@ export async function POST(request: NextRequest) {
     await wallet.loadMint()
 
     // Swap the proofs for new ones that only we control
-    // This invalidates the original token immediately
     let newProofs: Proof[]
     try {
       const swapResult = await wallet.swap(totalAmount, proofs)
-      // swap() returns { keep: Proof[], send: Proof[] } or just Proof[]
-      // We want all the proofs back
       if (Array.isArray(swapResult)) {
         newProofs = swapResult as Proof[]
       } else if (swapResult && typeof swapResult === 'object') {
-        // Combine keep and send proofs
         const keep = (swapResult as { keep?: Proof[], send?: Proof[] }).keep || []
         const send = (swapResult as { keep?: Proof[], send?: Proof[] }).send || []
         newProofs = [...keep, ...send] as Proof[]
@@ -93,7 +71,6 @@ export async function POST(request: NextRequest) {
       }
     } catch (swapErr) {
       console.error("[Cashu] Swap failed:", swapErr)
-      // Token might already be spent or invalid
       return NextResponse.json(
         { error: "Token already spent or invalid" },
         { status: 400 }
@@ -114,13 +91,7 @@ export async function POST(request: NextRequest) {
     })
 
     // Store the new token
-    let tokens: StoredToken[] = []
-    try {
-      const data = await fs.readFile(TOKENS_FILE, "utf-8")
-      tokens = JSON.parse(data)
-    } catch {
-      // File doesn't exist yet, start fresh
-    }
+    const tokens = await readTokens()
 
     const storedToken: StoredToken = {
       id: `token_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
@@ -132,9 +103,7 @@ export async function POST(request: NextRequest) {
     }
     tokens.push(storedToken)
 
-    await fs.writeFile(TOKENS_FILE, JSON.stringify(tokens, null, 2))
-
-    console.log(`[Cashu] Redeemed and stored ${totalAmount} sats from pasted token`)
+    await writeTokens(tokens)
 
     return NextResponse.json({
       success: true,
@@ -152,12 +121,5 @@ export async function POST(request: NextRequest) {
 
 // OPTIONS - CORS preflight
 export async function OPTIONS() {
-  return new NextResponse(null, {
-    status: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
-  })
+  return corsOptionsResponse("POST, OPTIONS")
 }
