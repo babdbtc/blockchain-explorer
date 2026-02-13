@@ -97,7 +97,7 @@ export function MobileMenu({ blockHeight, onOpenPrivacyGuide }: MobileMenuProps)
                   </div>
                   <div>
                     <div className="text-sm font-medium text-white">Privacy Guide</div>
-                    <div className="text-xs text-[hsl(var(--text-muted))]">Bitcoin privacy techniques</div>
+                    <div className="text-xs text-[hsl(var(--text-muted))]">Escape the panopticon</div>
                   </div>
                 </button>
               </div>

@@ -21,6 +21,7 @@ const TECHNIQUE_ICONS: Record<PrivacyTechniqueId, string> = {
   cashu: '🥜',
   'atomic-swap': '⚛️',
   coinswap: '🔄',
+  p2p: '🏴',
 }
 
 const privacyBadgeClass = (level: 'high' | 'moderate') =>
