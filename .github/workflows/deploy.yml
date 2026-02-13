@@ -34,5 +34,7 @@ jobs:
             git pull origin main
             npm install
             npm run build
-            pm2 restart babd-timechain-explorer
+            pm2 delete babd-timechain-explorer 2>/dev/null || true
+            pm2 start ecosystem.config.js
+            pm2 save
           "
