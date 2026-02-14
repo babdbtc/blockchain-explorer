@@ -613,7 +613,7 @@ export function ThreeScene() {
         uniforms: {
           time: { value: 0 },
           spinFactor: { value: 1.0 },
-          cursorProximity: { value: 0.0 }
+          cursorProximity: { value: 0.5 }
         },
         vertexShader: `
           varying vec3 vNormal;

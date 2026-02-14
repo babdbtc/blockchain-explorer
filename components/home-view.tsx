@@ -10,7 +10,7 @@ import { CashuDonation } from "@/components/cashu-donation"
 import { PrivacyGuide } from "@/components/privacy-guide-modal"
 import { BottomDock } from "@/components/bottom-dock"
 import { SearchBar } from "@/components/search-bar"
-import { NetworkStats } from "@/components/network-stats"
+import { NetworkStatsHUD } from "@/components/network-stats-hud"
 import { NetworkStatsModal } from "@/components/network-stats-modal"
 import { ChartModal } from "@/components/chart-modal"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
@@ -80,14 +80,13 @@ export function HomeView({ initialQuery }: { initialQuery?: string }) {
       {/* Desktop search bar (hidden on mobile, accessible via dock) */}
       <SearchBar />
 
-      {/* Network stats panel (desktop side panel) */}
-      <NetworkStats />
+      {/* Network stats HUD (floating difficulty + halving, desktop only) */}
+      <NetworkStatsHUD />
 
       {/* Block explorer strip */}
       <BlockExplorer currentHeight={currentBlockHeight} />
 
-      {/* Desktop donation panel (hidden on mobile, accessible via dock) */}
-      <CashuDonation />
+      {/* Donation panel hidden by default — accessible via dock button */}
 
       {/* Privacy guide modal (triggered from dock) */}
       <PrivacyGuide
