@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback, useEffect } from "react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, type OriginRect } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Shield, ExternalLink, ArrowLeft, AlertTriangle, BookOpen, ChevronRight } from "lucide-react"
 import { AnimatePresence, motion } from "framer-motion"
 import {
@@ -276,33 +276,19 @@ function PrivacyTechniqueDetail({
 export function PrivacyGuide({ externalOpen, onExternalOpenHandled }: { externalOpen?: boolean; onExternalOpenHandled?: () => void } = {}) {
   const [isOpen, setIsOpen] = useState(false)
 
-  // Allow external trigger (mobile menu)
+  // Allow external trigger (dock button)
   useEffect(() => {
     if (externalOpen) {
       setIsOpen(true)
       onExternalOpenHandled?.()
     }
   }, [externalOpen, onExternalOpenHandled])
-  const [originRect, setOriginRect] = useState<OriginRect | null>(null)
   const [view, setView] = useState<View>('overview')
   const [selectedTechnique, setSelectedTechnique] = useState<PrivacyTechniqueId | null>(null)
-
-  const openModal = useCallback((event: React.MouseEvent) => {
-    const target = event.currentTarget as HTMLElement
-    const rect = target.getBoundingClientRect()
-    setOriginRect({
-      x: rect.left,
-      y: rect.top,
-      width: rect.width,
-      height: rect.height,
-    })
-    setIsOpen(true)
-  }, [])
 
   const closeModal = useCallback(() => {
     setIsOpen(false)
     setTimeout(() => {
-      setOriginRect(null)
       setView('overview')
       setSelectedTechnique(null)
     }, 300)
@@ -322,32 +308,11 @@ export function PrivacyGuide({ externalOpen, onExternalOpenHandled }: { external
 
   return (
     <>
-      {/* Trigger Button — nothing suspicious here, just a fun button for kids! */}
-      <div className="absolute top-4 left-[12rem] z-10 hidden md:block">
-        <div
-          className="anonymize-friendly select-none"
-          onClick={openModal}
-        >
-          <div className="relative z-10 px-5 py-3 flex items-center gap-3">
-            <span className="text-2xl leading-none anonymize-bounce" role="img" aria-label="cherry blossom">🌸</span>
-            <div className="flex flex-col items-start">
-              <span className="text-base font-extrabold tracking-wide text-[hsl(var(--accent))]" style={{ fontFamily: '"Comic Sans MS", "Comic Sans", "Chalkboard SE", cursive' }}>
-                Anonymize
-              </span>
-              <span className="text-xs font-bold text-[hsl(var(--text-secondary))] -mt-0.5" style={{ fontFamily: '"Comic Sans MS", "Comic Sans", "Chalkboard SE", cursive' }}>
-                your coins! <span className="anonymize-wiggle inline-block">⭐</span>
-              </span>
-            </div>
-            <span className="text-xl leading-none anonymize-wiggle" role="img" aria-label="sparkle star">🦄</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Modal */}
+      {/* Modal — triggered externally from the dock */}
       <Dialog open={isOpen} onOpenChange={(open) => !open && closeModal()}>
         <DialogContent
           className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-5xl max-h-[85vh] overflow-y-auto custom-scrollbar p-0 gap-0"
-          originRect={originRect}
+          originRect={null}
         >
           <DialogHeader className="p-6 pb-4 border-b border-[hsl(var(--border-subtle))] bg-[hsl(var(--accent)/0.05)]">
             <DialogTitle className="flex items-center gap-2 text-[hsl(var(--accent))]">

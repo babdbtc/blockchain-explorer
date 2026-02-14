@@ -66,7 +66,7 @@ export function SearchBar() {
   }
 
   return (
-    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10 w-full max-w-3xl px-2">
+    <div className="absolute top-[5.5rem] md:top-[7rem] left-1/2 transform -translate-x-1/2 z-20 w-full max-w-3xl px-4">
       <div className="search-bar-premium relative" ref={dropdownRef}>
         <form onSubmit={handleSubmit} className="flex items-center p-1 relative z-[2]">
           <div className="pl-4 pr-3 relative">
@@ -119,7 +119,7 @@ export function SearchBar() {
 
         {/* History Dropdown */}
         {historyOpen && (
-          <div className="absolute bottom-full left-0 right-0 mb-2 bg-[hsl(var(--surface-2))] border border-[hsl(var(--border-subtle))] rounded-lg shadow-xl overflow-hidden">
+          <div className="absolute top-full left-0 right-0 mt-2 bg-[hsl(var(--surface-2))] border border-[hsl(var(--border-subtle))] rounded-lg shadow-xl overflow-hidden">
             {history.length === 0 ? (
               <div className="px-4 py-3 text-sm text-[hsl(var(--text-muted))] text-center">
                 No recent searches

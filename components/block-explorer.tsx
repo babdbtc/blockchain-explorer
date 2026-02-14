@@ -296,7 +296,7 @@ export function BlockExplorer({ currentHeight }: BlockExplorerProps) {
 
   return (
     <>
-      <div className="absolute bottom-36 md:bottom-24 left-1/2 -translate-x-1/2 w-screen md:w-[120vw] z-10 pointer-events-none">
+      <div className="absolute bottom-20 md:bottom-[5.5rem] left-1/2 -translate-x-1/2 w-screen md:w-[120vw] z-10 pointer-events-none">
         <div>
           <Card className="bg-transparent border-transparent shadow-none relative pointer-events-auto">
             <div
