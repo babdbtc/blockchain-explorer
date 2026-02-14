@@ -613,7 +613,7 @@ export function ThreeScene() {
         uniforms: {
           time: { value: 0 },
           spinFactor: { value: 1.0 },
-          cursorProximity: { value: 0.5 }
+          cursorProximity: { value: 0.65 }
         },
         vertexShader: `
           varying vec3 vNormal;
@@ -1058,7 +1058,8 @@ export function ThreeScene() {
         updateMagnetFromRay()
 
         // Calculate cursor proximity to planet center for glow intensity
-        let cursorProximity = 0.5 // Default minimum glow (50%)
+        // Always show a base glow; cursor proximity boosts it further
+        let cursorProximity = 0.65 // Default base glow (always visible)
         if (hasCursorMoved) {
           // Get planet center in screen space
           vCenterW.setFromMatrixPosition(planet.matrixWorld)
@@ -1073,13 +1074,13 @@ export function ThreeScene() {
           const dy = globalCursorY - planetScreenY
           const distFromCenter = Math.sqrt(dx * dx + dy * dy)
 
-          // Convert to proximity: 1 at center, 0.5 at far distance
+          // Convert to proximity: 1 at center, 0.65 at far distance
           // Use screen diagonal as max distance
           const maxDist = Math.sqrt(window.innerWidth ** 2 + window.innerHeight ** 2)
           const normalizedDist = Math.min(distFromCenter / maxDist, 1)
 
-          // Map from [0, 1] distance to [1.0, 0.5] proximity (inverted, with 50% minimum)
-          cursorProximity = 1.0 - normalizedDist * 0.5
+          // Map from [0, 1] distance to [1.0, 0.65] proximity (inverted, with 65% minimum)
+          cursorProximity = 1.0 - normalizedDist * 0.35
         }
 
         // Update glow shader uniform

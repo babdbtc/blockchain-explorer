@@ -20,6 +20,8 @@ interface CircularProgressProps {
   /** Optional second colour segment drawn after `percent` */
   extensionPercent?: number
   extensionColor?: string
+  /** Whether the extension represents being ahead (true) or behind (false) */
+  extensionAhead?: boolean
   /** Content rendered inside the ring */
   children?: React.ReactNode
 }
@@ -31,6 +33,7 @@ function CircularProgress({
   color,
   extensionPercent = 0,
   extensionColor,
+  extensionAhead = false,
   children,
 }: CircularProgressProps) {
   const radius = (size - strokeWidth) / 2
@@ -40,10 +43,13 @@ function CircularProgress({
   const extLength = (Math.min(extensionPercent, 100 - percent) / 100) * circumference
 
   // Pulse: a short bright segment that sweeps the filled arc
-  const pulseSize = Math.max(filledLength * 0.10, 6)
+  // When ahead (green extension): pulse sweeps through blue + green
+  // When behind (red extension): pulse only sweeps the blue arc
+  const pulseTargetLength = extensionAhead ? filledLength + extLength : filledLength
+  const pulseSize = Math.max(pulseTargetLength * 0.10, 6)
   const pulseGap = circumference - pulseSize
-  // Stop the pulse so its leading edge doesn't overshoot the filled arc
-  const pulseEndOffset = mainOffset + pulseSize
+  const pulseTargetOffset = circumference - pulseTargetLength
+  const pulseEndOffset = pulseTargetOffset + pulseSize
 
   return (
     <div className="relative overflow-visible" style={{ width: size, height: size }}>
@@ -74,8 +80,27 @@ function CircularProgress({
           style={{ filter: `drop-shadow(0 0 6px ${color})` }}
         />
 
-        {/* Pulse sweep — bright dot travelling along the filled arc */}
-        {filledLength > 10 && (
+        {/* Optional extension arc (difficulty ahead/behind) */}
+        {extensionPercent > 0 && extensionColor && (
+          <motion.circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill="none"
+            stroke={extensionColor}
+            strokeWidth={strokeWidth}
+            strokeLinecap="round"
+            strokeDasharray={`${extLength} ${circumference - extLength}`}
+            strokeDashoffset={mainOffset}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            style={{ filter: `drop-shadow(0 0 4px ${extensionColor})` }}
+          />
+        )}
+
+        {/* Pulse sweep — bright dot travelling along the filled arc (rendered last, on top) */}
+        {pulseTargetLength > 10 && (
           <motion.circle
             cx={size / 2}
             cy={size / 2}
@@ -99,25 +124,6 @@ function CircularProgress({
             style={{
               filter: `drop-shadow(0 0 6px ${color}) drop-shadow(0 0 3px ${color})`,
             }}
-          />
-        )}
-
-        {/* Optional extension arc (difficulty ahead/behind) */}
-        {extensionPercent > 0 && extensionColor && (
-          <motion.circle
-            cx={size / 2}
-            cy={size / 2}
-            r={radius}
-            fill="none"
-            stroke={extensionColor}
-            strokeWidth={strokeWidth}
-            strokeLinecap="round"
-            strokeDasharray={`${extLength} ${circumference - extLength}`}
-            strokeDashoffset={mainOffset}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            style={{ filter: `drop-shadow(0 0 4px ${extensionColor})` }}
           />
         )}
       </svg>
@@ -261,6 +267,7 @@ export function NetworkStatsHUD() {
               color="#3b82f6"
               extensionPercent={extensionPercent}
               extensionColor={isAhead ? "#22c55e" : "#ef4444"}
+              extensionAhead={isAhead}
               size={100}
               strokeWidth={6}
             >
@@ -329,6 +336,7 @@ export function NetworkStatsHUD() {
             color="#3b82f6"
             extensionPercent={extensionPercent}
             extensionColor={isAhead ? "#22c55e" : "#ef4444"}
+            extensionAhead={isAhead}
             size={130}
             strokeWidth={7}
           >
