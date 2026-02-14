@@ -357,7 +357,7 @@ export function CashuDonation({ mobile = false, modal = false }: { mobile?: bool
   }
 
   return (
-    <div className={mobile || modal ? "" : "absolute right-4 bottom-[18rem] md:bottom-[18rem] @[@media(min-height:1000px)]:top-1/2 @[@media(min-height:1000px)]:-translate-y-1/2 @[@media(min-height:1000px)]:bottom-auto min-[2000px]:top-1/2 min-[2000px]:-translate-y-1/2 min-[2000px]:bottom-auto z-5 hidden md:block"}>
+    <div className={mobile || modal ? "" : "absolute right-4 top-1/2 -translate-y-1/2 z-5 hidden md:block"}>
       <Card className={mobile || modal ? "p-3 text-center flex flex-col bg-transparent border-0 shadow-none" : "premium-card p-3 text-center w-[232px] min-h-[430px] flex flex-col"}>
         {/* Title */}
         <div className="text-[hsl(var(--accent))] text-sm font-medium mb-2">Donations</div>

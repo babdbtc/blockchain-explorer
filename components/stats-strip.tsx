@@ -73,8 +73,8 @@ export function StatsStrip({ blockHeight }: StatsStripProps) {
   return (
     <>
       {/* Stats Strip - Horizontal bar at the top */}
-      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-30 w-full max-w-5xl px-4">
-        <div className="premium-card rounded-2xl flex items-center justify-center gap-0 md:gap-1 px-1 py-2 md:px-4 md:py-3 overflow-x-auto no-scrollbar">
+      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-30 px-4">
+        <div className="premium-card rounded-2xl flex items-center justify-center gap-0 md:gap-1 px-1 py-2 md:px-4 md:py-3 w-max max-w-[calc(100vw-2rem)] overflow-x-auto no-scrollbar mx-auto">
           {/* Price */}
           <button
             className="flex flex-col items-center min-w-0 px-1 md:px-3 py-1 rounded-lg hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors cursor-pointer flex-shrink-0"

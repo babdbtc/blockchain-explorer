@@ -66,7 +66,7 @@ export function SearchBar() {
   }
 
   return (
-    <div className="absolute top-[5.5rem] md:top-[7rem] left-1/2 transform -translate-x-1/2 z-20 w-full max-w-3xl px-4">
+    <div className="absolute top-[5.5rem] md:top-[7rem] left-1/2 transform -translate-x-1/2 z-20 w-full max-w-xl px-4">
       <div className="search-bar-premium relative" ref={dropdownRef}>
         <form onSubmit={handleSubmit} className="flex items-center p-1 relative z-[2]">
           <div className="pl-4 pr-3 relative">
