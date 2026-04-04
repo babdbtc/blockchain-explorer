@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Card } from "@/components/ui/card"
 import { Activity, Loader2, BarChart3 } from "lucide-react"
+import { motion } from "framer-motion"
 import {
     ResponsiveContainer,
     ComposedChart,
@@ -82,7 +83,7 @@ export function MiningStatsModal({ isOpen, onClose }: MiningStatsModalProps) {
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-5xl max-h-[90vh] overflow-y-auto p-0 gap-0">
+            <DialogContent data-testid="mining-stats-modal" className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-5xl max-h-[90vh] overflow-y-auto p-0 gap-0">
                 <DialogHeader className="p-6 pb-2 border-b border-[hsl(var(--border-subtle))] bg-[hsl(var(--accent)/0.05)]">
                     <DialogTitle className="text-[hsl(var(--accent))] flex items-center gap-2 text-xl">
                         <BarChart3 className="w-6 h-6" />
@@ -90,88 +91,119 @@ export function MiningStatsModal({ isOpen, onClose }: MiningStatsModalProps) {
                     </DialogTitle>
                 </DialogHeader>
 
-                <div className="p-6 h-[500px] w-full">
-                    {loading ? (
-                        <div className="h-full flex flex-col items-center justify-center space-y-4">
-                            <Loader2 className="w-10 h-10 animate-spin text-[hsl(var(--accent))]" />
-                            <span className="text-[hsl(var(--text-muted))]">Loading mining data...</span>
-                        </div>
-                    ) : (
-                        <ResponsiveContainer width="100%" height="100%">
-                            <ComposedChart data={data}>
-                                <defs>
-                                    <linearGradient id="colorHashrate" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="hsl(48 96% 72%)" stopOpacity={0.3} />
-                                        <stop offset="95%" stopColor="hsl(48 96% 72%)" stopOpacity={0} />
-                                    </linearGradient>
-                                </defs>
-                                <CartesianGrid strokeDasharray="3 3" stroke="hsl(0 0% 15%)" vertical={false} />
-                                <XAxis
-                                    dataKey="date"
-                                    stroke="hsl(0 0% 30%)"
-                                    tick={{ fill: 'hsl(0 0% 45%)', fontSize: 12 }}
-                                    tickLine={false}
-                                    axisLine={false}
-                                    minTickGap={30}
-                                />
-                                <YAxis
-                                    yAxisId="left"
-                                    stroke="hsl(48 96% 72%)"
-                                    tick={{ fill: 'hsl(48 96% 72%)', fontSize: 12 }}
-                                    tickFormatter={formatHashrate}
-                                    tickLine={false}
-                                    axisLine={false}
-                                    domain={['auto', 'auto']}
-                                />
-                                <YAxis
-                                    yAxisId="right"
-                                    orientation="right"
-                                    stroke="#3b82f6"
-                                    tick={{ fill: '#3b82f6', fontSize: 12 }}
-                                    tickFormatter={formatDifficulty}
-                                    tickLine={false}
-                                    axisLine={false}
-                                    domain={['auto', 'auto']}
-                                />
-                                <Tooltip
-                                    contentStyle={{ backgroundColor: 'hsl(0 0% 7%)', borderColor: 'hsl(0 0% 15%)', borderRadius: '8px' }}
-                                    itemStyle={{ fontSize: '12px' }}
-                                    labelStyle={{ color: 'hsl(0 0% 65%)', marginBottom: '4px' }}
-                                    formatter={(value: number, name: string) => [
-                                        name === 'hashrate' ? formatHashrate(value) : formatDifficulty(value),
-                                        name === 'hashrate' ? 'Hashrate' : 'Difficulty'
-                                    ]}
-                                    labelFormatter={(label, payload) => {
-                                        if (payload && payload.length > 0) {
-                                            return payload[0].payload.fullDate
-                                        }
-                                        return label
-                                    }}
-                                />
-                                <Legend />
-                                <Area
-                                    yAxisId="left"
-                                    type="monotone"
-                                    dataKey="hashrate"
-                                    name="Hashrate"
-                                    stroke="hsl(48 96% 72%)"
-                                    fillOpacity={1}
-                                    fill="url(#colorHashrate)"
-                                    strokeWidth={2}
-                                />
-                                <Line
-                                    yAxisId="right"
-                                    type="stepAfter"
-                                    dataKey="difficulty"
-                                    name="Difficulty"
-                                    stroke="#3b82f6"
-                                    strokeWidth={2}
-                                    dot={false}
-                                />
-                            </ComposedChart>
-                        </ResponsiveContainer>
-                    )}
-                </div>
+                <motion.div
+                    className="p-6 space-y-6"
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                        hidden: { opacity: 0 },
+                        visible: {
+                            opacity: 1,
+                            transition: {
+                                staggerChildren: 0.06
+                            }
+                        }
+                    }}
+                >
+                    <motion.div
+                        data-stagger-item
+                        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+                        className="h-[500px] w-full rounded-lg border border-[hsl(var(--border-subtle))] p-4 bg-[hsl(var(--surface-1)/0.5)]"
+                    >
+                        {loading ? (
+                            <div className="h-full flex flex-col items-center justify-center space-y-4 relative overflow-hidden">
+                                <div className="absolute inset-0 shimmer-skeleton rounded-lg" />
+                                <div className="relative z-10 flex flex-col items-center gap-4">
+                                    <Loader2 className="w-10 h-10 animate-spin text-[hsl(var(--accent))]" />
+                                    <span className="text-[hsl(var(--text-muted))] text-sm">Loading mining data...</span>
+                                </div>
+                                <div className="absolute inset-4 flex items-end gap-1 opacity-[0.07]">
+                                    {Array.from({ length: 24 }).map((_, i) => (
+                                        <div
+                                            key={i}
+                                            className="flex-1 bg-[hsl(var(--accent))] rounded-t"
+                                            style={{ height: `${20 + Math.sin(i * 0.5) * 30 + (i * 7 % 20)}%` }}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        ) : (
+                            <ResponsiveContainer width="100%" height="100%">
+                                <ComposedChart data={data}>
+                                    <defs>
+                                        <linearGradient id="colorHashrate" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="5%" stopColor="hsl(48 96% 72%)" stopOpacity={0.3} />
+                                            <stop offset="95%" stopColor="hsl(48 96% 72%)" stopOpacity={0} />
+                                        </linearGradient>
+                                    </defs>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(0 0% 15%)" vertical={false} />
+                                    <XAxis
+                                        dataKey="date"
+                                        stroke="hsl(0 0% 30%)"
+                                        tick={{ fill: 'hsl(0 0% 45%)', fontSize: 12 }}
+                                        tickLine={false}
+                                        axisLine={false}
+                                        minTickGap={30}
+                                    />
+                                    <YAxis
+                                        yAxisId="left"
+                                        stroke="hsl(48 96% 72%)"
+                                        tick={{ fill: 'hsl(48 96% 72%)', fontSize: 12 }}
+                                        tickFormatter={formatHashrate}
+                                        tickLine={false}
+                                        axisLine={false}
+                                        domain={['auto', 'auto']}
+                                    />
+                                    <YAxis
+                                        yAxisId="right"
+                                        orientation="right"
+                                        stroke="#3b82f6"
+                                        tick={{ fill: '#3b82f6', fontSize: 12 }}
+                                        tickFormatter={formatDifficulty}
+                                        tickLine={false}
+                                        axisLine={false}
+                                        domain={['auto', 'auto']}
+                                    />
+                                    <Tooltip
+                                        contentStyle={{ backgroundColor: 'hsl(0 0% 7%)', borderColor: 'hsl(0 0% 15%)', borderRadius: '8px' }}
+                                        itemStyle={{ fontSize: '12px' }}
+                                        labelStyle={{ color: 'hsl(0 0% 65%)', marginBottom: '4px' }}
+                                        formatter={(value: number, name: string) => [
+                                            name === 'hashrate' ? formatHashrate(value) : formatDifficulty(value),
+                                            name === 'hashrate' ? 'Hashrate' : 'Difficulty'
+                                        ]}
+                                        labelFormatter={(label, payload) => {
+                                            if (payload && payload.length > 0) {
+                                                return payload[0].payload.fullDate
+                                            }
+                                            return label
+                                        }}
+                                    />
+                                    <Legend />
+                                    <Area
+                                        yAxisId="left"
+                                        type="monotone"
+                                        dataKey="hashrate"
+                                        name="Hashrate"
+                                        stroke="hsl(48 96% 72%)"
+                                        fillOpacity={1}
+                                        fill="url(#colorHashrate)"
+                                        strokeWidth={2}
+                                    />
+                                    <Line
+                                        yAxisId="right"
+                                        type="stepAfter"
+                                        dataKey="difficulty"
+                                        name="Difficulty"
+                                        stroke="#3b82f6"
+                                        strokeWidth={2}
+                                        dot={false}
+                                    />
+                                </ComposedChart>
+                            </ResponsiveContainer>
+                        )}
+                    </motion.div>
+                </motion.div>
             </DialogContent>
         </Dialog>
     )

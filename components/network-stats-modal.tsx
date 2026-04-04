@@ -25,7 +25,7 @@ export function NetworkStatsModal({ isOpen, onClose, difficultyData, halvingData
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-4xl max-h-[90vh] overflow-y-auto p-0 gap-0">
+            <DialogContent data-testid="network-stats-modal" className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-4xl max-h-[90vh] overflow-y-auto p-0 gap-0">
                 <DialogHeader className="p-6 pb-2 border-b border-[hsl(var(--border-subtle))] bg-[hsl(var(--accent)/0.05)]">
                     <DialogTitle className="text-[hsl(var(--accent))] flex items-center gap-2 text-xl">
                         <Activity className="w-6 h-6" />
@@ -49,7 +49,7 @@ export function NetworkStatsModal({ isOpen, onClose, difficultyData, halvingData
                         }}
                     >
                         {/* Difficulty Section */}
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+                        <motion.div data-stagger-item variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
                             <div className="flex items-center gap-2 mb-4">
                                 <TrendingUp className="w-5 h-5 text-blue-400" />
                                 <h3 className="text-xl font-bold text-blue-400">Difficulty Adjustment</h3>
@@ -63,6 +63,7 @@ export function NetworkStatsModal({ isOpen, onClose, difficultyData, halvingData
                                             <div className="relative h-4 bg-[hsl(var(--surface-3))] rounded-full overflow-hidden">
                                                 <motion.div
                                                     className="h-full bg-blue-500"
+                                                    style={{ boxShadow: '0 0 8px hsl(var(--accent) / 0.3)' }}
                                                     initial={{ width: 0 }}
                                                     animate={{ width: `${Math.min(baseProgress, 100)}%` }}
                                                     transition={{ duration: 0.5, ease: "easeOut" }}
@@ -70,7 +71,7 @@ export function NetworkStatsModal({ isOpen, onClose, difficultyData, halvingData
                                                 {baseProgress < 100 && (
                                                     <motion.div
                                                         className={`h-full ${isAhead ? "bg-green-500" : "bg-red-500"} inline-block absolute top-0`}
-                                                        style={{ left: `${baseProgress}%` }}
+                                                        style={{ left: `${baseProgress}%`, boxShadow: '0 0 8px hsl(var(--accent) / 0.3)' }}
                                                         initial={{ width: 0 }}
                                                         animate={{ width: `${Math.min(extensionPercent, 100 - baseProgress)}%` }}
                                                         transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
@@ -84,14 +85,14 @@ export function NetworkStatsModal({ isOpen, onClose, difficultyData, halvingData
                                         </div>
 
                                         <div className="grid grid-cols-2 gap-4">
-                                            <div className="bg-[hsl(var(--surface-2))] p-3 rounded border border-[hsl(var(--border-subtle))]">
+                                            <div className="bg-[hsl(var(--surface-2))] p-3 rounded border border-[hsl(var(--border-subtle))] border-l-2 border-l-[hsl(var(--accent)/0.5)] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                                                 <div className="text-xs text-[hsl(var(--text-muted))] mb-1">Estimated Change</div>
                                                 <div className={`text-lg font-mono font-bold ${difficultyData.difficultyChange > 0 ? "text-green-400" : "text-red-400"}`}>
                                                     {difficultyData.difficultyChange > 0 ? "+" : ""}
                                                     {difficultyData.difficultyChange.toFixed(2)}%
                                                 </div>
                                             </div>
-                                            <div className="bg-[hsl(var(--surface-2))] p-3 rounded border border-[hsl(var(--border-subtle))]">
+                                            <div className="bg-[hsl(var(--surface-2))] p-3 rounded border border-[hsl(var(--border-subtle))] border-l-2 border-l-[hsl(var(--accent)/0.5)] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                                                 <div className="text-xs text-[hsl(var(--text-muted))] mb-1">Previous Change</div>
                                                 <div className={`text-lg font-mono font-bold ${difficultyData.previousChange > 0 ? "text-green-400" : "text-red-400"}`}>
                                                     {difficultyData.previousChange > 0 ? "+" : ""}
@@ -102,7 +103,7 @@ export function NetworkStatsModal({ isOpen, onClose, difficultyData, halvingData
                                     </div>
 
                                     <div className="space-y-4">
-                                        <div className="flex justify-between items-center p-3 bg-[hsl(var(--surface-2))] rounded border border-[hsl(var(--border-subtle))]">
+                                        <div className="flex justify-between items-center p-3 bg-[hsl(var(--surface-2))] rounded border border-[hsl(var(--border-subtle))] border-l-2 border-l-[hsl(var(--accent)/0.5)] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                                             <div className="flex items-center gap-3">
                                                 <Clock className="w-4 h-4 text-[hsl(var(--text-muted))]" />
                                                 <span className="text-sm text-gray-300">Average Block Time</span>
@@ -112,7 +113,7 @@ export function NetworkStatsModal({ isOpen, onClose, difficultyData, halvingData
                                             </span>
                                         </div>
 
-                                        <div className="flex justify-between items-center p-3 bg-[hsl(var(--surface-2))] rounded border border-[hsl(var(--border-subtle))]">
+                                        <div className="flex justify-between items-center p-3 bg-[hsl(var(--surface-2))] rounded border border-[hsl(var(--border-subtle))] border-l-2 border-l-[hsl(var(--accent)/0.5)] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                                             <div className="flex items-center gap-3">
                                                 <Calendar className="w-4 h-4 text-[hsl(var(--text-muted))]" />
                                                 <span className="text-sm text-gray-300">Next Retarget</span>
@@ -134,7 +135,7 @@ export function NetworkStatsModal({ isOpen, onClose, difficultyData, halvingData
                         </motion.div>
 
                         {/* Halving Section */}
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+                        <motion.div data-stagger-item variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
                             <div className="flex items-center gap-2 mb-4">
                                 <Hourglass className="w-5 h-5 text-[hsl(var(--accent))]" />
                                 <h3 className="text-xl font-bold text-[hsl(var(--accent))]">Halving Countdown</h3>
@@ -148,27 +149,29 @@ export function NetworkStatsModal({ isOpen, onClose, difficultyData, halvingData
                                             <div className="relative h-4 bg-[hsl(var(--surface-3))] rounded-full overflow-hidden">
                                                 <motion.div
                                                     className="h-full bg-gradient-to-r from-[hsl(var(--accent))] to-[hsl(48_96%_65%)]"
+                                                    style={{ boxShadow: '0 0 8px hsl(var(--accent) / 0.3)' }}
                                                     initial={{ width: 0 }}
                                                     animate={{ width: `${halvingData.progressPercent}%` }}
                                                     transition={{ duration: 0.5, ease: "easeOut" }}
                                                 />
                                             </div>
-                                            <div className="flex justify-between text-xs text-[hsl(var(--text-muted))] mt-2">
+                                            <div className="flex justify-between items-end text-xs text-[hsl(var(--text-muted))] mt-2">
                                                 <span>{halvingData.progressPercent.toFixed(2)}% complete</span>
-                                                <span>
-                                                    <AnimatedNumber value={halvingData.blocksRemaining} formatFn={v => Math.floor(v).toLocaleString()} /> blocks left
+                                                <span className="text-right">
+                                                    <span className="text-3xl font-bold text-white block leading-tight"><AnimatedNumber value={halvingData.blocksRemaining} formatFn={v => Math.floor(v).toLocaleString()} /></span>
+                                                    blocks left
                                                 </span>
                                             </div>
                                         </div>
 
                                         <div className="grid grid-cols-2 gap-4">
-                                            <div className="bg-[hsl(var(--surface-2))] p-3 rounded border border-[hsl(var(--border-subtle))]">
+                                            <div className="bg-[hsl(var(--surface-2))] p-3 rounded border border-[hsl(var(--border-subtle))] border-l-2 border-l-[hsl(var(--accent)/0.5)] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                                                 <div className="text-xs text-[hsl(var(--text-muted))] mb-1">Current Subsidy</div>
                                                 <div className="text-lg font-mono font-bold text-white">
                                                     {halvingData.currentSubsidy} BTC
                                                 </div>
                                             </div>
-                                            <div className="bg-[hsl(var(--surface-2))] p-3 rounded border border-[hsl(var(--border-subtle))]">
+                                            <div className="bg-[hsl(var(--surface-2))] p-3 rounded border border-[hsl(var(--border-subtle))] border-l-2 border-l-[hsl(var(--accent)/0.5)] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                                                 <div className="text-xs text-[hsl(var(--text-muted))] mb-1">Next Subsidy</div>
                                                 <div className="text-lg font-mono font-bold text-[hsl(var(--accent))]">
                                                     {halvingData.newSubsidy.toFixed(4)} BTC
@@ -178,7 +181,7 @@ export function NetworkStatsModal({ isOpen, onClose, difficultyData, halvingData
                                     </div>
 
                                     <div className="space-y-4">
-                                        <div className="flex justify-between items-center p-3 bg-[hsl(var(--surface-2))] rounded border border-[hsl(var(--border-subtle))]">
+                                        <div className="flex justify-between items-center p-3 bg-[hsl(var(--surface-2))] rounded border border-[hsl(var(--border-subtle))] border-l-2 border-l-[hsl(var(--accent)/0.5)] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                                             <div className="flex items-center gap-3">
                                                 <Calendar className="w-4 h-4 text-[hsl(var(--text-muted))]" />
                                                 <span className="text-sm text-gray-300">Estimated Date</span>
@@ -197,7 +200,7 @@ export function NetworkStatsModal({ isOpen, onClose, difficultyData, halvingData
                         </motion.div>
 
                         {/* Mining Stats Chart Section */}
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+                        <motion.div data-stagger-item variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
                             <div className="flex items-center gap-2 mb-4">
                                 <BarChart3 className="w-5 h-5 text-purple-400" />
                                 <h3 className="text-xl font-bold text-purple-400">Hashrate & Difficulty (1 Year)</h3>
