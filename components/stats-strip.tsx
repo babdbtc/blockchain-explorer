@@ -73,7 +73,7 @@ export function StatsStrip({ blockHeight }: StatsStripProps) {
   return (
     <>
       {/* Stats Strip - Horizontal bar at the top */}
-      <div className="absolute top-[4.5rem] md:top-[4.5rem] left-1/2 transform -translate-x-1/2 z-20 px-4">
+      <div>
         <div className="premium-card glow-border rounded-2xl flex items-center justify-center gap-0 md:gap-1 px-1 py-2 md:px-4 md:py-3 w-max max-w-[calc(100vw-2rem)] overflow-x-auto no-scrollbar mx-auto">
           {/* Price */}
           <button

@@ -74,11 +74,11 @@ export function HomeView({ initialQuery }: { initialQuery?: string }) {
     <div className="relative w-full h-screen overflow-hidden bg-background">
       <ThreeScene />
 
-      {/* Top stats strip (replaces corner stat cards) */}
-      <StatsStrip blockHeight={currentBlockHeight} />
-
-      {/* Desktop search bar (hidden on mobile, accessible via dock) */}
-      <SearchBar />
+      {/* Search bar + stats strip — shared container so widths match */}
+      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-30 flex flex-col items-center gap-2 px-4 w-max max-w-[calc(100vw-2rem)]">
+        <SearchBar />
+        <StatsStrip blockHeight={currentBlockHeight} />
+      </div>
 
       {/* Network stats HUD (floating difficulty + halving, desktop only) */}
       <NetworkStatsHUD />

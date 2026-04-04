@@ -616,11 +616,8 @@
   background: hsl(var(--surface-2));
   border: 1px solid hsl(var(--accent) / 0.15);
   border-radius: 12px;
-  width: fit-content;
-  min-width: 40rem;
-  margin-left: auto;
-  margin-right: auto;
-  transition: border-color 300ms ease, box-shadow 300ms ease, background 300ms ease, min-width 300ms ease-out;
+  width: 100%;
+  transition: border-color 300ms ease, box-shadow 300ms ease, background 300ms ease;
   box-shadow: 0 0 12px hsl(var(--accent) / 0.04);
 }
 
@@ -630,7 +627,6 @@
 }
 
 .search-bar-premium:focus-within {
-  min-width: 42rem;
   border-color: hsl(var(--accent) / 0.6);
   box-shadow:
     0 0 0 4px hsl(var(--accent) / 0.1),

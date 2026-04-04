@@ -1387,7 +1387,7 @@ Wave FINAL (Verification — 4 parallel, after ALL tasks):
   - Files: `components/home-view.tsx`
   - Pre-commit: `npm run build`
 
-- [ ] 14. Mobile Touch Interactions & Final Consistency Pass
+- [x] 14. Mobile Touch Interactions & Final Consistency Pass
 
   **What to do**:
   - Final sweep across ALL modified components to ensure mobile and cross-component consistency:
