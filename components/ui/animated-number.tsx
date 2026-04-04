@@ -31,6 +31,14 @@ export function AnimatedNumber({
   useEffect(() => {
     const startValue = prevValueRef.current
     const endValue = value
+
+    // Skip rAF animation when user prefers reduced motion
+    if (shouldReduceMotion) {
+      setDisplayValue(endValue)
+      prevValueRef.current = endValue
+      return
+    }
+
     const startTime = Date.now()
 
     const animate = () => {
@@ -62,7 +70,7 @@ export function AnimatedNumber({
         cancelAnimationFrame(animationFrameRef.current)
       }
     }
-  }, [value, duration])
+  }, [value, duration, shouldReduceMotion])
 
   useEffect(() => {
     if (flash && Math.abs(value - flashPrevRef.current) > 0.01 && !shouldReduceMotion) {

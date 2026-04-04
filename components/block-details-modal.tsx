@@ -144,7 +144,7 @@ export function BlockDetailsModal({ isOpen, onClose, blockHash, originRect }: Bl
                 visible: {
                   opacity: 1,
                   transition: {
-                    staggerChildren: 0.05
+                    staggerChildren: 0.06
                   }
                 }
               }}

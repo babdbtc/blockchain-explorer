@@ -1,0 +1,36 @@
+{
+  "active_plan": "/home/user/git/blockchain-explorer/.sisyphus/plans/ui-polish.md",
+  "started_at": "2026-04-04T00:36:44.911Z",
+  "session_ids": [
+    "ses_2aa2bef72ffeT4tAE5kZ7uvhK0",
+    "ses_2aa12db51ffefC751RSw4R0Zpv",
+    "ses_2aa0ea800ffeerlbWvo7xUZXpR",
+    "ses_2aa0e1bedffe8d1ZaRnCEaZ3Yr",
+    "ses_2aa0d679cffe9SDheYcRxQnnEr",
+    "ses_2aa0c359dffeoclE9KdMkiswFq",
+    "ses_2aa0c7fa1ffeYk4EPCtGE73zjN",
+    "ses_2aa08ce8effejNpVfF5G5FDKDk",
+    "ses_2aa08a483ffeWFx02Ld5otge5E",
+    "ses_2aa088200ffevYEu4djhD9b3ea",
+    "ses_2aa09109dffeZApKG9VEMe2Iw5",
+    "ses_2aa08629affedY0NPGv106SP3W",
+    "ses_2aa0214c1ffe79VnAk3AstCvV4",
+    "ses_2aa014584ffeLgAqIY3hQwuUnI",
+    "ses_2aa017220ffezIG1os0JEa6Qmc",
+    "ses_2aa0257fbffeXWTsz0n1f1m5yk",
+    "ses_2aa04769fffekubMwoP3iTtwe2"
+  ],
+  "plan_name": "ui-polish",
+  "agent": "atlas",
+  "task_sessions": {
+    "todo:1": {
+      "task_key": "todo:1",
+      "task_label": "1",
+      "task_title": "CSS Animation Infrastructure",
+      "session_id": "ses_2aa12db51ffefC751RSw4R0Zpv",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-04-04T00:40:55.444Z"
+    }
+  }
+}

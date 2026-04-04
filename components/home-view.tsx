@@ -71,7 +71,7 @@ export function HomeView({ initialQuery }: { initialQuery?: string }) {
   }, [])
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-[#0d0d0f]">
+    <div className="relative w-full h-screen overflow-hidden bg-background">
       <ThreeScene />
 
       {/* Top stats strip (replaces corner stat cards) */}
