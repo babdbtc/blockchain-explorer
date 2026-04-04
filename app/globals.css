@@ -617,6 +617,8 @@
   border: 1px solid hsl(var(--accent) / 0.15);
   border-radius: 12px;
   max-width: 36rem;
+  margin-left: auto;
+  margin-right: auto;
   transition: border-color 300ms ease, box-shadow 300ms ease, background 300ms ease, max-width 300ms ease-out;
   box-shadow: 0 0 12px hsl(var(--accent) / 0.04);
 }
