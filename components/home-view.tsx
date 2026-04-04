@@ -112,14 +112,14 @@ export function HomeView({ initialQuery }: { initialQuery?: string }) {
 
       {/* Donation modal (dock-triggered, for mobile and desktop) */}
       <Dialog open={donationModalOpen} onOpenChange={setDonationModalOpen}>
-        <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-sm max-h-[85vh] overflow-y-auto custom-scrollbar p-0 gap-0">
-          <DialogHeader className="p-4 pb-3 border-b border-[hsl(var(--border-subtle))] bg-[hsl(var(--accent)/0.05)]">
+        <DialogContent data-testid="donation-modal" className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-sm max-h-[85vh] overflow-y-auto custom-scrollbar p-0 gap-0">
+          <DialogHeader data-stagger-item className="p-4 pb-3 border-b border-[hsl(var(--border-subtle))] bg-[hsl(var(--accent)/0.05)]">
             <DialogTitle className="flex items-center gap-2 text-[hsl(var(--accent))]">
               <Heart className="w-5 h-5" />
               Donate
             </DialogTitle>
           </DialogHeader>
-          <div className="p-2">
+          <div data-stagger-item className="p-2 rounded-b-lg shadow-[0_0_16px_hsl(var(--accent)/0.1)]">
             <CashuDonation modal />
           </div>
         </DialogContent>
@@ -184,8 +184,8 @@ function MobileSearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] max-w-lg p-0 gap-0 top-[10%] translate-y-0">
-        <form onSubmit={handleSubmit} className="flex items-center p-3 gap-2">
+      <DialogContent data-testid="mobile-search-modal" className="premium-modal text-white w-[calc(100%-1rem)] max-w-lg p-0 gap-0 top-[10%] translate-y-0">
+        <form data-stagger-item onSubmit={handleSubmit} className="flex items-center p-3 gap-2">
           <input
             ref={inputRef}
             type="search"
@@ -193,12 +193,13 @@ function MobileSearchModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search TxID or Address..."
-            className="flex-1 bg-transparent border-none focus:ring-0 focus:outline-none text-white placeholder-[hsl(var(--text-muted))] text-lg font-mono px-2 py-3 caret-[hsl(var(--accent))]"
+            className="flex-1 bg-transparent border border-transparent rounded-lg focus:border-[hsl(var(--accent)/0.6)] focus:shadow-[0_0_0_4px_hsl(var(--accent)/0.1),0_0_24px_hsl(var(--accent)/0.08)] focus:outline-none text-white placeholder-[hsl(var(--text-muted))] text-lg font-mono px-2 py-3 caret-[hsl(var(--accent))] transition-[border-color,box-shadow] duration-300"
             autoComplete="off"
           />
           {/* Query type indicator dot */}
           {query.trim() && (
             <div
+              data-stagger-item
               className={`w-2 h-2 rounded-full flex-shrink-0 ${
                 /^[0-9a-fA-F]{64}$/.test(query.trim())
                   ? "bg-orange-400 shadow-[0_0_6px_theme(colors.orange.400/0.6)]"
