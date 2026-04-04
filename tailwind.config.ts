@@ -137,8 +137,8 @@ const config: Config = {
 		animation: {
 			'accordion-down': 'accordion-down 0.2s ease-out',
 			'accordion-up': 'accordion-up 0.2s ease-out',
-			'dialog-in': 'dialog-in 0.3s ease-out forwards',
-			'dialog-out': 'dialog-out 0.2s ease-in forwards',
+			'dialog-in': 'dialog-in 0.35s cubic-bezier(0.32, 0.72, 0, 1) forwards',
+			'dialog-out': 'dialog-out 0.2s cubic-bezier(0.32, 0, 0.67, 0) forwards',
 			'glow-pulse': 'glow-pulse 3s ease-in-out infinite',
 			'value-flash': 'value-flash 600ms ease-out forwards',
 			'stagger-fade-in': 'stagger-fade-in 300ms ease-out forwards',

@@ -3,6 +3,7 @@
 import * as React from "react"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { X } from "lucide-react"
+import { useReducedMotion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -34,8 +35,9 @@ const DialogOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Overlay
     ref={ref}
+    data-testid="dialog-overlay"
     className={cn(
-      "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed inset-0 z-50 bg-black/80 duration-[250ms] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className
     )}
     {...props}
@@ -51,6 +53,8 @@ const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   DialogContentProps
 >(({ className, children, originRect, ...props }, ref) => {
+  const shouldReduceMotion = useReducedMotion()
+
   // Calculate styles for origin-based animation
   // Combines transform-origin for zoom + CSS variables for slide direction
   const getOriginStyles = (): React.CSSProperties => {
@@ -91,7 +95,8 @@ const DialogContent = React.forwardRef<
       <DialogOriginContext.Provider value={originRect || null}>
         <DialogPrimitive.Content
           ref={ref}
-          style={getOriginStyles()}
+          data-testid="dialog-content"
+          style={shouldReduceMotion ? { ...getOriginStyles(), animationDuration: '0ms' } : getOriginStyles()}
           className={cn(
             "fixed left-[50%] top-[50%] z-50 grid w-[calc(100%-2rem)] max-w-lg gap-4 border bg-background p-4 sm:p-6 shadow-lg rounded-lg",
             originRect

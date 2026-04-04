@@ -757,23 +757,44 @@
 
 /* ── NEW: Value flash — CSS class added/removed by JS to signal value change ── */
 .value-flash {
-  animation: value-flash 600ms ease-out forwards;
+	animation: value-flash 600ms ease-out forwards;
 }
 
 /* ── NEW: Stat hover zone — subtle lift + glow on hover for stat buttons ── */
 .stat-hover {
-  transition: transform 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
+	transition: transform 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
 }
 .stat-hover:hover {
-  transform: translateY(-1px);
-  background-color: hsl(var(--surface-3) / 0.7);
-  box-shadow: 0 0 12px hsl(var(--accent) / 0.15);
+	transform: translateY(-1px);
+	background-color: hsl(var(--surface-3) / 0.7);
+	box-shadow: 0 0 12px hsl(var(--accent) / 0.15);
 }
 .stat-hover:active {
-  transform: translateY(-1px);
-  background-color: hsl(var(--surface-3) / 0.7);
-  box-shadow: 0 0 12px hsl(var(--accent) / 0.15);
+	transform: translateY(-1px);
+	background-color: hsl(var(--surface-3) / 0.7);
+	box-shadow: 0 0 12px hsl(var(--accent) / 0.15);
 }
+
+/* ── Stagger animation for dialog content children ── */
+[data-stagger-item] {
+	opacity: 0;
+	animation: stagger-fade-in 300ms ease-out forwards;
+}
+[data-stagger-item]:nth-child(1) { animation-delay: 0ms; }
+[data-stagger-item]:nth-child(2) { animation-delay: 60ms; }
+[data-stagger-item]:nth-child(3) { animation-delay: 120ms; }
+[data-stagger-item]:nth-child(4) { animation-delay: 180ms; }
+[data-stagger-item]:nth-child(5) { animation-delay: 240ms; }
+[data-stagger-item]:nth-child(6) { animation-delay: 300ms; }
+[data-stagger-item]:nth-child(7) { animation-delay: 360ms; }
+[data-stagger-item]:nth-child(8) { animation-delay: 420ms; }
+[data-stagger-item]:nth-child(9) { animation-delay: 480ms; }
+[data-stagger-item]:nth-child(10) { animation-delay: 540ms; }
+[data-stagger-item]:nth-child(11) { animation-delay: 600ms; }
+[data-stagger-item]:nth-child(12) { animation-delay: 660ms; }
+[data-stagger-item]:nth-child(13) { animation-delay: 720ms; }
+[data-stagger-item]:nth-child(14) { animation-delay: 780ms; }
+[data-stagger-item]:nth-child(15) { animation-delay: 840ms; }
 
 /* ── NEW: Accessibility — disable all animations when user prefers reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
