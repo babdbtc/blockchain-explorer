@@ -705,7 +705,84 @@
   }
 }
 
+/* ── NEW: Glow pulse animation ── */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 8px hsl(var(--accent) / 0.1), 0 0 15px hsl(var(--accent) / 0.05);
+  }
+  50% {
+    box-shadow: 0 0 16px hsl(var(--accent) / 0.25), 0 0 30px hsl(var(--accent) / 0.12);
+  }
+}
+
+/* ── NEW: Value flash animation (single-shot brightness pulse) ── */
+@keyframes value-flash {
+  0% { background-color: transparent; }
+  20% { background-color: hsl(var(--accent) / 0.18); border-radius: 4px; }
+  100% { background-color: transparent; }
+}
+
+/* ── NEW: Stagger fade-in for modal content children ── */
+@keyframes stagger-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .recommended-card {
   background: linear-gradient(165deg, hsl(var(--accent) / 0.06) 0%, hsl(var(--surface-2)) 40%);
   animation: recommendedGlow 3s ease-in-out infinite;
+}
+
+/* ── NEW: Glow border — ambient golden glow cycling on container ── */
+.glow-border {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* ── NEW: Glow border hover — glow only on hover/active (touch-friendly) ── */
+.glow-border-hover {
+  transition: box-shadow 200ms ease;
+}
+.glow-border-hover:hover {
+  box-shadow: 0 0 12px hsl(var(--accent) / 0.2), 0 0 24px hsl(var(--accent) / 0.08);
+}
+.glow-border-hover:active {
+  box-shadow: 0 0 12px hsl(var(--accent) / 0.2), 0 0 24px hsl(var(--accent) / 0.08);
+}
+
+/* ── NEW: Value flash — CSS class added/removed by JS to signal value change ── */
+.value-flash {
+  animation: value-flash 600ms ease-out forwards;
+}
+
+/* ── NEW: Stat hover zone — subtle lift + glow on hover for stat buttons ── */
+.stat-hover {
+  transition: transform 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
+}
+.stat-hover:hover {
+  transform: translateY(-1px);
+  background-color: hsl(var(--surface-3) / 0.7);
+  box-shadow: 0 0 12px hsl(var(--accent) / 0.15);
+}
+.stat-hover:active {
+  transform: translateY(-1px);
+  background-color: hsl(var(--surface-3) / 0.7);
+  box-shadow: 0 0 12px hsl(var(--accent) / 0.15);
+}
+
+/* ── NEW: Accessibility — disable all animations when user prefers reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
