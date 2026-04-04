@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { Input } from "@/components/ui/input"
 import { Search, History, Wallet, Activity, Trash2 } from "lucide-react"
 import { useSearchHistory } from "@/hooks/use-search-history"
+import { AnimatePresence, motion } from "framer-motion"
 
 export function SearchBar() {
   const [query, setQuery] = useState("")
@@ -66,7 +67,7 @@ export function SearchBar() {
   }
 
   return (
-    <div className="absolute top-[5.5rem] md:top-[7rem] left-1/2 transform -translate-x-1/2 z-20 w-full max-w-xl px-4">
+    <div className="absolute top-[5.5rem] md:top-[7rem] left-1/2 transform -translate-x-1/2 z-20 w-full px-4" data-testid="search-container">
       <div className="search-bar-premium relative" ref={dropdownRef}>
         <form onSubmit={handleSubmit} className="flex items-center p-1 relative z-[2]">
           <div className="pl-4 pr-3 relative">
@@ -105,6 +106,7 @@ export function SearchBar() {
             className="flex-1 bg-transparent border-none focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 text-white placeholder-[hsl(var(--text-muted))] transition-all duration-150 text-lg font-mono px-2 py-5 caret-[hsl(var(--accent))]"
             autoComplete="off"
             data-1p-ignore
+            data-testid="search-input"
           />
 
           <button
@@ -118,57 +120,71 @@ export function SearchBar() {
         </form>
 
         {/* History Dropdown */}
-        {historyOpen && (
-          <div className="absolute top-full left-0 right-0 mt-2 bg-[hsl(var(--surface-2))] border border-[hsl(var(--border-subtle))] rounded-lg shadow-xl overflow-hidden">
-            {history.length === 0 ? (
-              <div className="px-4 py-3 text-sm text-[hsl(var(--text-muted))] text-center">
-                No recent searches
-              </div>
-            ) : (
-              <>
-                <div className="flex items-center justify-between px-4 py-2 border-b border-[hsl(var(--border-subtle))]">
-                  <span className="text-xs text-[hsl(var(--text-muted))] uppercase tracking-wide">Recent Searches</span>
-                  <button
-                    onClick={() => {
-                      clearHistory()
-                      setHistoryOpen(false)
-                    }}
-                    className="text-xs text-[hsl(var(--text-muted))] hover:text-red-400 transition-colors flex items-center gap-1"
-                  >
-                    <Trash2 className="w-3 h-3" />
-                    Clear
-                  </button>
+        <AnimatePresence>
+          {historyOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2 }}
+              className="absolute top-full left-0 right-0 mt-2 bg-[hsl(var(--surface-2))] border border-[hsl(var(--border-subtle))] rounded-lg shadow-xl overflow-hidden"
+            >
+              {history.length === 0 ? (
+                <div className="px-4 py-3 text-sm text-[hsl(var(--text-muted))] text-center">
+                  No recent searches
                 </div>
-                <div className="max-h-[400px] overflow-y-auto custom-scrollbar">
-                  {history.map((item, index) => (
+              ) : (
+                <>
+                  <div className="flex items-center justify-between px-4 py-2 border-b border-[hsl(var(--border-subtle))]">
+                    <span className="text-xs text-[hsl(var(--text-muted))] uppercase tracking-wide">Recent Searches</span>
                     <button
-                      key={`${item.query}-${index}`}
-                      onClick={() => handleHistoryClick(item.query, item.type)}
-                      className="w-full px-4 py-3 hover:bg-[hsl(var(--surface-3))] transition-colors text-left"
+                      onClick={() => {
+                        clearHistory()
+                        setHistoryOpen(false)
+                      }}
+                      className="text-xs text-[hsl(var(--text-muted))] hover:text-red-400 transition-colors flex items-center gap-1"
                     >
-                      <div className="flex items-center gap-2 mb-1">
-                        {item.type === "address" ? (
-                          <Wallet className="w-4 h-4 text-[hsl(var(--accent))] flex-shrink-0" />
-                        ) : (
-                          <Activity className="w-4 h-4 text-[hsl(var(--accent))] flex-shrink-0" />
-                        )}
-                        <span className="text-xs text-[hsl(var(--text-muted))]">
-                          {item.type === "transaction" ? "Transaction" : "Address"}
-                        </span>
-                        <span className="text-xs text-[hsl(var(--text-muted))/0.6] ml-auto">
-                          {formatRelativeTime(item.timestamp)}
-                        </span>
-                      </div>
-                      <div className="font-mono text-sm text-white break-all pl-6">
-                        {item.query}
-                      </div>
+                      <Trash2 className="w-3 h-3" />
+                      Clear
                     </button>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-        )}
+                  </div>
+                  <div className="max-h-[400px] overflow-y-auto custom-scrollbar">
+                    {history.map((item, index) => (
+                      <motion.div
+                        key={`${item.query}-${index}`}
+                        initial={{ opacity: 0, y: -4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.15, delay: index * 0.05 }}
+                      >
+                        <button
+                          onClick={() => handleHistoryClick(item.query, item.type)}
+                          className="w-full px-4 py-3 hover:bg-[hsl(var(--surface-3))] transition-colors text-left"
+                        >
+                          <div className="flex items-center gap-2 mb-1">
+                            {item.type === "address" ? (
+                              <Wallet className="w-4 h-4 text-[hsl(var(--accent))] flex-shrink-0" />
+                            ) : (
+                              <Activity className="w-4 h-4 text-[hsl(var(--accent))] flex-shrink-0" />
+                            )}
+                            <span className="text-xs text-[hsl(var(--text-muted))]">
+                              {item.type === "transaction" ? "Transaction" : "Address"}
+                            </span>
+                            <span className="text-xs text-[hsl(var(--text-muted))/0.6] ml-auto">
+                              {formatRelativeTime(item.timestamp)}
+                            </span>
+                          </div>
+                          <div className="font-mono text-sm text-white break-all pl-6">
+                            {item.query}
+                          </div>
+                        </button>
+                      </motion.div>
+                    ))}
+                  </div>
+                </>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   )
