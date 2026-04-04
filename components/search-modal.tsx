@@ -77,15 +77,15 @@ export function SearchModal({ isOpen, onClose, query }: SearchModalProps) {
       </div>
       <div>
         <div className="text-xs text-[hsl(var(--text-muted))]">{label}</div>
-        <div className="text-sm font-medium text-white">{value}</div>
-        {subValue && <div className="text-xs text-[hsl(var(--text-muted))]">{subValue}</div>}
+        <div className="text-sm font-medium text-white tabular-nums">{value}</div>
+        {subValue && <div className="text-xs text-[hsl(var(--text-muted))] tabular-nums">{subValue}</div>}
       </div>
     </div>
   )
 
   const renderTransactionResult = (txData: any) => (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div data-stagger-item className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <Activity className="w-5 h-5 text-[hsl(var(--accent))]" />
           <h3 className="text-lg font-semibold text-white">Transaction Details</h3>
@@ -101,7 +101,7 @@ export function SearchModal({ isOpen, onClose, query }: SearchModalProps) {
         </a>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div data-stagger-item className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <StatCard
           label="Status"
           value={txData.status.confirmed ? "Confirmed" : "Unconfirmed"}
@@ -125,7 +125,7 @@ export function SearchModal({ isOpen, onClose, query }: SearchModalProps) {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div data-stagger-item className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="bg-[hsl(var(--surface-1))] border-[hsl(var(--border-subtle))] p-4 backdrop-blur-sm">
           <div className="flex items-center justify-between mb-4">
             <h4 className="text-sm font-medium text-gray-300 flex items-center">
@@ -135,10 +135,10 @@ export function SearchModal({ isOpen, onClose, query }: SearchModalProps) {
           </div>
           <div className="space-y-3 max-h-[200px] overflow-y-auto pr-2 custom-scrollbar">
             {txData.vin.map((vin: any, i: number) => (
-              <div key={i} className="bg-[hsl(var(--surface-2))] p-3 rounded border border-[hsl(var(--border-subtle))] text-sm group hover:border-[hsl(var(--accent)/0.3)] transition-colors">
+              <div key={i} className="bg-[hsl(var(--surface-2)/0.5)] p-3 rounded border border-[hsl(var(--border-subtle))] border-l-2 border-l-[hsl(var(--accent)/0.5)] text-sm group hover:border-[hsl(var(--accent)/0.3)] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                 <div className="flex justify-between items-start mb-1">
                   <span className="text-xs text-[hsl(var(--text-muted))]">#{i}</span>
-                  <span className="text-[hsl(var(--accent))] font-mono">{vin.prevout ? `${vin.prevout.value.toLocaleString()} sat` : "Coinbase"}</span>
+                  <span className="text-[hsl(var(--accent))] font-mono text-sm tabular-nums">{vin.prevout ? `${vin.prevout.value.toLocaleString()} sat` : "Coinbase"}</span>
                 </div>
                 {vin.prevout?.scriptpubkey_address ? (
                   <Link
@@ -166,10 +166,10 @@ export function SearchModal({ isOpen, onClose, query }: SearchModalProps) {
           </div>
           <div className="space-y-3 max-h-[200px] overflow-y-auto pr-2 custom-scrollbar">
             {txData.vout.map((vout: any, i: number) => (
-              <div key={i} className="bg-[hsl(var(--surface-2))] p-3 rounded border border-[hsl(var(--border-subtle))] text-sm group hover:border-[hsl(var(--accent)/0.3)] transition-colors">
+              <div key={i} className="bg-[hsl(var(--surface-2)/0.5)] p-3 rounded border border-[hsl(var(--border-subtle))] border-r-2 border-r-[hsl(var(--accent)/0.5)] text-sm group hover:border-[hsl(var(--accent)/0.3)] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                 <div className="flex justify-between items-start mb-1">
                   <span className="text-xs text-[hsl(var(--text-muted))]">#{i}</span>
-                  <span className="text-[hsl(var(--accent))] font-mono">{vout.value.toLocaleString()} sat</span>
+                  <span className="text-[hsl(var(--accent))] font-mono text-sm tabular-nums">{vout.value.toLocaleString()} sat</span>
                 </div>
                 {vout.scriptpubkey_address ? (
                   <Link
@@ -196,7 +196,7 @@ export function SearchModal({ isOpen, onClose, query }: SearchModalProps) {
 
     return (
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
+        <div data-stagger-item className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Wallet className="w-5 h-5 text-[hsl(var(--accent))]" />
             <h3 className="text-lg font-semibold text-white">Address Details</h3>
@@ -212,7 +212,7 @@ export function SearchModal({ isOpen, onClose, query }: SearchModalProps) {
           </a>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div data-stagger-item className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <StatCard
             label="Balance"
             value={`${balance.toLocaleString()} sat`}
@@ -235,14 +235,14 @@ export function SearchModal({ isOpen, onClose, query }: SearchModalProps) {
           />
         </div>
 
-        <Card className="bg-[hsl(var(--surface-1))] border-[hsl(var(--border-subtle))] p-4 backdrop-blur-sm">
+        <Card data-stagger-item className="bg-[hsl(var(--surface-1))] border-[hsl(var(--border-subtle))] p-4 backdrop-blur-sm">
           <h4 className="text-sm font-medium text-gray-300 mb-4 flex items-center">
             <Coins className="w-4 h-4 mr-2 text-[hsl(var(--accent))]" />
             UTXOs ({utxos.length})
           </h4>
           <div className="space-y-2 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
             {utxos.map((utxo, i) => (
-              <div key={i} className="bg-[hsl(var(--surface-2))] p-3 rounded border border-[hsl(var(--border-subtle))] hover:border-[hsl(var(--accent)/0.3)] transition-colors">
+              <div key={i} className="bg-[hsl(var(--surface-2)/0.5)] p-3 rounded border border-[hsl(var(--border-subtle))] hover:border-[hsl(var(--accent)/0.3)] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                 <div className="flex justify-between items-start">
                   <div className="flex-1 min-w-0 mr-4">
                     <div className="flex items-center space-x-2 mb-1">
@@ -251,12 +251,12 @@ export function SearchModal({ isOpen, onClose, query }: SearchModalProps) {
                         {utxo.status.confirmed ? `Block ${utxo.status.block_height}` : "Unconfirmed"}
                       </Badge>
                     </div>
-                    <div className="text-xs font-mono text-gray-300 break-all truncate">
+                    <div className="text-xs font-mono text-gray-300 break-all truncate tabular-nums">
                       {utxo.txid}:{utxo.vout}
                     </div>
                   </div>
                   <div className="text-right whitespace-nowrap">
-                    <div className="text-[hsl(var(--accent))] font-mono text-sm">{utxo.value.toLocaleString()} sat</div>
+                    <div className="text-[hsl(var(--accent))] font-mono text-sm tabular-nums">{utxo.value.toLocaleString()} sat</div>
                   </div>
                 </div>
               </div>
@@ -269,7 +269,7 @@ export function SearchModal({ isOpen, onClose, query }: SearchModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-4xl max-h-[85vh] overflow-y-auto">
+      <DialogContent data-testid="search-modal" className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-4xl max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-[hsl(var(--accent))]">
             Search Results
