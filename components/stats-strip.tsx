@@ -74,10 +74,11 @@ export function StatsStrip({ blockHeight }: StatsStripProps) {
     <>
       {/* Stats Strip - Horizontal bar at the top */}
       <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-30 px-4">
-        <div className="premium-card rounded-2xl flex items-center justify-center gap-0 md:gap-1 px-1 py-2 md:px-4 md:py-3 w-max max-w-[calc(100vw-2rem)] overflow-x-auto no-scrollbar mx-auto">
+        <div className="premium-card glow-border rounded-2xl flex items-center justify-center gap-0 md:gap-1 px-1 py-2 md:px-4 md:py-3 w-max max-w-[calc(100vw-2rem)] overflow-x-auto no-scrollbar mx-auto">
           {/* Price */}
           <button
-            className="flex flex-col items-center min-w-0 px-1 md:px-3 py-1 rounded-lg hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors cursor-pointer flex-shrink-0"
+            className="flex flex-col items-center min-w-0 px-1 md:px-3 py-1 rounded-lg stat-hover cursor-pointer flex-shrink-0"
+            data-testid="stat-price"
             onClick={(e) => openModal("chart", e)}
           >
             {isLoading ? (
@@ -89,6 +90,7 @@ export function StatsStrip({ blockHeight }: StatsStripProps) {
                   value={displayStats.price}
                   formatFn={(val) => Math.floor(val).toLocaleString("en-US")}
                   duration={800}
+                  flash={true}
                 />
               </div>
             )}
@@ -102,7 +104,8 @@ export function StatsStrip({ blockHeight }: StatsStripProps) {
 
           {/* High Priority Fee */}
           <button
-            className="flex flex-col items-center min-w-0 px-1 md:px-3 py-1 rounded-lg hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors cursor-pointer flex-shrink-0"
+            className="flex flex-col items-center min-w-0 px-1 md:px-3 py-1 rounded-lg stat-hover cursor-pointer flex-shrink-0"
+            data-testid="stat-fees"
             onClick={(e) => openModal("fees", e)}
           >
             {isLoading ? (
@@ -115,6 +118,7 @@ export function StatsStrip({ blockHeight }: StatsStripProps) {
                     Math.floor(val).toLocaleString("en-US")
                   }
                   duration={800}
+                  flash={true}
                 />{" "}
                 <span className="text-xs md:text-sm">sat/vB</span>
               </div>
@@ -129,9 +133,10 @@ export function StatsStrip({ blockHeight }: StatsStripProps) {
 
           {/* Block Height - center piece */}
           <button
-            className={`flex flex-col items-center min-w-0 px-1 md:px-4 py-1 rounded-lg hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors cursor-pointer flex-shrink-0 ${
+            className={`flex flex-col items-center min-w-0 px-1 md:px-4 py-1 rounded-lg stat-hover cursor-pointer flex-shrink-0 ${
               isNewBlock ? "new-block-celebration" : ""
             }`}
+            data-testid="stat-blockheight"
             onClick={(e) => {
               if (currentBlockHash) openModal("block-height", e)
             }}
@@ -143,6 +148,7 @@ export function StatsStrip({ blockHeight }: StatsStripProps) {
                   Math.floor(val).toLocaleString("en-US")
                 }
                 duration={800}
+                flash={true}
               />
             </div>
             <div className="text-[hsl(var(--accent))] text-[10px] md:text-xs tracking-widest uppercase">
@@ -155,7 +161,8 @@ export function StatsStrip({ blockHeight }: StatsStripProps) {
 
           {/* Mempool Size */}
           <button
-            className="flex flex-col items-center min-w-0 px-1 md:px-3 py-1 rounded-lg hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors cursor-pointer flex-shrink-0"
+            className="flex flex-col items-center min-w-0 px-1 md:px-3 py-1 rounded-lg stat-hover cursor-pointer flex-shrink-0"
+            data-testid="stat-mempool"
             onClick={(e) => openModal("mempool", e)}
           >
             {isLoading ? (
@@ -166,6 +173,7 @@ export function StatsStrip({ blockHeight }: StatsStripProps) {
                   value={displayStats.mempoolSize}
                   decimals={2}
                   duration={800}
+                  flash={true}
                 />{" "}
                 <span className="text-xs md:text-sm">MB</span>
               </div>
@@ -180,7 +188,8 @@ export function StatsStrip({ blockHeight }: StatsStripProps) {
 
           {/* Unconfirmed TX */}
           <button
-            className="flex flex-col items-center min-w-0 px-1 md:px-3 py-1 rounded-lg hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors cursor-pointer flex-shrink-0"
+            className="flex flex-col items-center min-w-0 px-1 md:px-3 py-1 rounded-lg stat-hover cursor-pointer flex-shrink-0"
+            data-testid="stat-unconfirmed"
             onClick={(e) => openModal("unconfirmed", e)}
           >
             {isLoading ? (
@@ -193,6 +202,7 @@ export function StatsStrip({ blockHeight }: StatsStripProps) {
                     Math.floor(val).toLocaleString("en-US")
                   }
                   duration={800}
+                  flash={true}
                 />
               </div>
             )}
