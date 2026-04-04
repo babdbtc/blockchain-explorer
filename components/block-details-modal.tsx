@@ -111,7 +111,7 @@ export function BlockDetailsModal({ isOpen, onClose, blockHash, originRect }: Bl
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-5xl max-h-[90vh] overflow-y-auto p-0 gap-0" originRect={originRect}>
+      <DialogContent data-testid="block-details-modal" className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-5xl max-h-[90vh] overflow-y-auto p-0 gap-0" originRect={originRect}>
         <DialogHeader className="p-4 sm:p-6 pb-2 border-b border-[hsl(var(--border-subtle))] bg-[hsl(var(--accent)/0.05)]">
           <DialogTitle className="text-[hsl(var(--accent))] flex items-center gap-2 text-lg sm:text-xl">
             <Hash className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -157,7 +157,7 @@ export function BlockDetailsModal({ isOpen, onClose, blockHash, originRect }: Bl
                 <div className="absolute inset-0 bg-[hsl(var(--accent)/0.05)] blur-3xl rounded-full" />
                 <div className="relative z-10 text-center mb-6 sm:mb-8">
                   <div className="text-xs sm:text-sm text-[hsl(var(--accent)/0.8)] uppercase tracking-widest mb-1">Block Height</div>
-                  <div className="text-4xl sm:text-6xl md:text-7xl font-mono font-bold text-white block-height-display mb-3 sm:mb-4">
+                   <div className="text-4xl sm:text-6xl md:text-7xl font-mono font-bold tabular-nums text-white block-height-display mb-3 sm:mb-4">
                     {blockDetails.height.toLocaleString()}
                   </div>
 
@@ -196,27 +196,27 @@ export function BlockDetailsModal({ isOpen, onClose, blockHash, originRect }: Bl
               {/* Main Stats Grid */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
                 <motion.div variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1 } }}>
-                  <Card className="bg-[hsl(var(--surface-2))] border-[hsl(var(--border-subtle))] p-3 sm:p-4 h-full hover:bg-[hsl(var(--surface-3))] transition-colors">
+                  <Card className="bg-[hsl(var(--surface-2))] border-[hsl(var(--border-subtle))] border-l-2 border-l-[hsl(var(--accent)/0.5)] p-3 sm:p-4 h-full hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                     <div className="text-[hsl(var(--text-muted))] text-[10px] sm:text-xs uppercase tracking-wider mb-1">Timestamp</div>
-                    <div className="text-white font-mono text-xs sm:text-sm">{formatDate(blockDetails.timestamp)}</div>
+                    <div className="text-white font-mono tabular-nums text-xs sm:text-sm">{formatDate(blockDetails.timestamp)}</div>
                   </Card>
                 </motion.div>
                 <motion.div variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1 } }}>
-                  <Card className="bg-[hsl(var(--surface-2))] border-[hsl(var(--border-subtle))] p-3 sm:p-4 h-full hover:bg-[hsl(var(--surface-3))] transition-colors">
+                  <Card className="bg-[hsl(var(--surface-2))] border-[hsl(var(--border-subtle))] border-l-2 border-l-[hsl(var(--accent)/0.5)] p-3 sm:p-4 h-full hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                     <div className="text-[hsl(var(--text-muted))] text-[10px] sm:text-xs uppercase tracking-wider mb-1">Size</div>
-                    <div className="text-white font-mono text-sm sm:text-lg">{formatBytes(blockDetails.size)}</div>
+                    <div className="text-white font-mono tabular-nums text-sm sm:text-lg">{formatBytes(blockDetails.size)}</div>
                   </Card>
                 </motion.div>
                 <motion.div variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1 } }}>
-                  <Card className="bg-[hsl(var(--surface-2))] border-[hsl(var(--border-subtle))] p-3 sm:p-4 h-full hover:bg-[hsl(var(--surface-3))] transition-colors">
+                  <Card className="bg-[hsl(var(--surface-2))] border-[hsl(var(--border-subtle))] border-l-2 border-l-[hsl(var(--accent)/0.5)] p-3 sm:p-4 h-full hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                     <div className="text-[hsl(var(--text-muted))] text-[10px] sm:text-xs uppercase tracking-wider mb-1">Weight</div>
-                    <div className="text-white font-mono text-sm sm:text-lg">{blockDetails.weight.toLocaleString()} WU</div>
+                    <div className="text-white font-mono tabular-nums text-sm sm:text-lg">{blockDetails.weight.toLocaleString()} WU</div>
                   </Card>
                 </motion.div>
                 <motion.div variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1 } }}>
-                  <Card className="bg-[hsl(var(--surface-2))] border-[hsl(var(--border-subtle))] p-3 sm:p-4 h-full hover:bg-[hsl(var(--surface-3))] transition-colors">
+                  <Card className="bg-[hsl(var(--surface-2))] border-[hsl(var(--border-subtle))] border-l-2 border-l-[hsl(var(--accent)/0.5)] p-3 sm:p-4 h-full hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                     <div className="text-[hsl(var(--text-muted))] text-[10px] sm:text-xs uppercase tracking-wider mb-1">Transactions</div>
-                    <div className="text-white font-mono text-sm sm:text-lg">{blockDetails.tx_count.toLocaleString()}</div>
+                    <div className="text-white font-mono tabular-nums text-sm sm:text-lg">{blockDetails.tx_count.toLocaleString()}</div>
                   </Card>
                 </motion.div>
               </div>
@@ -228,38 +228,55 @@ export function BlockDetailsModal({ isOpen, onClose, blockHash, originRect }: Bl
                   <motion.div
                     variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }}
                   >
-                    <Card className="bg-[hsl(var(--surface-1))] border-green-500/20 overflow-hidden h-full">
+                    <Card className="bg-[hsl(var(--surface-1))] border-green-500/20 border-l-2 border-l-green-500/50 overflow-hidden h-full">
                       <div className="bg-green-500/10 p-3 border-b border-green-500/20 flex items-center gap-2">
                         <Zap className="w-4 h-4 text-green-400" />
                         <h4 className="text-green-400 font-semibold text-sm sm:text-base">Fee Statistics</h4>
                       </div>
                       <div className="p-3 sm:p-4 space-y-3 sm:space-y-4">
-                        <div className="flex justify-between items-center p-2 rounded bg-[hsl(var(--surface-2))]">
+                        <div data-stagger-item className="flex justify-between items-center p-2 rounded bg-[hsl(var(--surface-2))] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                           <span className="text-[hsl(var(--text-muted))] text-xs sm:text-sm">Total Fees</span>
-                          <span className="text-green-400 font-mono font-bold text-xs sm:text-sm">{formatSats(blockDetails.extras.totalFees)}</span>
+                          <span className="text-green-400 font-mono font-bold tabular-nums text-xs sm:text-sm">{formatSats(blockDetails.extras.totalFees)}</span>
                         </div>
-                        <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                          <div>
+                        <div data-stagger-item className="grid grid-cols-2 gap-3 sm:gap-4">
+                          <div className="p-2 rounded bg-[hsl(var(--surface-2))] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                             <div className="text-[hsl(var(--text-muted))] text-[10px] sm:text-xs mb-1">Average Fee</div>
-                            <div className="text-white font-mono text-xs sm:text-sm">{blockDetails.extras.avgFee.toLocaleString()} sat</div>
+                            <div className="text-white font-mono tabular-nums text-xs sm:text-sm">{blockDetails.extras.avgFee.toLocaleString()} sat</div>
                           </div>
-                          <div>
+                          <div className="p-2 rounded bg-[hsl(var(--surface-2))] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                             <div className="text-[hsl(var(--text-muted))] text-[10px] sm:text-xs mb-1">Avg Fee Rate</div>
-                            <div className="text-white font-mono text-xs sm:text-sm">{blockDetails.extras.avgFeeRate.toFixed(1)} sat/vB</div>
+                            <div className="text-white font-mono tabular-nums text-xs sm:text-sm">{blockDetails.extras.avgFeeRate.toFixed(1)} sat/vB</div>
                           </div>
                         </div>
-                        <div>
-                          <div className="text-[hsl(var(--text-muted))] text-xs mb-2">Fee Range (sat/vB)</div>
-                          <div className="h-2 bg-[hsl(var(--surface-3))] rounded-full overflow-hidden flex">
-                            <div className="h-full bg-green-900 w-1/4" />
-                            <div className="h-full bg-green-700 w-1/4" />
-                            <div className="h-full bg-green-500 w-1/4" />
-                            <div className="h-full bg-green-400 w-1/4" />
-                          </div>
-                          <div className="flex justify-between text-xs text-[hsl(var(--text-muted))] mt-1 font-mono">
-                            <span>{blockDetails.extras.feeRange[0]}</span>
-                            <span>{blockDetails.extras.feeRange[blockDetails.extras.feeRange.length - 1]}</span>
-                          </div>
+                        <div data-stagger-item className="space-y-2.5">
+                          <div className="text-[hsl(var(--text-muted))] text-xs mb-1">Fee Rates (sat/vB)</div>
+                          {(() => {
+                            const maxFee = blockDetails.extras.feeRange[blockDetails.extras.feeRange.length - 1]
+                            const items = [
+                              { label: "Min", value: blockDetails.extras.feeRange[0] },
+                              { label: "Avg", value: blockDetails.extras.avgFeeRate },
+                              { label: "Max", value: maxFee },
+                            ]
+                            return items.map((item) => {
+                              const pct = maxFee > 0 ? Math.max(4, (item.value / maxFee) * 100) : 0
+                              return (
+                                <div key={item.label} className="space-y-1">
+                                  <div className="flex justify-between text-xs">
+                                    <span className="text-[hsl(var(--text-muted))]">{item.label}</span>
+                                    <span className="text-white font-mono tabular-nums">
+                                      {Number(item.value).toFixed(1)}
+                                    </span>
+                                  </div>
+                                  <div className="h-1.5 rounded-full bg-[hsl(var(--surface-3))] overflow-hidden">
+                                    <div
+                                      className="h-1.5 rounded-full bg-gradient-to-r from-[hsl(var(--accent)/0.3)] to-[hsl(var(--accent))]"
+                                      style={{ width: `${pct}%` }}
+                                    />
+                                  </div>
+                                </div>
+                              )
+                            })
+                          })()}
                         </div>
                       </div>
                     </Card>
@@ -271,42 +288,42 @@ export function BlockDetailsModal({ isOpen, onClose, blockHash, originRect }: Bl
                   <motion.div
                     variants={{ hidden: { opacity: 0, x: 20 }, visible: { opacity: 1, x: 0 } }}
                   >
-                    <Card className="bg-[hsl(var(--surface-1))] border-blue-500/20 overflow-hidden h-full">
+                    <Card className="bg-[hsl(var(--surface-1))] border-blue-500/20 border-l-2 border-l-blue-500/50 overflow-hidden h-full">
                       <div className="bg-blue-500/10 p-3 border-b border-blue-500/20 flex items-center gap-2">
                         <Users className="w-4 h-4 text-blue-400" />
                         <h4 className="text-blue-400 font-semibold text-sm sm:text-base">Transaction Details</h4>
                       </div>
                       <div className="p-3 sm:p-4 space-y-3 sm:space-y-4">
-                        <div className="flex justify-between items-center p-2 rounded bg-[hsl(var(--surface-2))]">
+                        <div data-stagger-item className="flex justify-between items-center p-2 rounded bg-[hsl(var(--surface-2))] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                           <span className="text-[hsl(var(--text-muted))] text-xs sm:text-sm">Block Reward</span>
-                          <span className="text-[hsl(var(--accent))] font-mono font-bold text-xs sm:text-sm">{formatSats(blockDetails.extras.reward)}</span>
+                          <span className="text-[hsl(var(--accent))] font-mono font-bold tabular-nums text-xs sm:text-sm">{formatSats(blockDetails.extras.reward)}</span>
                         </div>
-                        <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
-                          <div className="p-1.5 sm:p-2 bg-[hsl(var(--surface-2))] rounded border border-[hsl(var(--border-subtle))]">
+                        <div data-stagger-item className="grid grid-cols-3 gap-1.5 sm:gap-2">
+                          <div className="p-1.5 sm:p-2 bg-[hsl(var(--surface-2))] rounded border border-[hsl(var(--border-subtle))] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                             <div className="text-[hsl(var(--text-muted))] text-[9px] sm:text-[10px] uppercase">Avg Size</div>
-                            <div className="text-white font-mono text-xs sm:text-sm">{blockDetails.extras.avgTxSize.toFixed(0)} B</div>
+                            <div className="text-white font-mono tabular-nums text-xs sm:text-sm">{blockDetails.extras.avgTxSize.toFixed(0)} B</div>
                           </div>
-                          <div className="p-1.5 sm:p-2 bg-[hsl(var(--surface-2))] rounded border border-[hsl(var(--border-subtle))]">
+                          <div className="p-1.5 sm:p-2 bg-[hsl(var(--surface-2))] rounded border border-[hsl(var(--border-subtle))] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                             <div className="text-[hsl(var(--text-muted))] text-[9px] sm:text-[10px] uppercase">Inputs</div>
-                            <div className="text-white font-mono text-xs sm:text-sm">{blockDetails.extras.totalInputs.toLocaleString()}</div>
+                            <div className="text-white font-mono tabular-nums text-xs sm:text-sm">{blockDetails.extras.totalInputs.toLocaleString()}</div>
                           </div>
-                          <div className="p-1.5 sm:p-2 bg-[hsl(var(--surface-2))] rounded border border-[hsl(var(--border-subtle))]">
+                          <div className="p-1.5 sm:p-2 bg-[hsl(var(--surface-2))] rounded border border-[hsl(var(--border-subtle))] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                             <div className="text-[hsl(var(--text-muted))] text-[9px] sm:text-[10px] uppercase">Outputs</div>
-                            <div className="text-white font-mono text-xs sm:text-sm">{blockDetails.extras.totalOutputs.toLocaleString()}</div>
+                            <div className="text-white font-mono tabular-nums text-xs sm:text-sm">{blockDetails.extras.totalOutputs.toLocaleString()}</div>
                           </div>
                         </div>
 
                         {/* SegWit Mini-Section */}
                         {blockDetails.extras.segwitTotalTxs > 0 && (
-                          <div className="pt-2 border-t border-[hsl(var(--border-subtle))]">
+                          <div data-stagger-item className="pt-2 border-t border-[hsl(var(--border-subtle))]">
                             <div className="flex justify-between items-center mb-1">
                               <span className="text-purple-400 text-xs font-semibold">SegWit Adoption</span>
-                              <span className="text-purple-300 text-xs font-mono">
+                              <span className="text-purple-300 text-xs font-mono tabular-nums">
                                 {Math.round((blockDetails.extras.segwitTotalTxs / blockDetails.tx_count) * 100)}%
                               </span>
                             </div>
                             <div className="text-xs text-[hsl(var(--text-muted))]">
-                              {blockDetails.extras.segwitTotalTxs.toLocaleString()} SegWit transactions
+                              <span className="font-mono tabular-nums">{blockDetails.extras.segwitTotalTxs.toLocaleString()}</span> SegWit transactions
                             </div>
                           </div>
                         )}
@@ -320,39 +337,39 @@ export function BlockDetailsModal({ isOpen, onClose, blockHash, originRect }: Bl
               <motion.div
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               >
-                <Card className="bg-[hsl(var(--surface-1))] border-[hsl(var(--border-subtle))] p-3 sm:p-4">
+                <Card className="bg-[hsl(var(--surface-1))] border-[hsl(var(--border-subtle))] border-l-2 border-l-[hsl(var(--accent)/0.5)] p-3 sm:p-4">
                   <h4 className="text-[hsl(var(--text-muted))] font-semibold mb-3 flex items-center gap-2 text-xs sm:text-sm uppercase tracking-wider">
                     <Clock className="w-4 h-4" />
                     Technical Details
                   </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-[10px] sm:text-xs font-mono">
-                    <div className="flex flex-col">
+                    <div data-stagger-item className="flex flex-col">
                       <span className="text-[hsl(var(--text-muted))] mb-1">Merkle Root</span>
-                      <span className="text-gray-300 break-all bg-[hsl(var(--surface-2))] p-1.5 rounded border border-[hsl(var(--border-subtle))]">
+                      <span className="text-gray-300 break-all bg-[hsl(var(--surface-2))] p-1.5 rounded border border-[hsl(var(--border-subtle))] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                         {blockDetails.merkle_root}
                       </span>
                     </div>
-                    <div className="flex flex-col">
+                    <div data-stagger-item className="flex flex-col">
                       <span className="text-[hsl(var(--text-muted))] mb-1">Previous Block</span>
-                      <span className="text-gray-300 break-all bg-[hsl(var(--surface-2))] p-1.5 rounded border border-[hsl(var(--border-subtle))]">
+                      <span className="text-gray-300 break-all bg-[hsl(var(--surface-2))] p-1.5 rounded border border-[hsl(var(--border-subtle))] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                         {blockDetails.previousblockhash}
                       </span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-[hsl(var(--border-subtle))] mt-2">
+                    <div data-stagger-item className="flex justify-between py-1.5 px-1 rounded border-b border-[hsl(var(--border-subtle))] mt-2 hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                       <span className="text-[hsl(var(--text-muted))]">Bits</span>
-                      <span className="text-gray-300">{blockDetails.bits.toString(16)}</span>
+                      <span className="text-gray-300 tabular-nums">{blockDetails.bits.toString(16)}</span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-[hsl(var(--border-subtle))] mt-2">
+                    <div data-stagger-item className="flex justify-between py-1.5 px-1 rounded border-b border-[hsl(var(--border-subtle))] mt-2 hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                       <span className="text-[hsl(var(--text-muted))]">Nonce</span>
-                      <span className="text-gray-300">{blockDetails.nonce.toLocaleString()}</span>
+                      <span className="text-gray-300 tabular-nums">{blockDetails.nonce.toLocaleString()}</span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-[hsl(var(--border-subtle))]">
+                    <div data-stagger-item className="flex justify-between py-1.5 px-1 rounded border-b border-[hsl(var(--border-subtle))] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                       <span className="text-[hsl(var(--text-muted))]">Version</span>
-                      <span className="text-gray-300">{blockDetails.version}</span>
+                      <span className="text-gray-300 tabular-nums">{blockDetails.version}</span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-[hsl(var(--border-subtle))]">
+                    <div data-stagger-item className="flex justify-between py-1.5 px-1 rounded border-b border-[hsl(var(--border-subtle))] hover:bg-[hsl(var(--surface-3)/0.5)] transition-colors">
                       <span className="text-[hsl(var(--text-muted))]">Difficulty</span>
-                      <span className="text-gray-300">{blockDetails.difficulty.toExponential(2)}</span>
+                      <span className="text-gray-300 tabular-nums">{blockDetails.difficulty.toExponential(2)}</span>
                     </div>
                   </div>
                 </Card>
