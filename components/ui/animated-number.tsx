@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { useReducedMotion } from "framer-motion"
 
 interface AnimatedNumberProps {
   value: number
@@ -8,6 +9,7 @@ interface AnimatedNumberProps {
   decimals?: number
   duration?: number
   formatFn?: (value: number) => string
+  flash?: boolean
 }
 
 export function AnimatedNumber({
@@ -16,10 +18,15 @@ export function AnimatedNumber({
   decimals = 0,
   duration = 1000,
   formatFn,
+  flash = false,
 }: AnimatedNumberProps) {
   const [displayValue, setDisplayValue] = useState(value)
   const prevValueRef = useRef(value)
   const animationFrameRef = useRef<number>(0)
+  const [isFlashing, setIsFlashing] = useState(false)
+  const flashTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const flashPrevRef = useRef(value)
+  const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
     const startValue = prevValueRef.current
@@ -57,12 +64,34 @@ export function AnimatedNumber({
     }
   }, [value, duration])
 
+  useEffect(() => {
+    if (flash && Math.abs(value - flashPrevRef.current) > 0.01 && !shouldReduceMotion) {
+      setIsFlashing(true)
+      if (flashTimeoutRef.current) {
+        clearTimeout(flashTimeoutRef.current)
+      }
+      flashTimeoutRef.current = setTimeout(() => {
+        setIsFlashing(false)
+      }, 600)
+    }
+    flashPrevRef.current = value
+
+    return () => {
+      if (flashTimeoutRef.current) {
+        clearTimeout(flashTimeoutRef.current)
+      }
+    }
+  }, [value, flash, shouldReduceMotion])
+
   const formattedValue = formatFn
     ? formatFn(displayValue)
     : displayValue.toFixed(decimals)
 
   return (
-    <span className={`tabular-nums ${className}`}>
+    <span
+      className={`tabular-nums ${isFlashing ? "value-flash" : ""} ${className}`}
+      data-testid="animated-number"
+    >
       {formattedValue}
     </span>
   )
