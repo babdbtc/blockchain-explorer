@@ -95,10 +95,10 @@ function PrivacyOverview({
         {PRIVACY_TECHNIQUES.map((technique) => {
           const isRecommended = technique.id === 'cashu'
           return (
-          <motion.div key={technique.id} variants={cardItem}>
+          <motion.div key={technique.id} variants={cardItem} data-stagger-item>
             <button
               onClick={() => onSelectTechnique(technique.id)}
-              className={`w-full text-left rounded-lg p-4 hover:bg-[hsl(var(--surface-3))] transition-all duration-150 group ${
+              className={`w-full text-left rounded-lg p-4 border-l-2 border-l-[hsl(var(--accent)/0.5)] hover:bg-[hsl(var(--surface-3)/0.5)] hover:-translate-y-0.5 transition-all duration-200 group ${
                 isRecommended
                   ? 'recommended-card hover:border-[hsl(var(--accent)/0.6)]'
                   : 'bg-[hsl(var(--surface-2))] border border-transparent hover:border-[hsl(var(--accent)/0.2)]'
@@ -196,9 +196,7 @@ function PrivacyTechniqueDetail({
         <div className="space-y-3">
           {technique.steps.map((s) => (
             <div key={s.step} className="flex gap-3">
-              <div className="w-6 h-6 rounded-full bg-[hsl(var(--accent)/0.15)] border border-[hsl(var(--accent)/0.3)] flex items-center justify-center shrink-0 mt-0.5">
-                <span className="text-xs font-bold text-[hsl(var(--accent))]">{s.step}</span>
-              </div>
+              <span className="w-6 h-6 rounded-full bg-[hsl(var(--accent)/0.15)] text-[hsl(var(--accent))] text-xs flex items-center justify-center flex-shrink-0">{s.step}</span>
               <div>
                 <h4 className="text-sm font-medium text-white">{s.title}</h4>
                 <p className="text-xs text-[hsl(var(--text-muted))] leading-relaxed mt-0.5">{s.description}</p>
@@ -215,7 +213,7 @@ function PrivacyTechniqueDetail({
           {technique.tools.map((tool) => (
             <div
               key={tool.name}
-              className="rounded-lg p-3 bg-[hsl(var(--surface-2))] border border-[hsl(var(--border-subtle))]"
+              className="rounded-lg p-3 bg-[hsl(var(--surface-2))] border border-[hsl(var(--border-subtle))] hover:shadow-[0_0_12px_hsl(var(--accent)/0.15)] transition-shadow duration-200"
             >
               <div className="flex items-start justify-between mb-1">
                 <h4 className="text-sm font-medium text-white">{tool.name}</h4>
@@ -311,6 +309,7 @@ export function PrivacyGuide({ externalOpen, onExternalOpenHandled }: { external
       {/* Modal — triggered externally from the dock */}
       <Dialog open={isOpen} onOpenChange={(open) => !open && closeModal()}>
         <DialogContent
+          data-testid="privacy-guide-modal"
           className="premium-modal text-white w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-5xl max-h-[85vh] overflow-y-auto custom-scrollbar p-0 gap-0"
           originRect={null}
         >
