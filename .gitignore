@@ -40,3 +40,8 @@ nul
 
 # cashu donation tokens (contains sensitive data)
 cashu-tokens.json
+
+# agent tooling
+.opencode
+.sisyphus
+.claude
