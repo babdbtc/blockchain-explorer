@@ -102,7 +102,7 @@ export function ThreeScene() {
         "21 Million",
         "tick tock, next block",
         "Defund The State",
-        "no state is the best state",
+
         "Open-source everything",
         "21M / ∞",
         "Privacy is not a crime",
@@ -112,15 +112,12 @@ export function ThreeScene() {
         "activism.net/cypherpunk/manifesto.html",
         "Run your own node!",
         "Sound money",
-        "Inflation is theft",
+
         "Cantillon was right",
         "Proof of Work",
-        "Taxation is armed robbery",
-        "The seperation of money and state",
+
         "DON'T TREAD ON ME",
-        "Anarcho-capitalism is inevitable",
-        "Read Rothbard",
-        "Read Hoppe",
+
         "Bitcoin fixes this!",
         "Anonymize your coins",
         "Cashu brings Chaumian dreams back",
@@ -129,7 +126,7 @@ export function ThreeScene() {
         "Practice Agorism",
         "Be the counter-economy",
         "Regulate THIS!",
-        "Don't impose democracy on me!",
+
         "Use blind signatures!",
         "1984 is now",
         "Austrian economics",
@@ -368,7 +365,74 @@ export function ThreeScene() {
         "Pinochet's Helicopter Tours.\nTake the plunge!",
         "\"Diversification\" is a fancy way\nto say \"less bitcoin\".",
         "Lost it all in a boat accident...",
-        "Bitcoin is everything people don't\nknow about computers, combined with\neverything they don't understand\nabout money.\n— John Oliver"
+        "Bitcoin is everything people don't\nknow about computers, combined with\neverything they don't understand\nabout money.\n— John Oliver",
+        // Hans-Hermann Hoppe
+        "Democracy has nothing to do with freedom.\nDemocracy is a soft variant of communism.\n— Hans-Hermann Hoppe",
+        "Democracy virtually assures that only bad\nand dangerous men will ever rise to the\ntop of government.\n— Hans-Hermann Hoppe",
+        "What is true, just, and beautiful is not\ndetermined by popular vote.\n— Hans-Hermann Hoppe",
+        "Whoever is the best demagogue will win.\n— Hans-Hermann Hoppe",
+        "Even the Founding Fathers of the U.S.\nwere strictly opposed to democracy.\nThey thought of it as nothing\nbut mob-rule.\n— Hans-Hermann Hoppe",
+        "The state is the result of aggressive force\nand subjugation. It has evolved without\ncontractual foundation, just like a gang\nof protection racketeers.\n— Hans-Hermann Hoppe",
+        "The state operates in a legal vacuum.\nThere exists no contract between\nthe state and its citizens.\n— Hans-Hermann Hoppe",
+        "An expropriating property protector\nis a contradiction in terms.\n— Hans-Hermann Hoppe",
+        "If no one can appeal to justice except\nto government, justice will be perverted\nin favor of the government.\n— Hans-Hermann Hoppe",
+        "It is states that are responsible for the\ndeaths of hundreds of millions of people\nin the 20th century alone.\n— Hans-Hermann Hoppe",
+        "It is precisely the institution of a state\nwhich first makes conflict\nunavoidable and permanent.\n— Hans-Hermann Hoppe",
+        "Private property implies exclusivity,\ninequality, and difference.\n— Hans-Hermann Hoppe",
+        "Egalitarianism, in every form and shape,\nis incompatible with the idea\nof private property.\n— Hans-Hermann Hoppe",
+        "The monopolization of money and banking\nis the ultimate pillar on which\nthe modern state rests.\n— Hans-Hermann Hoppe",
+        "More paper money cannot make a society\nricher — it is just more printed-paper.\n— Hans-Hermann Hoppe",
+        "Thanks to the central bank, most\n'monetary experts' can be turned into\ngovernment propagandists 'explaining'\nhow stones can be turned into bread.\n— Hans-Hermann Hoppe",
+        "There can be no socialism without a state,\nand as long as there is a state\nthere is socialism.\n— Hans-Hermann Hoppe",
+        "The higher on the socialist hierarchy\nyou look, the more you will find people\ntoo incompetent to do the job.\n— Hans-Hermann Hoppe",
+        "History is ultimately determined by ideas,\nand ideas can, at least in principle,\nchange almost instantly.\n— Hans-Hermann Hoppe",
+        "If the power of government rests on the\nacceptance of false and foolish ideas,\nthen the only genuine protection is the\nsystematic attack of these ideas.\n— Hans-Hermann Hoppe",
+        "Liberty instead of Democracy!\n— Hans-Hermann Hoppe",
+        "We must promote the idea of a world\ncomposed of tens of thousands of\ndistinct districts and hundreds of\nthousands of independent free cities.\n— Hans-Hermann Hoppe",
+        // Murray Rothbard
+        "The State is a gang of thieves\nwrit large.\n— Murray Rothbard",
+        "Taxation is theft, purely and simply.\n— Murray Rothbard",
+        "War is mass murder.\nConscription is slavery.\nTaxation is robbery.\n— Murray Rothbard",
+        "Capitalism is the fullest expression\nof anarchism, and anarchism is the\nfullest expression of capitalism.\n— Murray Rothbard",
+        "The great non sequitur committed by\ndefenders of the State is to leap from\nthe necessity of society to the\nnecessity of the State.\n— Murray Rothbard",
+        "It is no crime to be ignorant of economics.\nBut it is totally irresponsible to have a\nloud and vociferous opinion on economic\nsubjects while remaining in this\nstate of ignorance.\n— Murray Rothbard",
+        "Freedom from servitude comes not from\nviolent action, but from the refusal\nto serve.\n— Murray Rothbard",
+        "Tyrants fall when the people\nwithdraw their support.\n— Murray Rothbard",
+        "It is easy to be conspicuously\n'compassionate' if others are being\nforced to pay the cost.\n— Murray Rothbard",
+        "No action can be virtuous\nunless it is freely chosen.\n— Murray Rothbard",
+        "It is curious that people tend to regard\ngovernment as a quasi-divine, selfless,\nSanta Claus organization.\n— Murray Rothbard",
+        "The natural tendency of the state\nis inflation.\n— Murray Rothbard",
+        "Libertarians make no exceptions to\nthe golden rule and provide no moral\nloophole, no double standard,\nfor government.\n— Murray Rothbard",
+        // Ludwig von Mises
+        "Socialism is an alternative to capitalism\nas potassium cyanide is an alternative\nto water.\n— Ludwig von Mises",
+        "Every socialist is a disguised dictator.\n— Ludwig von Mises",
+        "The issue is always the same:\nthe government or the market.\nThere is no third solution.\n— Ludwig von Mises",
+        "Liberty is always freedom\nfrom the government.\n— Ludwig von Mises",
+        "He who is unfit to serve his fellow\ncitizens wants to rule them.\n— Ludwig von Mises",
+        "Inflation is not an act of God.\nInflation is not a catastrophe\nof the elements.\nInflation is a policy.\n— Ludwig von Mises",
+        "The gold standard did not collapse.\nGovernments abolished it in order\nto pave the way for inflation.\n— Ludwig von Mises",
+        "Every step which leads from capitalism\ntoward planning is necessarily a step\nnearer to absolutism and dictatorship.\n— Ludwig von Mises",
+        "Capitalism needs neither propaganda\nnor apostles. Its achievements speak\nfor themselves. Capitalism delivers\nthe goods.\n— Ludwig von Mises",
+        "Freedom is indivisible. As soon as one\nstarts to restrict it, one enters upon\na decline on which it is difficult\nto stop.\n— Ludwig von Mises",
+        "Government is the only institution\nthat can take a valuable commodity\nlike paper, and make it worthless\nby applying ink.\n— Ludwig von Mises",
+        "Under capitalism everybody is the\narchitect of his own fortune.\n— Ludwig von Mises",
+        "There is no means of avoiding the final\ncollapse of a boom brought about\nby credit expansion.\n— Ludwig von Mises",
+        // Frédéric Bastiat
+        "When plunder becomes a way of life,\nmen create for themselves a legal system\nthat authorizes it and a moral code\nthat glorifies it.\n— Frédéric Bastiat",
+        "The state is that great fiction by which\neveryone tries to live at the expense\nof everyone else.\n— Frédéric Bastiat",
+        "Life, liberty, and property do not exist\nbecause men have made laws. On the\ncontrary, it was the fact that they\nexisted beforehand that caused men\nto make laws.\n— Frédéric Bastiat",
+        "If the natural tendencies of mankind\nare so bad that it is not safe to\npermit people to be free, how is it\nthat the tendencies of these organizers\nare always good?\n— Frédéric Bastiat",
+        // Lysander Spooner
+        "A man is no less a slave because he is\nallowed to choose a new master\nonce in a term of years.\n— Lysander Spooner",
+        "The government, like a highwayman,\nsays to a man:\nYour money, or your life.\n— Lysander Spooner",
+        // Albert Jay Nock
+        "It can not even be said that the State\nhas ever shown any disposition to\nsuppress crime, but only to safeguard\nits own monopoly of crime.\n— Albert Jay Nock",
+        // Frank Chodorov
+        "Taxation is nothing but organized robbery,\nand there the subject should\nbe dropped.\n— Frank Chodorov",
+        "Private capitalism makes a steam engine;\nState capitalism makes pyramids.\n— Frank Chodorov",
+        "People can vote themselves\ninto slavery.\n— Frank Chodorov",
+        // Étienne de La Boétie
+        "Resolve to serve no more,\nand you are at once freed.\n— Étienne de La Boétie"
       ]
 
       const textSprites: any[] = []
@@ -484,7 +548,7 @@ export function ThreeScene() {
         padding: 40px;
         max-width: 800px;
         line-height: 1.6;
-        white-space: pre-line;
+        white-space: pre;
       `
       const closeHint = document.createElement("div")
       closeHint.style.cssText = `
